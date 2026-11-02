@@ -1,0 +1,16 @@
+{
+  "name": "adnario-estimate",
+  "private": true,
+  "scripts": {
+    "setup": "npm install && npm --prefix apps/web install && npm --prefix apps/converter install && cd apps/api && uv sync",
+    "dev": "node scripts/dev.mjs",
+    "build": "npm --prefix apps/web run build",
+    "check": "npm --prefix apps/web run check && cd apps/api && uv run python -m app.features.estimate.boq && uv run python -m app.features.estimate.cost && uv run python -m app.features.programme.service",
+    "e2e": "playwright test -c e2e/playwright.config.ts",
+    "e2e:report": "playwright show-report e2e/report",
+    "e2e:install": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2"
+  }
+}
