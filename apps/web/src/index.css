@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #12212f;
+  --muted: #6b7581;
+  --faint: #9ca3ab;
+  --rule: #e6e4dd;
+  --accent: #14456e; /* links in the AI's answers */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  background: #f6f5f2;
+  color: var(--ink);
+  font-family: Archivo, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+}
+a.link,
+.link {
+  color: var(--accent);
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-card;
+  }
+  .input {
+    @apply h-11 w-full rounded-xl border border-line bg-white px-4 text-[15px] text-ink outline-none placeholder:text-[#a3a9b0] focus:border-primary-300 focus:ring-2 focus:ring-primary-100;
+  }
+  .label {
+    @apply mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b7581];
+  }
+  .btn {
+    @apply inline-flex h-9 items-center justify-center gap-2 rounded-lg px-3.5 text-sm font-semibold transition-colors disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-800 disabled:bg-[#93a6bb] disabled:opacity-100;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-white text-ink hover:bg-paper;
+  }
+  .eyebrow {
+    @apply text-[13px] font-semibold uppercase tracking-[0.16em] text-[#6b7581];
+  }
+  .tool {
+    @apply grid h-9 w-9 place-items-center rounded-lg border border-line bg-white text-[#3b4652] hover:bg-paper;
+  }
+  .tool.on {
+    @apply border-primary-300 bg-primary-50 text-primary;
+  }
+  .pill {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-[12px] font-semibold;
+  }
+  .th {
+    @apply px-3 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.1em] text-[#6b7581];
+  }
+}
+
+/* a sheet slides in from the right over a dimmed page */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgb(18 33 47 / 0.35);
+}
+.sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 71;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: -12px 0 48px -12px rgba(12, 26, 43, 0.18);
+}
+.thin-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: #d4d2cb;
+  border-radius: 4px;
+}
+
+/* Outside the workspace the app is drawn a size smaller (the screenshots are at 1512 css px; most laptops show
+   less): zoom keeps every proportion, and the height is given back so the page still fills the window. */
+.compact {
+  zoom: 0.9;
+  height: calc(100vh / 0.9);
+}
+
+/* Marks over the 3D view (Viewer.tsx): a BOQ item's dot, a count of near dots, a run label, a comment pin */
+.marks .mk { position: absolute; transform: translate(-50%, -50%); pointer-events: auto; display: grid; place-items: center; border: 1.5px solid #fff; box-shadow: 0 1px 3px rgba(16, 24, 40, 0.35); cursor: pointer; }
+.marks .mk.dot { width: 11px; height: 11px; border-radius: 50%; background: var(--c); }
+.marks .mk.dot.open { width: 15px; height: 15px; border: 2.5px solid #1f2a37; z-index: 5; }
+.marks .mk.cluster { min-width: 21px; height: 21px; padding: 0 5px; border-radius: 11px; background: #3b4652; color: #fff; font-size: 10.5px; font-weight: 700; }
+.marks .mk.number { width: 21px; height: 21px; border-radius: 50%; background: var(--c); color: #fff; font-size: 10.5px; font-weight: 700; border-width: 2px; }
+.marks .mk.pin { width: 22px; height: 22px; border-radius: 50% 50% 50% 0; background: #1f3a5f; color: #fff; font-size: 10.5px; font-weight: 700; transform: translate(-2px, -100%); }
+.marks .mk-label { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: max-content; max-width: 260px; padding: 6px 9px; border-radius: 8px; background: #fff; color: #1f2a37; font-size: 12px; font-weight: 500; line-height: 1.4; text-align: left; box-shadow: 0 4px 14px rgba(16, 24, 40, 0.18); }
