@@ -1,0 +1,416 @@
+/* The sidekick: an "Adnario AI" button at the workspace's bottom right, and the chat it opens above it, in the primary
+   colour on a near-white tint of it. */
+.sidekick,
+.sidekickBtn {
+  --ai: #14456e;
+  --ai-tint: #f6f9fc;
+  --ai-soft: #eaf1f7;
+}
+.sidekickBtn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 18px 0 14px;
+  border-radius: 23px;
+  background: var(--ai);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgb(20 69 110 / 0.3);
+  transition: transform 0.15s;
+}
+.sidekickBtn:hover {
+  transform: translateY(-1px);
+}
+.sidekickBtn svg {
+  width: 18px;
+  height: 18px;
+}
+.sidekick {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: min(420px, calc(100vw - 32px));
+  height: min(720px, calc(100vh - 48px));
+  border: 1.5px solid var(--ai);
+  border-radius: 18px;
+  background: var(--ai-tint);
+  box-shadow: 0 16px 48px rgb(20 69 110 / 0.18);
+  overflow: hidden;
+}
+.sidekick header {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px 6px 14px;
+  font-size: 14px;
+}
+.sidekick header .mark {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  color: var(--ai);
+}
+.sidekick header b {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+.sidekick .ico {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+}
+.sidekick .ico:hover:not(:disabled),
+.sidekick .ico.on {
+  background: var(--ai-soft);
+  color: var(--ink);
+}
+.sidekick .ico svg {
+  width: 16px;
+  height: 16px;
+}
+.sidekickBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.sidekickHello {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  color: var(--muted);
+}
+.sidekickHello h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.sidekickHello h2 em {
+  font-style: normal;
+  color: var(--ai);
+}
+.sidekickHello p {
+  margin: 0 0 14px;
+  font-size: 13px;
+}
+.sidekickChips {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.sidekickChips button {
+  padding: 8px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 13px;
+  text-align: left;
+}
+.sidekickChips button:hover {
+  border-color: var(--ai);
+  background: var(--ai-soft);
+}
+.sidekick .said.user {
+  align-self: flex-end;
+  max-width: 85%;
+  padding: 8px 14px;
+  border-radius: 18px;
+  background: var(--ai-soft);
+  white-space: pre-wrap;
+}
+.sidekick .said.assistant {
+  color: var(--ink);
+}
+.sidekick .said.assistant p {
+  margin: 0 0 8px;
+}
+.sidekick .said.assistant ul,
+.sidekick .said.assistant ol {
+  margin: 0 0 8px;
+  padding-left: 18px;
+}
+.sidekick .said.assistant ul {
+  list-style: disc;
+}
+.sidekick .said.assistant ol {
+  list-style: decimal;
+}
+.sidekick .said.assistant li {
+  margin: 2px 0;
+}
+/* a list inside a list item, and the paragraphs markdown puts in a spaced-out list, sit tight under their item */
+.sidekick .said.assistant li > ul,
+.sidekick .said.assistant li > ol,
+.sidekick .said.assistant li > p {
+  margin: 2px 0 0;
+}
+.sidekick .said.assistant li ul {
+  list-style: circle;
+}
+.sidekick .said.assistant .md > :last-child {
+  margin-bottom: 0;
+}
+.sidekick .said.assistant h5 {
+  margin: 10px 0 4px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.sidekick .said.assistant blockquote {
+  margin: 0 0 8px;
+  padding-left: 10px;
+  border-left: 2px solid var(--rule);
+  color: var(--muted);
+}
+.mdTable {
+  margin: 0 0 8px;
+  overflow-x: auto;
+}
+.mdTable table {
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.mdTable th,
+.mdTable td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.mdTable th {
+  font-weight: 600;
+}
+.sidekick .said .link {
+  font-weight: 600;
+  text-decoration: none;
+}
+/* it opens part of this workspace, not a web page: no underline, a shade darker on hover */
+.sidekick .said .link:hover {
+  color: color-mix(in srgb, var(--accent) 88%, black);
+  text-decoration: none;
+}
+.sidekick .working {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.sidekick .worked {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.sidekick .worked summary {
+  cursor: pointer;
+  width: max-content;
+}
+.sidekick .worked ol {
+  margin: 6px 0 0;
+  padding: 2px 0 2px 12px;
+  border-left: 2px solid var(--rule);
+  list-style: none;
+}
+.sidekick .worked li + li {
+  margin-top: 3px;
+}
+.sidekick .worked li.note {
+  font-style: italic;
+}
+.sidekick .lookUp summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+}
+.sidekick .lookUp small {
+  color: var(--faint);
+}
+.sidekick .lookUp pre {
+  max-height: 220px;
+  margin: 4px 0 6px;
+  padding: 6px 8px;
+  overflow: auto;
+  border-radius: 6px;
+  background: var(--ai-soft);
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+/* three dots in a wave: the AI is working */
+.sidekick .wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 14px;
+}
+.sidekick .wave i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ai);
+  animation: sidekickWave 1.1s ease-in-out infinite;
+}
+.sidekick .wave i:nth-child(2) {
+  animation-delay: 0.15s;
+  opacity: 0.75;
+}
+.sidekick .wave i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes sidekickWave {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-7px);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sidekick .wave i {
+    animation: none;
+  }
+}
+.sidekick .copy {
+  width: 26px;
+  height: 26px;
+  margin-left: -6px;
+}
+.sidekick .copy svg {
+  width: 14px;
+  height: 14px;
+}
+.sidekickHistory {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sidekickHistory li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 10px;
+}
+.sidekickHistory li:hover {
+  background: var(--ai-soft);
+}
+.sidekickHistory li > button:first-child {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  text-align: left;
+}
+.sidekickHistory span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.sidekickHistory small {
+  color: var(--faint);
+  font-size: 11.5px;
+}
+.sidekickEmpty {
+  margin: 24px 0;
+  color: var(--muted);
+  text-align: center;
+}
+.sidekickAsk {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  margin: 0 12px;
+  padding: 8px 8px 8px 16px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(20 69 110 / 0.1);
+}
+.sidekickAsk:focus-within {
+  box-shadow:
+    0 1px 4px rgb(20 69 110 / 0.1),
+    0 0 0 2px rgb(20 69 110 / 0.25);
+}
+.sidekickAsk textarea {
+  flex: 1;
+  min-height: 52px;
+  padding: 6px 0;
+  border: 0;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.sidekickAsk .send {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--ai);
+  color: #fff;
+}
+.sidekickAsk .send:disabled {
+  opacity: 0.35;
+}
+.sidekickAsk .send svg {
+  width: 16px;
+  height: 16px;
+}
+.sidekickAsk .send svg.lucide-square {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+.sidekickNote {
+  margin: 6px 0 10px;
+  color: var(--faint);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* the app's small icon button, as the rest of the workspace has it */
+.sidekick .ico {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+.sidekick .ico:disabled {
+  opacity: 0.4;
+}
