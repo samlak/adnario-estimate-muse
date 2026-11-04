@@ -13,6 +13,7 @@ import { RateCards } from '@/pages/rate-cards/RateCards';
 import { Shell } from '@/pages/shell/Shell';
 import { can, useMe } from '@/lib/store';
 import { Workspace } from '@/workspace/Workspace';
+import { NotFound } from './pages/not-found/NotFound';
 
 /** Signed in, and (when `allow` says so) allowed by role; the server decides in the end. */
 function Guard({ children, allow }: { children: ReactNode; allow?: 'rates' | 'org' }) {
@@ -37,6 +38,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/signup" element={<SignUp />} />
         <Route path="/invite/:id" element={<AcceptInvite />} />
         <Route path="/projects/:id" element={<Guard><Workspace /></Guard>} />
+        <Route path="*" element={<NotFound />} />
         <Route element={<Guard><Shell /></Guard>}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />

@@ -1,7 +1,8 @@
 /** The project workspace (README §7): the bar, the rail, the side panel, the 3D model, the properties of the clicked
  * element, the programme's dock, and Adnario AI at the bottom right. */
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { NotFound } from '@/pages/not-found/NotFound';
 import { can, put, reload, send, useApi, useMe } from '@/lib/store';
 import { RAIL } from './constants';
 import { hiddenTest, looksOf, marksOf } from './model';
@@ -12,6 +13,7 @@ import { Properties } from './Properties';
 import { Rail } from './Rail';
 import { Conversation } from './sheets/Conversation';
 import { People } from './sheets/People';
+import { ProjectSettings } from './sheets/ProjectSettings';
 import { Versions } from './sheets/Versions';
 import { SidePanel } from './SidePanel';
 import { Sidekick } from './sidekick/Sidekick';
@@ -41,7 +43,7 @@ export function Workspace() {
   const [activity, setActivity] = useState<number | null>(null);
   const [picked, setPicked] = useState<Element | null>(null);
   const [elements, setElements] = useState<Element[]>([]);
-  const [sheet, setSheet] = useState<'people' | 'conversation' | 'versions' | null>(null);
+  const [sheet, setSheet] = useState<'people' | 'conversation' | 'versions' | 'settings' | null>(null);
   const [tool, setTool] = useState<'cut' | 'measure' | null>(null);
   const [glass, setGlass] = useState(true);
   const [chosenView, setView] = useState<View | null>(null); // null: Annotated once there is a takeoff, else Original
@@ -69,7 +71,7 @@ export function Workspace() {
   const marks = useMemo(() => marksOf(live, labels, result, view, comments), [live?.feed, labels, result, view, comments]);
   const isHidden = useMemo(() => hiddenTest(hidden), [hidden]);
 
-  if (missing) return <p className="p-10 text-center">This project is not one of yours. <Link className="link font-semibold" to="/projects">Your projects</Link></p>;
+  if (missing) return <NotFound />;
   if (!project) return null;
 
   const editor = project.editor;
@@ -154,6 +156,7 @@ export function Workspace() {
         {sheet === 'people' && <People project={project} onClose={() => setSheet(null)} />}
         {sheet === 'conversation' && <Conversation project={project} onClose={() => setSheet(null)} />}
         {sheet === 'versions' && <Versions onClose={() => setSheet(null)} />}
+        {sheet === 'settings' && <ProjectSettings project={project} onClose={() => setSheet(null)} />}
       </div>
     </WsContext.Provider>
   );

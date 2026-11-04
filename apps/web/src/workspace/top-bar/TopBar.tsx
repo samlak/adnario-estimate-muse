@@ -8,13 +8,13 @@ import { send, useMe } from '@/lib/store';
 import { AccountMenu } from '@/pages/shell/AccountMenu';
 import { Bells } from '@/pages/shell/Bells';
 import { NewProject } from '@/pages/home/NewProject';
-import { useProjects } from '@/pages/home/useProjects';
 import { Conversation } from '../sheets/Conversation';
 import { People } from '../sheets/People';
 import { Versions } from '../sheets/Versions';
 import { DATA_PANELS, useWs, type Model } from '../state';
 import type { ViewerHandle } from '../viewer/types';
 import { Divider } from './Divider';
+import { ProjectMenu } from './ProjectMenu';
 import { Tool } from './Tool';
 import { Segment } from './Segment';
 
@@ -22,11 +22,10 @@ export function TopBar(props: {
   viewer: React.RefObject<ViewerHandle>;
   tool: 'cut' | 'measure' | null; setTool: (tool: 'cut' | 'measure' | null) => void;
   glass: boolean; setGlass: (on: boolean) => void;
-  onSheet: (sheet: 'people' | 'conversation' | 'versions') => void;
+  onSheet: (sheet: 'people' | 'conversation' | 'versions' | 'settings') => void;
 }) {
   const ws = useWs();
   const navigate = useNavigate();
-  const projects = useProjects();
   const [switching, setSwitching] = useState(false);
   const [creating, setCreating] = useState(false);
   const { me } = useMe();
@@ -38,15 +37,14 @@ export function TopBar(props: {
     <header className="flex h-[58px] shrink-0 items-center gap-[7px] border-b border-line px-2.5">
       <button className="tool" title="Back to projects" onClick={() => navigate('/projects')}><ChevronLeft size={18} /></button>
       <div className="relative">
-        <button className="flex items-center gap-2 px-3 text-[15.5px] font-bold" onClick={() => setSwitching(!switching)}>
+        <button className={`flex h-[38px] items-center gap-2 rounded-lg border-2 px-3 text-[15.5px] font-bold ${switching ? 'border-primary-400 bg-paper' : 'border-transparent'}`} onClick={() => setSwitching(!switching)}>
           {ws.projectName} <ChevronDown size={16} className="text-[#7b848e]" />
         </button>
         {switching && (
-          <div className="absolute left-0 z-50 mt-2 w-64 rounded-xl border border-line bg-white py-1.5 shadow-pop">
-            {projects.map((each) => (
-              <button key={each.id} className={`block w-full px-4 py-2 text-left text-[14px] hover:bg-paper ${each.id === ws.projectId ? 'font-semibold' : ''}`} onClick={() => { setSwitching(false); navigate(`/projects/${each.id}`); }}>{each.name}</button>
-            ))}
-          </div>
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setSwitching(false)} />
+            <ProjectMenu onSheet={(sheet) => { setSwitching(false); props.onSheet(sheet); }} />
+          </>
         )}
       </div>
       <Divider />
