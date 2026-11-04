@@ -6,7 +6,7 @@ import { day as dayName } from '@/lib/format';
 import { useWs } from '../../state';
 import { Gantt } from './Gantt';
 import { range } from './utils';
-import { Opened } from './Opened';
+import { ActivityDetail } from './ActivityDetail';
 import { upload } from './upload';
 import { Reading } from './Reading';
 import { useDrop } from './useDrop';
@@ -22,6 +22,7 @@ export function ProgrammeList() {
   const drop = useDrop();
   if (!plan) return <UploadCard />;
   const opened = plan.byId.get(ws.activity ?? -1);
+  if (opened && !opened.summary) return <div className="min-h-full px-[15px] pt-[15px]"><ActivityDetail activity={opened} /></div>;
   const programme = ws.estimate!.programme!;
   return (
     <div className={`min-h-full px-[15px] pt-[15px] text-[12px] ${drop.over ? 'bg-primary-50/60' : ''}`} {...drop.handlers}>
@@ -45,7 +46,6 @@ export function ProgrammeList() {
           <ul className="mt-1 space-y-0.5 text-[#59636e]">{programme.not_in_programme.map((each, index) => <li key={index}>{each.section}, {each.storey}: {each.operation}</li>)}</ul>
         </details>
       )}
-      {opened && <Opened activity={opened} />}
       <div ref={rows} className="mt-2.5 pb-24">
         {plan.activities.map((activity) => (
           <button
@@ -53,8 +53,7 @@ export function ProgrammeList() {
             data-id={activity.id}
             onClick={() => {
               if (activity.summary) return;
-              ws.setActivity(ws.activity === activity.id ? null : activity.id);
-              if (ws.activity !== activity.id && activity.refs.length) ws.show(activity.refs);
+              ws.setActivity(activity.id); // it opens, and shows its elements
             }}
             className={`grid w-full grid-cols-[34px_1fr_auto_34px] items-center gap-1 border-b border-line py-[5px] text-left ${ws.activity === activity.id ? 'bg-primary-50' : ''} ${activity.summary ? 'cursor-default' : 'hover:bg-paper'}`}
           >

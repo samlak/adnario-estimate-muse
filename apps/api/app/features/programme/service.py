@@ -4,10 +4,16 @@ says which activity does each piece of the BOQ's work (an item on a storey); cod
 each activity's cost and the cash flow by month."""
 
 import asyncio
+import copy
 
+from fastapi import HTTPException
+
+from app.core.errors import NotFound
+from app.database import connection as db
 from app.features.estimate.boq import totals
 from app.features.programme.cash_flow import cash_flow
-from app.features.programme.schedule import schedule
+from app.features.programme.schedule import schedule, timed, waits_on
+from app.features.programme.schemas import ActivityEdit
 from app.features.programme.uploaded import read_pdf
 from app.features.programme.work import assign
 
@@ -30,6 +36,43 @@ def reprice(programme: dict, result: dict) -> dict:
     programme['unpriced'] = sorted({w['code'] for a in programme['activities'] for w in a.get('work') or [] if lines.get(w['code'], {}).get('rate') is None})
     programme['cash_flow'] = cash_flow(programme, result['pricing'], totals(result['boq'], result['pricing'])['prelims'])
     return programme
+
+
+def edited(programme: dict, result: dict, change: ActivityEdit) -> dict:
+    """The programme after one change to one activity, scheduled again from its links, its cash flow worked out again."""
+    programme = copy.deepcopy(programme)
+    activity = next((a for a in programme['activities'] if a['id'] == change.id and not a['summary']), None)
+    if activity is None:
+        raise NotFound('No such activity')
+    if change.name:
+        activity['name'] = change.name.strip()
+    if change.days is not None:
+        activity.setdefault('programmed', activity['finish'] - activity['start'])  # as the programme had it
+        activity['finish'] = activity['start'] + change.days
+        activity['milestone'] = change.days == 0
+    if change.remove_link is not None:
+        programme['links'] = [link for link in programme['links'] if not (link['after'] == change.id and link['before'] == change.remove_link)]
+    if change.add_link:
+        before = change.add_link.before
+        if not any(a['id'] == before and not a['summary'] for a in programme['activities']) or before == change.id:
+            raise HTTPException(422, 'It can only wait for another activity')
+        if any(link['after'] == change.id and link['before'] == before for link in programme['links']):
+            raise HTTPException(422, 'It already waits for that activity')
+        if waits_on(programme, change.id, before):
+            raise HTTPException(422, 'That activity already waits for this one: the link would go round in a loop')
+        programme['links'].append({'before': before, 'after': change.id, 'kind': change.add_link.kind, 'lag': change.add_link.lag})
+    return reprice(timed(programme), result)
+
+
+def edit(connection, actor, estimate_id, change: ActivityEdit) -> dict | None:
+    from app.features.estimate.service import editable  # the estimate's access rules
+
+    estimate, _ = editable(connection, actor, estimate_id)
+    if not estimate['programme'] or not estimate['result']:
+        raise NotFound('No programme')
+    programme = edited(estimate['programme'], estimate['result'], change)
+    connection.execute('update estimates set programme = %s, updated_at = now() where id = %s', [db.Jsonb(programme), estimate_id])
+    return shown(actor, programme)
 
 
 def shown(actor, programme: dict | None) -> dict | None:

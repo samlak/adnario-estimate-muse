@@ -90,6 +90,10 @@ export function Workspace() {
       const next = await send<Estimate>(`/estimates/${estimate.id}/edit`, 'POST', change);
       put(`/projects/${id}/estimate`, next);
     },
+    editProgramme: async (change) => {
+      if (!estimate) return;
+      await send(`/estimates/${estimate.id}/programme`, 'PATCH', change, `/projects/${id}/estimate`);
+    },
     work,
     start: (kind, body) => {
       if (!estimate) return;

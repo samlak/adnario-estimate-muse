@@ -9,8 +9,9 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 from app.core import runs
 from app.core.access import CurrentActor
 from app.database import connection as db
-from app.features.programme import jobs
+from app.features.programme import jobs, service
 from app.features.programme.constants import PDF_HEADER, UPLOAD_LIMIT
+from app.features.programme.schemas import ActivityEdit
 
 router = APIRouter()
 
@@ -29,3 +30,9 @@ async def programme(estimate_id: UUID, actor: CurrentActor, file: UploadFile = F
 
     path = await asyncio.to_thread(store)
     return runs.stream(runs.start(f'programme:{estimate_id}', jobs.read(path, actor.org_id, estimate_id)))
+
+
+@router.patch('/estimates/{estimate_id}/programme')
+def edit(estimate_id: UUID, body: ActivityEdit, actor: CurrentActor):
+    with db.in_org(actor.org_id) as connection:
+        return service.edit(connection, actor, estimate_id, body)

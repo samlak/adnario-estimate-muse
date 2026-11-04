@@ -50,7 +50,7 @@ export function Review({ result }: { result: Result }) {
             {(refs.length > 0 || said > 0) && (
               <div className="mt-1 flex items-end gap-2">
                 <button className="flex-1 text-left text-[11.5px] text-[#6b7581] hover:text-primary disabled:hover:text-[#6b7581]" disabled={!gids.length} onClick={() => ws.show(gids)}>
-                  {refs.join(', ')}{gids.length > 0 && ` · ${gids.length} elements, click to show`}
+                  {refs.join(', ')}{gids.length > 0 && ` · ${gids.length} ${gids.length === 1 ? 'element' : 'elements'}, click to show`}
                 </button>
                 {said > 0 && <span className="flex items-center gap-1 rounded-md bg-accent-50 px-1.5 py-0.5 text-[11px] text-accent-600"><MessageSquare size={12} /> {said}</span>}
               </div>
