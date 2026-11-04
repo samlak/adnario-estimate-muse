@@ -24,6 +24,8 @@ def test_a_saved_estimate_fits_its_project_and_the_library(folder):
     assert {model['name'] for model in result['models']} == set(files)
     assert all(line['rate_item_id'] is None or line['rate_item_id'].startswith('row-') for line in result['boq'])
     assert saved['programme']['activities']
+    ids = tuple(f'model-{name}#' for name in files)  # the viewer marks and colours elements by these refs
+    assert all(gid.startswith(ids) for line in result['boq'] + result['takeoff_lines'] for gid in line['gids'])
     assert portable(result) == saved['result']  # and back again
 
 

@@ -7,7 +7,7 @@ import json
 from app.core.config import env
 from app.database import connection as db
 from app.database.seed.constants import DEMO, PROJECTS
-from app.database.seed.estimates import portable
+from app.database.seed.estimates import portable, refs
 
 
 def export() -> None:
@@ -21,7 +21,8 @@ def export() -> None:
             if not estimate:
                 print(f'{name}: no finished estimate, skipped')
                 continue
-            saved = {'result': portable(estimate['result']), 'programme': estimate['programme']}
+            names = {model['id']: model['name'] for model in estimate['result']['models']}
+            saved = {'result': portable(estimate['result']), 'programme': refs(estimate['programme'], names)}
             (env.SAMPLES / folder / 'estimate.json').write_text(json.dumps(saved, ensure_ascii=False, separators=(',', ':')))
             print(f'{name}: saved')
 

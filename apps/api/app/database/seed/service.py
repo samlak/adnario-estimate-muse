@@ -10,7 +10,7 @@ from app.core.config import env
 from app.core.constants import DEMO_PASSWORD
 from app.database import connection as db
 from app.database.seed.constants import DEMO, FINISHED, PEOPLE, PROJECTS
-from app.database.seed.estimates import placed
+from app.database.seed.estimates import placed, refs
 from app.features.auth.utils import hashed
 from app.features.models.convert import convert
 from app.features.models.service import add_model
@@ -62,7 +62,7 @@ def seed() -> list[tuple]:
                 saved = json.loads((env.SAMPLES / folder / 'estimate.json').read_text())
                 connection.execute(
                     "insert into estimates (org_id, project_id, status, result, programme) values (%s, %s, 'ready', %s, %s)",
-                    [org, project, db.Jsonb(placed(saved['result'], models, card, rows)), db.Jsonb(saved['programme'])],
+                    [org, project, db.Jsonb(placed(saved['result'], models, card, rows)), db.Jsonb(refs(saved['programme'], {name: str(model_id) for name, model_id in models.items()}))],
                 )
             else:
                 connection.execute('insert into estimates (org_id, project_id) values (%s, %s)', [org, project])
