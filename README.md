@@ -27,7 +27,7 @@ All of Adnario Estimate, including every line of code in this repository, was bu
 You need [Docker](https://www.docker.com) and a Meta Muse API key for the AI steps (the app and the demo data work without one).
 
 ```bash
-git clone <repository url> adnario-estimate && cd adnario-estimate
+git clone https://github.com/samlak/adnario-estimate-muse.git && cd adnario-estimate-muse
 cp .env.example .env        # then set MUSE_API_KEY=<your Meta Muse API key>
 docker compose up --build   # the first start downloads the sample models and loads the demo data (a few minutes)
 ```
