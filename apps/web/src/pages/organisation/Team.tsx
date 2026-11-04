@@ -22,7 +22,8 @@ export function Team() {
   const sorted = [...people].sort((a, b) => Number(!!b.invited) - Number(!!a.invited) || a.name.localeCompare(b.name));
   const copy = (id: string, link: string) => void navigator.clipboard.writeText(inviteLink(link)).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }).catch(() => {});
   return (
-    <div className="card mt-[22px] overflow-hidden">
+    <div className="card thin-scroll mt-[22px] overflow-x-auto">
+      <div className="min-w-[900px]">
       <div className="grid grid-cols-[400px_342px_1fr_auto] items-center border-b border-line py-2 pl-4 pr-4">
         <span className="th px-0">Person</span><span className="th px-0">Role</span><span className="th px-0">Status</span>
         <button className="btn-primary h-[33px] rounded-lg" onClick={() => setInviting(true)}><UserPlus size={16} /> Invite someone</button>
@@ -64,6 +65,7 @@ export function Team() {
         />
       )}
       {inviting && <Invite onClose={() => setInviting(false)} onDone={(link) => copy('new', link)} />}
+      </div>
     </div>
   );
 }

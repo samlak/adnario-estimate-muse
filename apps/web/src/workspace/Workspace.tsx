@@ -4,6 +4,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { NotFound } from '@/pages/not-found/NotFound';
 import { can, put, reload, send, useApi, useMe } from '@/lib/store';
+import { useMobile } from '@/lib/useMobile';
 import { RAIL } from './constants';
 import { hiddenTest, looksOf, marksOf } from './model';
 import type { Hidden } from './panels/models/types';
@@ -34,6 +35,7 @@ export function Workspace() {
   const models = useApi<Model[]>(`/projects/${id}/models`).data ?? [];
   const estimate = useApi<Estimate>(`/projects/${id}/estimate`).data;
   const rights = can(me.role);
+  const mobile = useMobile(); // a phone: no 3D model, so no model panels or tools; a panel is always open
 
   const [panel, open] = useRemembered<Panel | null>(`ws:${id}:open`, 'takeoff'); // a project opens on its takeoff
   const [full, setFull] = useState(false);
@@ -76,8 +78,8 @@ export function Workspace() {
   if (!project) return null;
 
   const editor = project.editor;
-  const rail = RAIL.filter((item) => rights.seeMoney || !item.money);
-  const shown = panel && rail.some((item) => item.id === panel) ? panel : null;
+  const rail = RAIL.filter((item) => (rights.seeMoney || !item.money) && !(mobile && (item.id === 'models' || item.id === 'tree')));
+  const shown = panel && rail.some((item) => item.id === panel) ? panel : mobile ? rail[0].id : null;
   const ws: Ws = {
     project, projectId: project.id, projectName: project.name, models, estimate, result, plan,
     money: rights.seeMoney, editor, seeRates: rights.seeRateCards,
@@ -124,10 +126,10 @@ export function Workspace() {
           onSheet={(next) => { setTopic(null); setSheet(next); }}
         />
         <div className="flex min-h-0 flex-1">
-          <Rail items={rail} shown={shown} open={ws.open} />
-          {shown && !programmeFull && <SidePanel shown={shown} full={full} hidden={hidden} setHidden={setHidden} elements={elements} />}
-          <div className={`relative flex min-w-0 flex-1 flex-col ${full && !programmeFull ? 'hidden' : ''}`}>
-            <div className={`relative min-h-0 flex-1 overflow-clip ${programmeFull ? 'hidden' : ''}`}>
+          <Rail items={rail} shown={shown} open={(next) => { if (!mobile) return ws.open(next); ws.setFull(false); if (next) ws.open(next); }} />
+          {shown && !programmeFull && <SidePanel shown={shown} full={full || mobile} hidden={hidden} setHidden={setHidden} elements={elements} />}
+          {(!mobile || programmeFull) && <div className={`relative flex min-w-0 flex-1 flex-col ${full && !programmeFull ? 'hidden' : ''}`}>
+            {!mobile && <div className={`relative min-h-0 flex-1 overflow-clip ${programmeFull ? 'hidden' : ''}`}>
               <Viewer
                 ref={viewer}
                 models={models}
@@ -154,9 +156,9 @@ export function Workspace() {
               />
               {fourD && <Readout />}
               {picked && !full && <Properties element={picked} onClose={() => { setPicked(null); viewer.current?.select(null); }} />}
-            </div>
+            </div>}
             {fourD && <Dock outline={outline} setOutline={setOutline} roofOff={roofOff} setRoofOff={setRoofOff} canvas={() => viewer.current?.canvas() ?? null} fit={() => viewer.current?.fit(true)} />}
-          </div>
+          </div>}
         </div>
         {estimate?.result && <Sidekick estimateId={estimate.id} projectId={project.id} projectName={project.name} links={links} />}
         {sheet === 'people' && <People project={project} onClose={() => setSheet(null)} />}

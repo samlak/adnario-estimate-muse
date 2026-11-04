@@ -32,7 +32,7 @@ export function ProgrammeList() {
       <h2 className="mt-1.5 text-[15px] font-bold">{plan.days.length} working days</h2>
       {drop.refused && <p className="mt-1 text-danger">{drop.refused}</p>}
       <p className="text-[11.5px] text-[#59636e]">{dayName(plan.start, true)} → {dayName(plan.finish, true)}</p>
-      <div className="mt-2 flex gap-1.5">
+      <div className="mt-2 flex flex-wrap gap-1.5">
         <button className="btn-ghost h-[28px] rounded-md px-2.5 text-[12px] font-medium" onClick={() => ws.setFull(true)}><Maximize2 size={13} /> Full view: Gantt and table</button>
         {ws.editor && (
           <label className="btn-ghost h-[28px] cursor-pointer rounded-md px-2.5 text-[12px] font-medium">
@@ -57,11 +57,14 @@ export function ProgrammeList() {
               if (activity.summary) return;
               ws.setActivity(activity.id); // it opens, and shows its elements
             }}
-            className={`grid w-full grid-cols-[34px_1fr_auto_34px] items-center gap-1 border-b border-line py-[5px] text-left ${ws.activity === activity.id ? 'bg-primary-50' : ''} ${activity.summary ? 'cursor-default' : 'hover:bg-paper'}`}
+            className={`grid w-full grid-cols-[34px_1fr_40px] items-center gap-1 border-b max-md:py-2 md:grid-cols-[34px_1fr_auto_34px] border-line py-[5px] text-left ${ws.activity === activity.id ? 'bg-primary-50' : ''} ${activity.summary ? 'cursor-default' : 'hover:bg-paper'}`}
           >
             <span className="pl-0.5 font-mono text-[11.5px]">{activity.id}</span>
-            <span className={activity.summary ? 'text-[11.5px] font-bold tracking-[0.04em]' : 'text-[11.5px]'} style={{ paddingLeft: Math.max(0, activity.level - 1) * 10 + (activity.summary ? 0 : 10) }}>{activity.name}</span>
-            <span className="whitespace-nowrap pl-2 text-[11px] text-[#59636e]">{range(activity)}</span>
+            <span className={activity.summary ? 'text-[11.5px] font-bold tracking-[0.04em]' : 'text-[11.5px]'} style={{ paddingLeft: Math.max(0, activity.level - 1) * 10 + (activity.summary ? 0 : 10) }}>
+              {activity.name}
+              {!activity.summary && <span className="block text-[11px] text-[#59636e] md:hidden">{range(activity)}</span>}
+            </span>
+            <span className="whitespace-nowrap pl-2 text-[11px] text-[#59636e] max-md:hidden">{range(activity)}</span>
             <span className={`text-right text-[11.5px] ${activity.critical ? 'text-danger' : ''}`}>{activity.summary ? '' : `${activity.days} d`}</span>
           </button>
         ))}

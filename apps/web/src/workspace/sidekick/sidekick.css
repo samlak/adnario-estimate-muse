@@ -414,3 +414,18 @@
 .sidekick .ico:disabled {
   opacity: 0.4;
 }
+
+/* a phone: the open chat is the whole screen */
+@media (max-width: 767px) {
+  .sidekick {
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+  .sidekickBtn {
+    right: 14px;
+    bottom: 14px;
+  }
+}

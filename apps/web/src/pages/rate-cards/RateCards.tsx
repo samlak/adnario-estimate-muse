@@ -58,8 +58,8 @@ export function RateCards() {
     <div className="pt-[11px]">
       <CardTitle name={card.name} pricesOf={card.prices_of} rows={RATES.length + PRICES.length} onRename={(name) => void send(`/ratecards/${card.id}`, 'PATCH', { name }, '/ratecards')} />
       <RateTabs tabs={tabsOf(RATES, PRICES)} tab={tab} setTab={setTab} query={query} setQuery={setQuery} />
-      <div className="card mt-3.5 overflow-hidden">
-        <table className="w-full table-fixed text-[14px]">
+      <div className="card thin-scroll mt-3.5 overflow-x-auto">
+        <table className="w-full min-w-[1150px] table-fixed text-[14px]">
           <colgroup><col className="w-[110px]" /><col /><col className="w-[100px]" /><col className="w-[118px]" />{labourColumns && <><col className="w-[220px]" /><col className="w-[250px]" /></>}<col className="w-[44px]" /></colgroup>
           <thead className="border-b border-line">
             <tr><th className="th pl-3">Code</th><th className="th">Description</th><th className="th">Unit</th><th className="th text-right">Rate (₦)</th>{labourColumns && <><th className="th pl-6">Labour</th><th className="th">Gang</th></>}<th className="th" /></tr>

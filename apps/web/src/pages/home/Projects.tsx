@@ -14,8 +14,8 @@ export function Projects() {
   const shown = projects.filter((project) => `${project.name} ${project.client} ${project.location}`.toLowerCase().includes(words));
   return (
     <>
-      <div className="flex items-center gap-3.5">
-        <label className="relative w-full max-w-[405px]">
+      <div className="flex flex-wrap items-center gap-3.5">
+        <label className="relative w-full md:max-w-[405px]">
           <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8a929b]" />
           <input className="input h-[44px] pl-10" placeholder="Search projects" value={query} onChange={(event) => setQuery(event.target.value)} />
         </label>

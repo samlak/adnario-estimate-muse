@@ -36,9 +36,9 @@ export function TopBar(props: {
   return (
     <header className="flex h-[58px] shrink-0 items-center gap-[7px] border-b border-line px-2.5">
       <button className="tool" title="Back to projects" onClick={() => navigate('/projects')}><ChevronLeft size={18} /></button>
-      <div className="relative">
-        <button className={`flex h-[38px] items-center gap-2 rounded-lg border-2 px-3 text-[15.5px] font-bold ${switching ? 'border-primary-400 bg-paper' : 'border-transparent'}`} onClick={() => setSwitching(!switching)}>
-          {ws.projectName} <ChevronDown size={16} className="text-[#7b848e]" />
+      <div className="relative min-w-0">
+        <button className={`flex h-[38px] max-w-full items-center gap-2 rounded-lg border-2 px-3 text-[15.5px] font-bold ${switching ? 'border-primary-400 bg-paper' : 'border-transparent'}`} onClick={() => setSwitching(!switching)}>
+          <span className="truncate">{ws.projectName}</span> <ChevronDown size={16} className="shrink-0 text-[#7b848e]" />
         </button>
         {switching && (
           <>
@@ -47,6 +47,8 @@ export function TopBar(props: {
           </>
         )}
       </div>
+      {/* the model's tools: none on a phone, where there is no model */}
+      <div className="contents max-md:hidden">
       <Divider />
       {me.role !== 'viewer' && (
         <label className="btn-primary h-[34px] cursor-pointer rounded-lg">
@@ -74,7 +76,9 @@ export function TopBar(props: {
         <Segment title="Skeleton: every element as an outline" on={ws.view === 'skeleton'} onClick={() => ws.setView('skeleton')}><Square size={17} /></Segment>
         <Segment title={annotatable ? 'Annotated: the takeoff on the model' : 'Annotated: run the takeoff first'} disabled={!annotatable} on={ws.view === 'annotated'} onClick={() => ws.setView('annotated')}><MapPin size={17} /></Segment>
       </div>
+      </div>
       <span className="flex-1" />
+      <div className="contents max-md:hidden">
       {dataPanel && (
         <button
           className={`btn h-[30px] rounded-lg border px-3 text-[13.5px] font-medium ${ws.full ? 'border-line text-ink' : 'border-primary-300 bg-primary-50 text-ink'}`}
@@ -86,6 +90,7 @@ export function TopBar(props: {
       )}
       <button className="grid h-9 w-9 place-items-center text-[#59636e]" title="Versions" onClick={() => props.onSheet('versions')}><History size={18} /></button>
       {me.role !== 'viewer' && <button className="btn-primary h-[34px] w-[34px] rounded-lg px-0" title="New project" onClick={() => setCreating(true)}><Plus size={18} /></button>}
+      </div>
       {creating && <NewProject onClose={() => setCreating(false)} />}
       <Divider />
       <button className="grid h-9 w-9 place-items-center text-[#3b4652]" title="Conversation" onClick={() => props.onSheet('conversation')}><MessagesSquare size={18} /></button>

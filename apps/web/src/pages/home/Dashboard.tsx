@@ -18,10 +18,10 @@ export function Dashboard() {
   const part = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
   return (
     <>
-      <section className="relative overflow-hidden rounded-[26px] bg-[#13294a] px-[34px] pb-[22px] pt-[22px] text-white">
+      <section className="relative overflow-hidden rounded-[26px] bg-[#13294a] px-5 pb-[22px] pt-[22px] text-white md:px-[34px]">
         <div className="absolute -right-24 -top-28 h-[360px] w-[360px] rounded-full bg-white/[0.06]" style={{ right: -120, top: -80, width: 360, height: 360 }} />
         <p className="relative text-[12.5px] font-bold tracking-[0.16em] text-accent">{ROLE_NAME[me.role].toUpperCase()}</p>
-        <h2 className="relative mt-2 text-[31px] font-bold tracking-[-0.02em]">Good {part}, {me.name.split(' ')[0]}</h2>
+        <h2 className="relative mt-2 text-[24px] font-bold md:text-[31px] tracking-[-0.02em]">Good {part}, {me.name.split(' ')[0]}</h2>
         <p className="relative mt-1 text-[15px] text-white/80">{firm.name}</p>
       </section>
       <div className="mt-[26px] flex items-end justify-between">

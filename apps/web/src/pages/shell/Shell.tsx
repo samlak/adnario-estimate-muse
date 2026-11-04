@@ -1,6 +1,7 @@
 /** The app outside a project (README §6): the sidebar's four pages, the header with the notification bell and the
  * account menu, and the sheets they open. */
 import { Building2, FileText, FolderKanban, LayoutGrid } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Logo } from '@/components/ui/Logo';
 import { can, useMe } from '@/lib/store';
@@ -13,6 +14,8 @@ const TITLES: Record<string, string> = {
 export function Shell() {
   const { me } = useMe();
   const { pathname } = useLocation();
+  const [menu, setMenu] = useState(false); // on a phone the sidebar is a drawer
+  useEffect(() => setMenu(false), [pathname]);
   const pages = [
     { to: '/', label: 'Dashboard', icon: LayoutGrid },
     { to: '/projects', label: 'Projects', icon: FolderKanban },
@@ -21,7 +24,8 @@ export function Shell() {
   ];
   return (
     <div className="compact flex">
-      <nav className="flex w-[211px] shrink-0 flex-col border-r border-line bg-white px-[13px]">
+      {menu && <div className="scrim md:hidden" onClick={() => setMenu(false)} />}
+      <nav className={`w-[211px] shrink-0 flex-col border-r border-line bg-white px-[13px] max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-[71] md:flex ${menu ? 'flex' : 'hidden'}`}>
         <div className="flex h-[66px] items-center"><Logo className="h-[27px]" /></div>
         <ul className="mt-1.5 space-y-1">
           {pages.map(({ to, label, icon: Icon }) => (
@@ -46,8 +50,8 @@ export function Shell() {
         </ul>
       </nav>
       <div className="flex min-w-0 flex-1 flex-col">
-        <Header title={TITLES[pathname] ?? ''} />
-        <main className="thin-scroll flex-1 overflow-y-auto px-[34px] pb-10 pt-[21px]">
+        <Header title={TITLES[pathname] ?? ''} onMenu={() => setMenu(true)} />
+        <main className="thin-scroll flex-1 overflow-y-auto px-4 pb-10 pt-[21px] md:px-[34px]">
           <Outlet />
         </main>
       </div>

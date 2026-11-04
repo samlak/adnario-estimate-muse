@@ -18,7 +18,7 @@ export function AccountMenu({ compact = false }: { compact?: boolean }) {
     <div className="relative" ref={box}>
       <button className="flex items-center gap-2.5 rounded-xl py-1 pl-1 pr-2" onClick={() => setOpen(!open)}>
         <Avatar name={me.name} size={compact ? 30 : 30} />
-        {!compact && <span className="text-[14px] font-semibold">{me.name}</span>}
+        {!compact && <span className="text-[14px] font-semibold max-md:hidden">{me.name}</span>}
         <ChevronDown size={15} className="text-[#7b848e]" />
       </button>
       {open && (

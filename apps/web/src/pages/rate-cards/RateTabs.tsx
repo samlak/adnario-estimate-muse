@@ -4,10 +4,10 @@ import type { Tab } from './groups';
 /** The tabs (all, rates, each kind of price) and the search. */
 export function RateTabs({ tabs, tab, setTab, query, setQuery }: { tabs: [Tab, string][]; tab: Tab; setTab: (tab: Tab) => void; query: string; setQuery: (query: string) => void }) {
   return (
-    <div className="mt-[21px] flex items-center gap-3.5">
-      <div className="flex rounded-xl bg-canvas p-1">
+    <div className="mt-[21px] flex flex-wrap items-center gap-3.5">
+      <div className="thin-scroll flex max-w-full overflow-x-auto rounded-xl bg-canvas p-1">
         {tabs.map(([id, label]) => (
-          <button key={id} onClick={() => setTab(id)} className={`h-[32px] rounded-lg px-3 text-[13.5px] ${tab === id ? 'bg-white font-semibold shadow-sm' : 'text-[#59636e]'}`}>{label}</button>
+          <button key={id} onClick={() => setTab(id)} className={`h-[32px] shrink-0 whitespace-nowrap rounded-lg px-3 text-[13.5px] ${tab === id ? 'bg-white font-semibold shadow-sm' : 'text-[#59636e]'}`}>{label}</button>
         ))}
       </div>
       <label className="relative w-full max-w-[338px]">
