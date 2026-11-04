@@ -1,29 +1,25 @@
 /** The project workspace (README §7): the bar, the rail, the side panel, the 3D model, the properties of the clicked
  * element, the programme's dock, and Adnario AI at the bottom right. */
-import {
-  Banknote, Box, Boxes, CalendarDays, ChevronDown, ChevronLeft, Crosshair, Eraser, Eye, EyeOff, FileUp, History,
-  ChevronUp, LineChart, ListTree, MapPin, MessageSquare, MessagesSquare, PanelsTopLeft, Plus, Ruler, Scissors, Square, Users, X,
-} from 'lucide-react';
-import { Conf } from '@/components/ui';
-import { parse } from '@/lib/calendar';
-import { day as dayName, num } from '@/lib/format';
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Banknote, Boxes, CalendarDays, LineChart, ListTree, Ruler } from 'lucide-react';
+import { num } from '@/lib/format';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { errorText } from '@/lib/api';
 import { can, put, reload, send, useApi, useMe } from '@/lib/store';
-import { AccountMenu, Bells } from '@/pages/Shell';
-import { NewProject, useProjects } from '@/pages/Home';
 import { CashFlow } from './panels/CashFlow';
 import { Cost } from './panels/Cost';
 import { Models, Tree, type Hidden } from './panels/Models';
-import { Dock, ProgrammeList, Readout } from './panels/Programme';
+import { Dock, Readout } from './panels/Dock';
+import { ProgrammeList } from './panels/Programme';
 import { Takeoff } from './panels/Takeoff';
 import { Conversation, People, Versions } from './Sheets';
 import { Sidekick } from './sidekick/Sidekick';
 import './sidekick/sidekick.css';
-import { dayOfWeek, planOf, useWs, WsContext, type Card, type Estimate, type Model, type Panel, type Project, type Work, type Ws } from './state';
+import { DATA_PANELS, dayOfWeek, planOf, WsContext, type Card, type Estimate, type Model, type Panel, type Project, type Work, type Ws } from './state';
 import { streamRun } from './sidekick/stream';
 import { HEX, Viewer, type Element, type Look, type Mark, type View, type ViewerHandle } from './Viewer';
+import { TopBar } from './TopBar';
+import { Properties } from './Properties';
 
 const WIDTH: Record<Panel, number> = { models: 285, tree: 313, takeoff: 475, cost: 360, programme: 405, cashflow: 447 };
 const RAIL: { id: Panel; icon: typeof Boxes; label: string; money?: boolean }[] = [
@@ -34,7 +30,6 @@ const RAIL: { id: Panel; icon: typeof Boxes; label: string; money?: boolean }[] 
   { id: 'programme', icon: CalendarDays, label: 'Programme' },
   { id: 'cashflow', icon: LineChart, label: 'Cash flow', money: true },
 ];
-const DATA_PANELS: Panel[] = ['takeoff', 'cost', 'programme', 'cashflow'];
 
 /** Kept in the browser: the panel open and the player's day (README §7). */
 function remembered<T>(key: string, fallback: T): [T, (value: T) => void] {
@@ -299,186 +294,3 @@ export function Workspace() {
   );
 }
 
-function TopBar(props: {
-  viewer: React.RefObject<ViewerHandle>;
-  tool: 'cut' | 'measure' | null; setTool: (tool: 'cut' | 'measure' | null) => void;
-  glass: boolean; setGlass: (on: boolean) => void;
-  onSheet: (sheet: 'people' | 'conversation' | 'versions') => void;
-}) {
-  const ws = useWs();
-  const navigate = useNavigate();
-  const projects = useProjects();
-  const [switching, setSwitching] = useState(false);
-  const [creating, setCreating] = useState(false);
-  const { me } = useMe();
-  const v = props.viewer;
-  const toggle = (tool: 'cut' | 'measure') => props.setTool(props.tool === tool ? null : tool);
-  const dataPanel = ws.panel && DATA_PANELS.includes(ws.panel);
-  const annotatable = !!ws.result || (ws.work?.kind === 'run' && !ws.work.done);
-  return (
-    <header className="flex h-[58px] shrink-0 items-center gap-[7px] border-b border-line px-2.5">
-      <button className="tool" title="Back to projects" onClick={() => navigate('/projects')}><ChevronLeft size={18} /></button>
-      <div className="relative">
-        <button className="flex items-center gap-2 px-3 text-[15.5px] font-bold" onClick={() => setSwitching(!switching)}>
-          {ws.projectName} <ChevronDown size={16} className="text-[#7b848e]" />
-        </button>
-        {switching && (
-          <div className="absolute left-0 z-50 mt-2 w-64 rounded-xl border border-line bg-white py-1.5 shadow-pop">
-            {projects.map((each) => (
-              <button key={each.id} className={`block w-full px-4 py-2 text-left text-[14px] hover:bg-paper ${each.id === ws.projectId ? 'font-semibold' : ''}`} onClick={() => { setSwitching(false); navigate(`/projects/${each.id}`); }}>{each.name}</button>
-            ))}
-          </div>
-        )}
-      </div>
-      <Divider />
-      {me.role !== 'viewer' && (
-        <label className="btn-primary h-[34px] cursor-pointer rounded-lg">
-          <FileUp size={16} /> Import IFC
-          <input type="file" accept=".ifc" multiple hidden onChange={(event) => {
-            const body = new FormData();
-            [...(event.target.files ?? [])].forEach((file) => body.append('files', file));
-            event.target.value = '';
-            void send(`/projects/${ws.projectId}/models`, 'POST', body, `/projects/${ws.projectId}/models`).catch((error) => alert(errorText(error)));
-          }} />
-        </label>
-      )}
-      <Divider />
-      <Tool title="Fit view" onClick={() => v.current?.fit()}><Crosshair size={17} /></Tool>
-      <Tool title="See-through glass" on={props.glass} onClick={() => props.setGlass(!props.glass)}><PanelsTopLeft size={17} /></Tool>
-      <Tool title="Section cut: click a surface" on={props.tool === 'cut'} onClick={() => toggle('cut')}><Scissors size={17} /></Tool>
-      <Tool title="Measure distance: click two points" on={props.tool === 'measure'} onClick={() => toggle('measure')}><Ruler size={17} /></Tool>
-      <Tool title="Remove cuts and measurements" onClick={() => { v.current?.erase(); props.setTool(null); }}><Eraser size={17} /></Tool>
-      <Divider />
-      <Tool title="Hide selected" onClick={() => v.current?.hideSelected()}><EyeOff size={17} /></Tool>
-      <Tool title="Show all" onClick={() => v.current?.showAll()}><Eye size={17} /></Tool>
-      <Divider />
-      <div className="flex overflow-hidden rounded-lg border border-line">
-        <Segment title="Original: the model as designed" on={ws.view === 'original'} onClick={() => ws.setView('original')}><Box size={17} /></Segment>
-        <Segment title="Skeleton: every element as an outline" on={ws.view === 'skeleton'} onClick={() => ws.setView('skeleton')}><Square size={17} /></Segment>
-        <Segment title={annotatable ? 'Annotated: the takeoff on the model' : 'Annotated: run the takeoff first'} disabled={!annotatable} on={ws.view === 'annotated'} onClick={() => ws.setView('annotated')}><MapPin size={17} /></Segment>
-      </div>
-      <span className="flex-1" />
-      {dataPanel && (
-        <button
-          className={`btn h-[30px] rounded-lg border px-3 text-[13.5px] font-medium ${ws.full ? 'border-line text-ink' : 'border-primary-300 bg-primary-50 text-ink'}`}
-          onClick={() => ws.setFull(!ws.full)}
-          title={ws.full ? 'Bring the model back' : 'Give the table the whole width'}
-        >
-          <Boxes size={15} /> Model
-        </button>
-      )}
-      <button className="grid h-9 w-9 place-items-center text-[#59636e]" title="Versions" onClick={() => props.onSheet('versions')}><History size={18} /></button>
-      {me.role !== 'viewer' && <button className="btn-primary h-[34px] w-[34px] rounded-lg px-0" title="New project" onClick={() => setCreating(true)}><Plus size={18} /></button>}
-      {creating && <NewProject onClose={() => setCreating(false)} />}
-      <Divider />
-      <button className="grid h-9 w-9 place-items-center text-[#3b4652]" title="Conversation" onClick={() => props.onSheet('conversation')}><MessagesSquare size={18} /></button>
-      <button className="grid h-9 w-9 place-items-center text-[#3b4652]" title="People" onClick={() => props.onSheet('people')}><Users size={18} /></button>
-      <Divider />
-      <Bells compact />
-      <AccountMenu compact />
-    </header>
-  );
-}
-
-
-const Divider = () => <span className="mx-1 h-6 w-px bg-line" />;
-const Tool = ({ title, on, onClick, children }: { title: string; on?: boolean; onClick: () => void; children: ReactNode }) => (
-  <button title={title} className={`tool ${on ? 'on' : ''}`} onClick={onClick}>{children}</button>
-);
-const Segment = ({ title, on, disabled, onClick, children }: { title: string; on?: boolean; disabled?: boolean; onClick: () => void; children: ReactNode }) => (
-  <button title={title} aria-pressed={on} disabled={disabled} onClick={onClick} className={`grid h-[34px] w-9 place-items-center border-r border-line last:border-0 disabled:text-[#c3c7cb] ${on ? 'bg-primary-50 text-primary' : 'bg-white text-[#3b4652] hover:bg-paper'}`}>{children}</button>
-);
-
-/** Clicking an element shows its properties over the model: where it is in the BOQ (each item, its quantity from
- * this element and how it was measured), its IFC data and property sets, and a comment on it. */
-function Properties({ element, onClose, onComments }: { element: Element; onClose: () => void; onComments: () => void }) {
-  const ws = useWs();
-  const gid = element.id.split('#')[1];
-  const { data } = useApi<{ type: string | null; material: string[]; psets: Record<string, Record<string, unknown>> }>(`/models/${element.model}/elements/${encodeURIComponent(gid)}`);
-  const [folded, setFolded] = useState(false);
-  const [writing, setWriting] = useState(false);
-  const [text, setText] = useState('');
-  const [error, setError] = useState('');
-  const result = ws.result;
-  // the takeoff rows measured from this element, under the BOQ item each went into
-  const inBoq = useMemo(() => {
-    if (!result) return [];
-    const rows = result.takeoff.filter((row) => row.ref === element.id && row.qty);
-    return rows.map((row) => {
-      const item = result.boq.find((each) => row.code && each.lines.includes(row.code)) ?? result.takeoff_lines.find((each) => each.code === row.code);
-      return { code: item?.code ?? row.code ?? '', ref: item ? result.refs[item.code] ?? '' : '', description: item?.description ?? row.description, confidence: item?.confidence, qty: row.qty, unit: row.unit, source: row.source };
-    });
-  }, [result, element.id]);
-  const parent = data?.type ?? element.storey;
-  const building = (ws.plan?.leaves ?? []).filter((activity) => activity.refs.includes(element.id));
-  const post = () => {
-    const body = new FormData();
-    body.append('text', text.trim());
-    body.append('on_kind', 'element');
-    body.append('on_ref', element.id);
-    body.append('on_label', `${element.cls.replace(/^Ifc/, '')} · ${element.name}`.slice(0, 200));
-    send(`/projects/${ws.projectId}/comments`, 'POST', body, `/projects/${ws.projectId}/comments`, '/notifications')
-      .then(() => { setText(''); setWriting(false); setError(''); }).catch((failure) => setError(errorText(failure)));
-  };
-  return (
-    <aside className="thin-scroll absolute right-3 top-3 z-20 max-h-[75%] w-[320px] overflow-y-auto overscroll-contain rounded-xl border border-line bg-white shadow-pop">
-      <header className="sticky top-0 flex items-center gap-2 bg-white px-3.5 py-2.5">
-        <b className="flex-1 text-[13.5px]">Properties</b>
-        <button title={folded ? 'Open' : 'Fold'} onClick={() => setFolded(!folded)}>{folded ? <ChevronDown size={15} className="text-[#7b848e]" /> : <ChevronUp size={15} className="text-[#7b848e]" />}</button>
-        <button className="flex items-center gap-1 text-[12px] text-[#6b7581] hover:text-primary" onClick={() => setWriting(!writing)}><MessageSquare size={13} /> Comment</button>
-        <button onClick={onClose} title="Close"><X size={16} className="text-[#7b848e]" /></button>
-      </header>
-      {!folded && (
-        <div className="px-3.5 pb-3 text-[12.5px]">
-          {writing && (
-            <div className="mb-2.5 rounded-lg border border-line p-2">
-              <textarea ref={(box) => box?.focus({ preventScroll: true })} rows={2} value={text} onChange={(event) => setText(event.target.value)} placeholder="A comment on this element…" className="w-full resize-none text-[12.5px] outline-none"
-                onKeyDown={(event) => { if (event.key === 'Enter' && (event.metaKey || event.ctrlKey) && text.trim()) post(); }} />
-              <div className="flex items-center gap-2">
-                <button className="text-[11.5px] text-[#6b7581] hover:text-primary" onClick={onComments}>All comments</button>
-                <span className="flex-1" />
-                <button className="btn-primary h-[26px] px-3 text-[12px]" disabled={!text.trim()} onClick={post}>Post</button>
-              </div>
-              {error && <p className="mt-1 text-[11.5px] text-danger">{error}</p>}
-            </div>
-          )}
-          {inBoq.length > 0 && (
-            <section className="mb-2.5 rounded-lg bg-[#f1f5f9] px-2.5 py-2">
-              <p className="text-[10.5px] font-semibold tracking-[0.1em] text-[#6b7581]">{result?.boq.length ? 'IN THE BOQ' : 'IN THE TAKEOFF'}</p>
-              {inBoq.map((row, at) => (
-                <button key={at} className="mt-1.5 block w-full text-left" onClick={() => { ws.open('takeoff'); ws.setBoqTab(result?.boq.length ? 'boq' : 'takeoff'); ws.setLine(row.code); }}>
-                  <span className="leading-[1.45]"><b>{row.ref}</b> {row.description} {row.confidence && <Conf value={row.confidence} />}</span>
-                  <small className="block text-[11.5px] text-[#6b7581]">{num(row.qty)} {row.unit}{row.source ? ` · ${row.source}` : ''}</small>
-                </button>
-              ))}
-            </section>
-          )}
-          {building.length > 0 && (
-            <section className="mb-2.5 rounded-lg bg-[#f1f5f9] px-2.5 py-2">
-              <p className="text-[10.5px] font-semibold tracking-[0.1em] text-[#6b7581]">IN THE PROGRAMME</p>
-              {building.map((activity) => (
-                <button key={activity.id} className="mt-1.5 block w-full text-left" onClick={() => { ws.open('programme'); ws.setActivity(activity.id); ws.setDay(activity.start); }}>
-                  <b className="font-semibold text-primary">{activity.id} {activity.name}</b>
-                  <small className="block text-[11.5px] text-[#6b7581]">{dayName(parse(activity.startDate))} – {dayName(parse(activity.finishDate))}{activity.critical ? ' · critical' : ''}</small>
-                </button>
-              ))}
-            </section>
-          )}
-          <dl>
-            {([['Class', element.cls], ['Name', element.name], ['GlobalId', gid], ['Inside', parent], ['Model', ws.models.find((model) => model.id === element.model)?.name ?? ''], ['Material', data?.material.join(', ') ?? '']] as [string, string][])
-              .filter(([, value]) => value).map(([name, value]) => (
-                <div key={name} className="grid grid-cols-[88px_1fr] gap-2 py-1"><dt className="text-[#6b7581]">{name}</dt><dd className="break-words">{value}</dd></div>
-              ))}
-          </dl>
-          {data && Object.keys(data.psets).length === 0 && <p className="mt-1.5 text-[#6b7581]">No property sets on this element.</p>}
-          {data && Object.entries(data.psets).map(([name, values]) => (
-            <details key={name} className="border-t border-line py-1.5">
-              <summary className="cursor-pointer font-semibold">{name}</summary>
-              <dl className="mt-1">{Object.entries(values).filter(([key]) => key !== 'id').map(([key, value]) => <div key={key} className="grid grid-cols-[110px_1fr] gap-2 py-0.5 text-[12px]"><dt className="truncate text-[#6b7581]" title={key}>{key}</dt><dd className="break-words">{String(value)}</dd></div>)}</dl>
-            </details>
-          ))}
-        </div>
-      )}
-    </aside>
-  );
-}

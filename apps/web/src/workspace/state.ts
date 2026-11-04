@@ -4,6 +4,8 @@ import { createContext, useContext } from 'react';
 import { parse } from '@/lib/calendar';
 
 export type Panel = 'models' | 'tree' | 'takeoff' | 'cost' | 'programme' | 'cashflow';
+/** The panels that show the estimate's data, and can open full width. */
+export const DATA_PANELS: Panel[] = ['takeoff', 'cost', 'programme', 'cashflow'];
 export type Confidence = 'High' | 'Medium' | 'Low';
 
 // ── What the API answers ─────────────────────────────────────────────────────────────────────────────────────────
