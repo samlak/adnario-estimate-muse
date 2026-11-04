@@ -1,52 +1,29 @@
 /** The project workspace (README §7): the bar, the rail, the side panel, the 3D model, the properties of the clicked
  * element, the programme's dock, and Adnario AI at the bottom right. */
-import { Banknote, Boxes, CalendarDays, LineChart, ListTree, Ruler } from 'lucide-react';
-import { num } from '@/lib/format';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { errorText } from '@/lib/api';
 import { can, put, reload, send, useApi, useMe } from '@/lib/store';
-import { CashFlow } from './panels/CashFlow';
-import { Cost } from './panels/Cost';
-import { Models, Tree, type Hidden } from './panels/Models';
-import { Dock, Readout } from './panels/Dock';
-import { ProgrammeList } from './panels/Programme';
-import { Takeoff } from './panels/Takeoff';
-import { Conversation, People, Versions } from './Sheets';
+import { RAIL } from './constants';
+import { hiddenTest, looksOf, marksOf } from './model';
+import type { Hidden } from './panels/models/types';
+import { Dock } from './panels/programme/Dock';
+import { Readout } from './panels/programme/Readout';
+import { Properties } from './Properties';
+import { Rail } from './Rail';
+import { Conversation } from './sheets/Conversation';
+import { People } from './sheets/People';
+import { Versions } from './sheets/Versions';
+import { SidePanel } from './SidePanel';
 import { Sidekick } from './sidekick/Sidekick';
 import './sidekick/sidekick.css';
-import { DATA_PANELS, dayOfWeek, planOf, WsContext, type Card, type Estimate, type Model, type Panel, type Project, type Work, type Ws } from './state';
-import { streamRun } from './sidekick/stream';
-import { HEX, Viewer, type Element, type Look, type Mark, type View, type ViewerHandle } from './Viewer';
-import { TopBar } from './TopBar';
-import { Properties } from './Properties';
-
-const WIDTH: Record<Panel, number> = { models: 285, tree: 313, takeoff: 475, cost: 360, programme: 405, cashflow: 447 };
-const RAIL: { id: Panel; icon: typeof Boxes; label: string; money?: boolean }[] = [
-  { id: 'models', icon: Boxes, label: 'Models' },
-  { id: 'tree', icon: ListTree, label: 'Tree' },
-  { id: 'takeoff', icon: Ruler, label: 'Takeoff', money: true },
-  { id: 'cost', icon: Banknote, label: 'Cost', money: true },
-  { id: 'programme', icon: CalendarDays, label: 'Programme' },
-  { id: 'cashflow', icon: LineChart, label: 'Cash flow', money: true },
-];
-
-/** Kept in the browser: the panel open and the player's day (README §7). */
-function remembered<T>(key: string, fallback: T): [T, (value: T) => void] {
-  const [value, setValue] = useState<T>(() => {
-    try {
-      const saved = localStorage.getItem(key);
-      return saved == null ? fallback : JSON.parse(saved);
-    } catch {
-      return fallback;
-    }
-  });
-  const keep = useCallback((next: T) => {
-    setValue(next);
-    try { localStorage.setItem(key, JSON.stringify(next)); } catch { /* not kept */ }
-  }, [key]);
-  return [value, keep];
-}
+import { DATA_PANELS, dayOfWeek, planOf, WsContext, type Card, type Estimate, type Model, type Panel, type Project, type Ws } from './state';
+import { TopBar } from './top-bar/TopBar';
+import { useLiveUpdates } from './useLiveUpdates';
+import { useNoPageZoom } from './useNoPageZoom';
+import { useRemembered } from './useRemembered';
+import { useWork } from './useWork';
+import { Viewer } from './viewer/Viewer';
+import { type Element, type View, type ViewerHandle } from './viewer/types';
 
 export function Workspace() {
   const { id = '' } = useParams();
@@ -56,9 +33,9 @@ export function Workspace() {
   const estimate = useApi<Estimate>(`/projects/${id}/estimate`).data;
   const rights = can(me.role);
 
-  const [panel, open] = remembered<Panel | null>(`ws:${id}:open`, 'takeoff'); // a project opens on its takeoff
+  const [panel, open] = useRemembered<Panel | null>(`ws:${id}:open`, 'takeoff'); // a project opens on its takeoff
   const [full, setFull] = useState(false);
-  const [day, setDay] = remembered(`ws:${id}:day`, 0);
+  const [day, setDay] = useRemembered(`ws:${id}:day`, 0);
   const [boqTab, setBoqTab] = useState('takeoff');
   const [line, setLine] = useState<string | null>(null);
   const [activity, setActivity] = useState<number | null>(null);
@@ -72,120 +49,25 @@ export function Workspace() {
   const [outline, setOutline] = useState(true);
   const [roofOff, setRoofOff] = useState(false);
   const [hidden, setHidden] = useState<Hidden>({ models: [], classes: [], storeys: [] });
-  const [work, setWork] = useState<Work | null>(null);
   const viewer = useRef<ViewerHandle>(null);
 
   const refresh = useCallback(() => reload(`/projects/${id}`, '/projects'), [id]);
-  // a pinch anywhere in the workspace never zooms the page: over the model it zooms the model (Viewer)
-  useEffect(() => {
-    const wheel = (event: WheelEvent) => { if (event.ctrlKey) event.preventDefault(); };
-    const gesture = (event: Event) => event.preventDefault();
-    document.addEventListener('wheel', wheel, { passive: false });
-    document.addEventListener('gesturestart', gesture);
-    return () => { document.removeEventListener('wheel', wheel); document.removeEventListener('gesturestart', gesture); };
-  }, []);
-  // every change on the project (a model converted, an estimate saved, a comment) is told over the live stream
-  useEffect(() => {
-    const source = new EventSource(`/api/v1/projects/${id}/live`);
-    let timer: ReturnType<typeof setTimeout>;
-    source.addEventListener('change', () => {
-      clearTimeout(timer);
-      timer = setTimeout(refresh, 400);
-    });
-    return () => { source.close(); clearTimeout(timer); };
-  }, [id, refresh]);
-
-  const follow = useCallback((kind: Work['kind'], path: string, body?: FormData, method: 'POST' | 'GET' = 'POST') => {
-    setWork({ kind, stages: [], done: false, mapped: 0, started: Date.now(), feed: [], decided: {}, file: body instanceof FormData ? (body.get('file') as File | null)?.name : undefined });
-    if (kind === 'run') { setView(null); open('takeoff'); }
-    const update = (change: (now: Work) => Work) => setWork((now) => (now && now.kind === kind ? change(now) : now));
-    streamRun(path, body, (event, data) => {
-      const given = data as Record<string, unknown>;
-      if (event === 'stage') update((now) => {
-        const stages = now.stages.filter((stage) => stage.name !== given.name);
-        return { ...now, stages: [...stages, given as Work['stages'][number]] };
-      });
-      else if (event === 'mapped') update((now) => {
-        const cards = (given.cards as Card[] | undefined) ?? [];
-        const decided = { ...now.decided, ...(given.confidence as Record<string, Card['confidence']>) };
-        for (const card of cards) decided[card.key] = card.confidence;
-        return { ...now, mapped: Object.keys(decided).length, decided, feed: [...[...cards].reverse(), ...now.feed] };
-      });
-      else if (event === 'log') update((now) => ({ ...now, feed: [{ text: String(given.text) }, ...now.feed] }));
-      else if (event === 'seen') update((now) => ({ ...now, seen: String(given.text) }));
-      else if (event === 'catalogue') update((now) => ({ ...now, catalogue: given.types as Record<string, string[]> }));
-      else if (event === 'error') update((now) => ({ ...now, error: String(given.message), done: true }));
-      else if (event === 'stopped') update((now) => ({ ...now, error: 'Stopped', done: true }));
-      else if (event === 'result') update((now) => ({ ...now, done: true }));
-    }, method)
-      .catch((error) => update((now) => ({ ...now, error: errorText(error), done: true })))
-      .finally(() => { refresh(); setTimeout(() => setWork((now) => (now?.done && !now.error ? null : now)), 1500); });
-  }, [refresh]);
-
-  // work already running on the server (started here before, or by someone else): follow it from its start
-  const running = estimate?.running.join(',') ?? '';
-  useEffect(() => {
-    if (!estimate || work) return;
-    const kind = estimate.running[0] as Work['kind'] | undefined;
-    if (kind) follow(kind, `/estimates/${estimate.id}/follow/${kind}`, undefined, 'GET');
-  }, [running, estimate?.id]);
+  useNoPageZoom();
+  useLiveUpdates(id, refresh);
+  const onRun = useCallback(() => { setView(null); open('takeoff'); }, [open]);
+  const { work, follow } = useWork(estimate, refresh, onRun);
 
   const result = estimate?.result ?? null;
   const plan = useMemo(() => planOf(estimate?.programme ?? null), [estimate?.programme]);
   // what colours the model: each element's confidence (its type's), and the dates of the activity that builds it
   const live = work?.kind === 'run' && !work.done ? work : null;
-  const looks = useMemo(() => {
-    if (live) {
-      // the run so far: each type the AI has decided fills in; the rest stays an outline
-      const map = new Map<string, Look>();
-      for (const [key, gids] of Object.entries(live.catalogue ?? {})) {
-        const conf = live.decided[key];
-        if (conf) for (const gid of gids) map.set(gid, { conf });
-      }
-      return map;
-    }
-    if (!result) return null;
-    const map = new Map<string, Look>();
-    for (const type of result.types) {
-      const conf = type.mapping.decision === 'exclude' ? 'Excluded' : type.mapping.decision === 'unmapped' ? 'Not mapped' : type.mapping.confidence;
-      for (const gid of type.gids) map.set(gid, { conf });
-    }
-    for (const activity of plan?.leaves ?? []) for (const ref of activity.refs) {
-      const look = map.get(ref) ?? {};
-      if (!look.start || activity.startDate < look.start) look.start = activity.startDate;
-      if (!look.finish || activity.finishDate > look.finish) look.finish = activity.finishDate;
-      map.set(ref, look);
-    }
-    return map;
-  }, [result, plan, live?.decided, live?.catalogue]);
+  const looks = useMemo(() => looksOf(result, plan, live), [result, plan, live?.decided, live?.catalogue]);
 
   const comments = useApi<{ id: string; on_kind: string; on_ref: string | null }[]>(`/projects/${id}/comments`).data ?? [];
   const view: View = chosenView ?? (result || live ? 'annotated' : 'original');
   // what is drawn on the model: the run's newest decisions numbered, or a dot per BOQ item; comment pins on elements
-  const marks = useMemo(() => {
-    const out: Mark[] = [];
-    if (live) {
-      if (labels) live.feed.filter((each): each is Card => 'key' in each && each.confidence !== 'Excluded').slice(0, 8)
-        .forEach((card, at) => out.push({ key: `card:${card.key}`, gids: card.gids, kind: 'number', color: HEX[card.confidence], text: String(at + 1), label: card.title }));
-    } else if (result && view === 'annotated') {
-      const items = result.boq.length ? result.boq : result.takeoff_lines;
-      for (const item of items) if (item.gids.length) {
-        const ref = result.refs[item.code] ?? '';
-        out.push({ key: item.code, gids: item.gids, kind: 'dot', color: HEX[item.confidence] ?? HEX.High, label: `${ref} ${item.description} · ${item.qty == null ? '' : num(item.qty)} ${item.unit}`.trim() });
-      }
-    }
-    if (view !== 'skeleton') {
-      const on = new Map<string, number>();
-      for (const comment of comments) if (comment.on_kind === 'element' && comment.on_ref) on.set(comment.on_ref, (on.get(comment.on_ref) ?? 0) + 1);
-      for (const [ref, count] of on) out.push({ key: `pin:${ref}`, gids: [ref], kind: 'pin', color: '#1f3a5f', text: String(count), label: `${count} comment${count > 1 ? 's' : ''}` });
-    }
-    return out;
-  }, [live?.feed, labels, result, view, comments]);
-
-  const isHidden = useMemo(() => {
-    const models = new Set(hidden.models), classes = new Set(hidden.classes), storeys = new Set(hidden.storeys);
-    return (element: Element) => models.has(element.model) || classes.has(`${element.model}:${element.cls}`) || storeys.has(`${element.model}:${element.storey}`);
-  }, [hidden]);
+  const marks = useMemo(() => marksOf(live, labels, result, view, comments), [live?.feed, labels, result, view, comments]);
+  const isHidden = useMemo(() => hiddenTest(hidden), [hidden]);
 
   if (missing) return <p className="p-10 text-center">This project is not one of yours. <Link className="link font-semibold" to="/projects">Your projects</Link></p>;
   if (!project) return null;
@@ -236,23 +118,8 @@ export function Workspace() {
           onSheet={setSheet}
         />
         <div className="flex min-h-0 flex-1">
-          <nav className="flex w-[44px] shrink-0 flex-col items-center gap-[7px] border-r border-line pt-3">
-            {rail.map(({ id: item, icon: Icon, label }) => (
-              <button key={item} title={label} onClick={() => ws.open(shown === item ? null : item)} className={`grid h-[33px] w-[33px] place-items-center rounded-lg ${shown === item ? 'bg-primary-50 text-primary' : 'text-[#5b6570] hover:bg-paper'}`}>
-                <Icon size={18} strokeWidth={1.6} />
-              </button>
-            ))}
-          </nav>
-          {shown && !programmeFull && (
-            <aside className={`thin-scroll shrink-0 overflow-y-auto border-r border-line ${full ? 'flex-1' : ''}`} style={full ? undefined : { width: WIDTH[shown] }}>
-              {shown === 'models' && <Models hidden={hidden} setHidden={setHidden} />}
-              {shown === 'tree' && <Tree elements={elements} hidden={hidden} setHidden={setHidden} />}
-              {shown === 'takeoff' && <Takeoff />}
-              {shown === 'cost' && <Cost />}
-              {shown === 'programme' && <ProgrammeList />}
-              {shown === 'cashflow' && <CashFlow />}
-            </aside>
-          )}
+          <Rail items={rail} shown={shown} open={ws.open} />
+          {shown && !programmeFull && <SidePanel shown={shown} full={full} hidden={hidden} setHidden={setHidden} elements={elements} />}
           <div className={`relative flex min-w-0 flex-1 flex-col ${full && !programmeFull ? 'hidden' : ''}`}>
             <div className={`relative min-h-0 flex-1 overflow-clip ${programmeFull ? 'hidden' : ''}`}>
               <Viewer

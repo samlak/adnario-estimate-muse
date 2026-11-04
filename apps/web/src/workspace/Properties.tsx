@@ -1,14 +1,14 @@
 /** The properties of the element clicked in the model (README §7.1): what it is, its quantities, where it is in the
  * BOQ, and its comments. */
 import { ChevronDown, ChevronUp, MessageSquare, X } from 'lucide-react';
-import { Conf } from '@/components/ui';
+import { Conf } from '@/components/ui/Conf';
 import { parse } from '@/lib/calendar';
 import { day as dayName, num } from '@/lib/format';
 import { useMemo, useState } from 'react';
 import { errorText } from '@/lib/api';
 import { send, useApi } from '@/lib/store';
 import { useWs, type Model } from './state';
-import { type Element } from './Viewer';
+import { type Element } from './viewer/types';
 
 /** Clicking an element shows its properties over the model: where it is in the BOQ (each item, its quantity from
  * this element and how it was measured), its IFC data and property sets, and a comment on it. */
