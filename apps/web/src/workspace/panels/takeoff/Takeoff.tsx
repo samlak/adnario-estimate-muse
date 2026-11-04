@@ -1,6 +1,6 @@
 /** The Takeoff panel (README §7.2–7.3): the start card or the run's card, then Takeoff, BOQ, Review, Provisional and
  * Types. Full view shows the bills as a document: Summary, A Preliminaries, then each bill. */
-import { CircleCheck, FileSpreadsheet, FileText, ListChecks, Maximize2, Minimize2, Redo2, RefreshCw, Undo2 } from 'lucide-react';
+import { CircleCheck, FileSpreadsheet, FileText, ListChecks, ListRestart, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 import { useWs } from '../../state';
 import { Generate } from './Generate';
 import { BoqLines } from './BoqLines';
@@ -33,24 +33,18 @@ export function Takeoff() {
       <section className="rounded-2xl border border-line px-[13px] py-[14px]">
         <p className="flex items-center gap-2 text-[11.5px] font-bold tracking-[0.12em] text-success"><CircleCheck size={14} /> {estimate.name.toUpperCase()} · READY IN {minutes(result.run.seconds)}</p>
         <p className={`mt-2.5 text-[13px] leading-[1.5] ${ws.full ? '' : 'line-clamp-3'}`} title={result.brief}>{result.brief}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-1.5">
-          {boq.length === 0 && (
+        <div className="mt-3 flex items-center gap-1.5">
+          {boq.length === 0 ? (
             <button className="btn-primary h-[29px] whitespace-nowrap rounded-lg px-2.5 text-[12.5px]" disabled={!ws.editor || busy} onClick={() => { ws.setBoqTab('boq'); ws.start('boq'); }}><ListChecks size={14} /> Generate BOQ</button>
-          )}
-          {boq.length > 0 && (
+          ) : (
             <>
               <a className="btn-primary h-[29px] whitespace-nowrap rounded-lg px-2.5 text-[12.5px]" href={`/api/v1/estimates/${estimate.id}/export/boq.xlsx`}><FileSpreadsheet size={14} /> Excel</a>
               <a className="btn-ghost h-[29px] whitespace-nowrap rounded-lg px-2.5 text-[12.5px] font-medium" href={`/api/v1/estimates/${estimate.id}/export/boq.pdf`}><FileText size={14} /> PDF</a>
-              {ws.editor && <button className="btn-ghost h-[29px] whitespace-nowrap rounded-lg px-2.5 text-[12.5px] font-medium" disabled={busy} title="Group the takeoff into BOQ items again; rates you have stay" onClick={() => { ws.setBoqTab('boq'); ws.start('boq'); }}><ListChecks size={14} /> Generate again</button>}
+              {ws.editor && <Icon title="Regenerate the BOQ: group the takeoff into BOQ items again; your rates stay" disabled={busy} onClick={() => { ws.setBoqTab('boq'); ws.start('boq'); }}><ListRestart size={14} /></Icon>}
             </>
           )}
-          <button className={`btn-ghost h-[29px] whitespace-nowrap rounded-lg px-2.5 text-[12.5px] font-medium ${ws.full ? 'border-primary' : ''}`} onClick={() => ws.setFull(!ws.full)}>
-            {ws.full ? <><Minimize2 size={14} /> Back to model</> : <><Maximize2 size={14} /> Full view</>}
-          </button>
-          <span className="flex-1" />
-          <Icon title="Undo" disabled={!ws.undo} onClick={ws.undo}><Undo2 size={14} /></Icon>
-          <Icon title="Redo" disabled={!ws.redo} onClick={ws.redo}><Redo2 size={14} /></Icon>
-          <Icon title="Update estimate: measure the current models again, keeping your work" disabled={!ws.editor || busy} onClick={() => ws.start('run')}><RefreshCw size={14} /></Icon>
+          {ws.editor && <Icon title="Update the takeoff: measure the current models again, keeping your work" disabled={busy} onClick={() => ws.start('run')}><RefreshCw size={14} /></Icon>}
+          <Icon title={ws.full ? 'Back to the model' : 'Full view'} onClick={() => ws.setFull(!ws.full)}>{ws.full ? <Minimize2 size={14} /> : <Maximize2 size={14} />}</Icon>
         </div>
         <div className="mt-2.5"><Legend /></div>
         {result.review_summary && <p className="mt-2 text-[12px] leading-[1.5] text-[#59636e]">{result.review_summary}</p>}

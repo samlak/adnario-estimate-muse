@@ -36,9 +36,9 @@ npm run dev       # installs on the first run, then starts db, api (live reload)
 Open the address it prints (http://localhost:3000) and sign in from **Demo accounts** (password `demo-password`).
 
 An empty database is seeded with the demo firm (README §13), with no AI and no key: Lekki Office Block (three models)
-and Ikoyi Duplex open finished (takeoff, BOQ, rates, programme), from the estimates saved in
-`apps/api/app/database/seed/samples/<project>/estimate.json`; Ikeja Corporate Office has only its model, to run the
-whole flow live from the app (that needs a Muse key; its programme PDF is in `samples/ikeja-office`). The sample IFC
+and Ikeja Corporate Office open finished (takeoff, BOQ, rates, programme), from the estimates saved in
+`apps/api/app/database/seed/samples/<project>/estimate.json`; Ikoyi Duplex has only its model, to run the whole flow
+live from the app (that needs a Muse key; its programme PDF is in `samples/ikoyi-duplex`). The sample IFC
 models are public files, too big for git: `npm run dev` (and the Docker build) downloads them once with
 `samples/download.sh` and checks each is the exact file the saved estimates were made from. A second firm, Northbridge
 Cost Consultants (`admin@northbridge.adnario.app`), shows that one firm never sees another's data.

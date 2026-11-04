@@ -1,10 +1,12 @@
 import { X } from 'lucide-react';
+import { useConfirm } from '@/components/ui/useConfirm';
 import { naira, num } from '@/lib/format';
 import { useWs, type Item, type Result } from '../../state';
 
 /** A BOQ item opened: its rate and where it came from, the measured lines in it, its elements in 3D. */
 export function Inspector({ line, result }: { line: Item; result: Result }) {
   const ws = useWs();
+  const { ask, dialog } = useConfirm();
   const source = line.rate_item_id ? result.pricing.sources?.[line.rate_item_id] : undefined;
   const parts = result.takeoff_lines.filter((each) => line.lines.includes(each.code));
   return (
@@ -20,7 +22,8 @@ export function Inspector({ line, result }: { line: Item; result: Result }) {
           {parts.map((part) => <li key={part.code} className="flex gap-2 py-0.5"><span className="flex-1">{part.description}</span><span>{part.qty == null ? '' : num(part.qty)} {part.unit}</span></li>)}
         </ul>
       )}
-      {ws.editor && line.source !== 'group' && <button className="mt-1.5 text-danger" onClick={() => { void ws.edit({ op: 'remove_line', code: line.code }); ws.setLine(null); }}>Remove from the BOQ</button>}
+      {ws.editor && line.source !== 'group' && <button className="mt-1.5 text-danger" onClick={() => ask({ title: `Remove ${result.refs[line.code] ?? line.code} from the BOQ?`, message: line.description, label: 'Remove', onConfirm: () => { void ws.edit({ op: 'remove_line', code: line.code }); ws.setLine(null); } })}>Remove from the BOQ</button>}
+      {dialog}
     </section>
   );
 }

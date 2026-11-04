@@ -2,6 +2,7 @@ import { AtSign, Bold, FileText, Italic, List, ListOrdered, Paperclip, X } from 
 import { useEffect, useRef, useState } from 'react';
 import { Avatar } from '@/components/ui/Avatar';
 import { Sheet } from '@/components/ui/Sheet';
+import { useConfirm } from '@/components/ui/useConfirm';
 import { errorText } from '@/lib/api';
 import { stamp } from '@/lib/format';
 import { ROLE_NAME, send, useApi, useMe } from '@/lib/store';
@@ -15,6 +16,7 @@ export function Conversation({ project, onClose }: { project: Project; onClose: 
   const comments = useApi<Comment[]>(path).data ?? [];
   const members = useApi<Member[]>(`/projects/${project.id}/members`).data ?? [];
   const [error, setError] = useState('');
+  const { ask, dialog } = useConfirm();
   const [text, setText] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [mentioning, setMentioning] = useState(false);
@@ -91,7 +93,7 @@ export function Conversation({ project, onClose }: { project: Project; onClose: 
                 <p className="flex items-baseline gap-2">
                   <b className="text-[13.5px] font-semibold">{comment.name}</b>
                   <small className="flex-1 text-[11.5px] text-[#9aa1a9]">{stamp(comment.created_at)}</small>
-                  {comment.person_id === me.id && <button className="text-[11.5px] font-semibold text-[#9aa1a9] opacity-0 group-hover:opacity-100" onClick={() => void send(`/comments/${comment.id}`, 'DELETE', undefined, path)}>Remove</button>}
+                  {comment.person_id === me.id && <button className="text-[11.5px] font-semibold text-[#9aa1a9] opacity-0 group-hover:opacity-100" onClick={() => ask({ title: 'Delete your comment?', message: 'It goes for everyone on the project.', onConfirm: () => void send(`/comments/${comment.id}`, 'DELETE', undefined, path) })}>Remove</button>}
                 </p>
                 {tagged ? <p className="mt-1 truncate rounded-md bg-accent-50 px-1.5 py-0.5 text-[11.5px] font-semibold text-accent-600">{comment.on_label}</p> : <p className="text-[11px] font-semibold text-[#9aa1a9]">An estimate</p>}
                 <p className="mt-1 whitespace-pre-wrap text-[13px] leading-[1.55]">{comment.text}</p>
@@ -102,6 +104,7 @@ export function Conversation({ project, onClose }: { project: Project; onClose: 
         })}
         <li ref={end} />
       </ul>
+      {dialog}
     </Sheet>
   );
 }

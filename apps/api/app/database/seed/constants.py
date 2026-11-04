@@ -15,4 +15,4 @@ PROJECTS = [
     ('Ikoyi Duplex', 'Private client', 'Ikoyi, Lagos', 'Two-storey residential duplex.', 'ikoyi-duplex', ['Ifc2x3_Duplex_Architecture.ifc']),
 ]
 # these open finished, from their saved estimate.json; the rest are left for the person to run (with a Muse key)
-FINISHED = {'ikoyi-duplex', 'lekki-office'}
+FINISHED = {'lekki-office', 'ikeja-office'}

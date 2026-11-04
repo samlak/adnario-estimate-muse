@@ -1,3 +1,4 @@
+import { useConfirm } from '@/components/ui/useConfirm';
 import { num } from '@/lib/format';
 import { useWs, type Item, type Result } from '../../state';
 import { Head } from './Head';
@@ -5,6 +6,7 @@ import { Generate } from './Generate';
 
 export function Provisional({ result }: { result: Result }) {
   const ws = useWs();
+  const { ask, dialog } = useConfirm();
   const inBoq = new Set(result.boq.map((line) => line.code));
   return (
     <>
@@ -22,7 +24,9 @@ export function Provisional({ result }: { result: Result }) {
                 <td className="py-1.5 pl-2">{item.unit}</td>
                 <td className="py-1 pl-2 text-right">
                   <button disabled={!ws.editor || !result.boq.length} title={result.boq.length ? '' : 'Generate the BOQ first'} className={`whitespace-nowrap rounded-md border px-2 py-1 ${added ? 'border-success-100 bg-success-50 text-success' : 'border-line'}`}
-                    onClick={() => void ws.edit(added ? { op: 'remove_line', code: item.code } : { op: 'add_provisional', code: item.code })}>
+                    onClick={() => added
+                      ? ask({ title: `Remove ${item.code} from the BOQ?`, message: item.description, label: 'Remove', onConfirm: () => void ws.edit({ op: 'remove_line', code: item.code }) })
+                      : void ws.edit({ op: 'add_provisional', code: item.code })}>
                     {added ? 'Added' : 'Add to BOQ'}
                   </button>
                 </td>
@@ -31,6 +35,7 @@ export function Provisional({ result }: { result: Result }) {
           })}
         </tbody>
       </table>
+      {dialog}
     </>
   );
 }

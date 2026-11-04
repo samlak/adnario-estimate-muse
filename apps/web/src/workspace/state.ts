@@ -98,8 +98,6 @@ export type Ws = {
   labels: boolean; // the run's feed labels the model
   setLabels: (on: boolean) => void;
   edit: (change: Record<string, unknown>) => Promise<void>;
-  undo: (() => void) | null;
-  redo: (() => void) | null;
   work: Work | null;
   start: (kind: Work['kind'], body?: FormData) => void;
   refresh: () => void;

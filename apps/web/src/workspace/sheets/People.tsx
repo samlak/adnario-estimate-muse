@@ -4,6 +4,7 @@ import { UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { Avatar } from '@/components/ui/Avatar';
 import { Sheet } from '@/components/ui/Sheet';
+import { useConfirm } from '@/components/ui/useConfirm';
 import { errorText } from '@/lib/api';
 import { ROLE_NAME, send, useApi, useMe } from '@/lib/store';
 import { type Project } from '../state';
@@ -19,6 +20,7 @@ export function People({ project, onClose }: { project: Project; onClose: () => 
   const [who, setWho] = useState('');
   const [access, setAccess] = useState<'edit' | 'view'>('edit');
   const [error, setError] = useState('');
+  const { ask, dialog } = useConfirm();
   const manage = me.role === 'admin' || me.role === 'qs';
   const act = (work: Promise<unknown>) => work.then(() => setError('')).catch((error) => setError(errorText(error)));
   return (
@@ -49,12 +51,13 @@ export function People({ project, onClose }: { project: Project; onClose: () => 
                 {choosable && manage && (
                   <Select className="w-[100px]" value={member.access} onChange={(value) => void act(send(`${path}/${person.id}`, 'PATCH', { access: value }, path))} options={[['edit', 'Can edit'], ['view', 'Can view']]} />
                 )}
-                {manage && <button className="text-[12.5px] text-[#6b7581] hover:text-danger" onClick={() => void act(send(`${path}/${person.id}`, 'DELETE', undefined, path))}>Remove</button>}
+                {manage && <button className="text-[12.5px] text-[#6b7581] hover:text-danger" onClick={() => ask({ title: `Remove ${person.name}?`, message: 'They lose access to this project. They stay in the organisation.', label: 'Remove', onConfirm: () => void act(send(`${path}/${person.id}`, 'DELETE', undefined, path)) })}>Remove</button>}
               </li>
             );
           })}
         </ul>
       </div>
+      {dialog}
     </Sheet>
   );
 }

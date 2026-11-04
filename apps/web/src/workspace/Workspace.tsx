@@ -88,8 +88,6 @@ export function Workspace() {
       const next = await send<Estimate>(`/estimates/${estimate.id}/edit`, 'POST', change);
       put(`/projects/${id}/estimate`, next);
     },
-    undo: estimate?.undo ? () => void send<Estimate>(`/estimates/${estimate.id}/history/undo`, 'POST').then((next) => put(`/projects/${id}/estimate`, next)) : null,
-    redo: estimate?.redo ? () => void send<Estimate>(`/estimates/${estimate.id}/history/redo`, 'POST').then((next) => put(`/projects/${id}/estimate`, next)) : null,
     work,
     start: (kind, body) => {
       if (!estimate) return;
