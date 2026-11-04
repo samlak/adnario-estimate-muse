@@ -23,10 +23,11 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
 ]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["app"]
 # every feature has its own tests/ folder, so test file names may repeat: import them by path
-addopts = "--import-mode=importlib"
+addopts = "--import-mode=importlib --cov=app --cov-report=term:skip-covered"

@@ -33,3 +33,33 @@ def test_history_replays_answered_look_ups_only():
     assert [type(m) for m in said] == [HumanMessage, AIMessage, ToolMessage, AIMessage]
     assert said[1].tool_calls[0]['name'] == 'boq' and said[2].tool_call_id == said[1].tool_calls[0]['id']
     assert said[3].content == '12 m³'
+
+
+def test_an_answer_that_is_not_json_is_asked_again_once(monkeypatch):
+    import asyncio
+
+    from app.core import llm
+
+    said = iter(['Sure! Here it is', '{"ok": true}'])
+    asked = []
+
+    async def ask_text(model, system, user, effort=None):
+        asked.append(user)
+        return next(said)
+
+    monkeypatch.setattr(llm, 'ask_text', ask_text)
+    assert asyncio.run(llm.ask_json('m', 'sys', 'question')) == {'ok': True}
+    assert 'was not valid JSON' in asked[1]
+
+
+def test_two_answers_that_are_not_json_fail(monkeypatch):
+    import asyncio
+
+    from app.core import llm
+
+    async def ask_text(*_args, **_kw):
+        return 'no'
+
+    monkeypatch.setattr(llm, 'ask_text', ask_text)
+    with pytest.raises(ValueError, match='did not answer with JSON'):
+        asyncio.run(llm.ask_json('m', 'sys', 'question'))

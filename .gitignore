@@ -8,3 +8,4 @@ __pycache__/
 apps/api/files/
 e2e/results/
 e2e/report/
+apps/api/.coverage

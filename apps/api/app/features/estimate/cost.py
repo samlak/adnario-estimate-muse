@@ -5,7 +5,7 @@ import asyncio
 import re
 
 from app.features.estimate import ai
-from app.features.estimate.constants import COUNTED, LINK_BATCH
+from app.features.estimate.constants import COUNTED, LINK_BATCH, PARALLEL
 
 
 def same_unit(a: str, b: str) -> bool:
@@ -66,7 +66,7 @@ async def link(boq: list[dict], card: dict, progress=None) -> tuple[list[dict], 
         except Exception:
             return {}
 
-    gate = asyncio.Semaphore(4)
+    gate = asyncio.Semaphore(PARALLEL)
 
     async def guarded(batch):
         async with gate:
