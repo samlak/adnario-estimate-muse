@@ -52,7 +52,7 @@ ON_DECK = re.compile(r'deck|plank|hollow.?core|permanent formwork|precast', re.I
 HOLLOW = re.compile(r'\b(hss|shs|rhs|chs|tube|pipe|hollow)\b', re.I)
 # the rate card item each derived kind is priced from, with no AI (Adnario Market Rates codes)
 DERIVED_RATE = {'formwork_foundations': 'FOR-01', 'formwork_columns': 'FOR-02', 'formwork_beams': 'FOR-03',
-                'formwork_soffit': 'FOR-04', 'formwork_stairs': 'FOR-05', 'formwork_walls': 'FOR-06', 'formwork_slab_edge': 'FOR-09',
+                'formwork_soffit': 'FOR-04', 'formwork_stairs': 'FOR-05', 'formwork_walls': 'FOR-06', 'formwork_foundation_walls': 'FOR-01', 'formwork_slab_edge': 'FOR-09',
                 'blinding': 'CON-15', 'dpm': 'EAR-07', 'anti_termite': 'EAR-11', 'rebar': 'REI-01', 'mesh': 'REI-02'}
 GENERIC = re.compile(r'^\s*(type\s*\d+|default|generic|standard|untitled|unnamed|\d+)\s*$', re.I)
 

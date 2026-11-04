@@ -240,7 +240,10 @@ def derive(elements: list[dict], rows: list[dict], summaries: list[dict] | None 
         elif kind == 'beams':
             add(element, row, 'formwork_beams', 'Formwork to sides and soffits of beams', sides + soffit, basis)
         elif kind == 'walls':
-            add(element, row, 'formwork_walls', 'Formwork to faces of foundation walls' if substructure else 'Formwork to faces of walls', sides, basis)
+            if substructure:  # below ground: the plank formwork of foundations, not the plywood of walls above
+                add(element, row, 'formwork_foundation_walls', 'Formwork to faces of foundation walls', sides, basis)
+            else:
+                add(element, row, 'formwork_walls', 'Formwork to faces of walls', sides, basis)
         elif kind == 'stairs':
             add(element, row, 'formwork_stairs', 'Formwork to soffits and sides of staircases', soffit + sides, basis)
     return out
