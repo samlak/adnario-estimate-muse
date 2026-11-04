@@ -32,3 +32,24 @@ def test_a_link_is_refused_with_its_reason():
     assert check_link({'unit': 'm³', 'description': ''}, {'code': 'C1', 'unit': 'm²', 'rate': 5}).startswith('C1 is priced')
     assert 'price missing' in check_link({'unit': 'm³', 'description': ''}, {'code': 'C1', 'unit': 'm³', 'name': '', 'rate': None})
     assert check_link({'unit': 'm³', 'description': ''}, {'code': 'C1', 'unit': 'm³', 'name': '', 'rate': 5}) is None
+
+
+def test_derived_lines_are_priced_from_their_own_card_item_without_the_ai(monkeypatch):
+    import asyncio
+
+    from app.features.estimate import ai, cost
+
+    asked = []
+
+    async def fake_link(items, lines):
+        asked.extend(line['line'] for line in lines)
+        return {'links': [{'line': line['line'], 'item': 'BLK-01', 'why': 'blockwork'} for line in lines]}
+
+    monkeypatch.setattr(ai, 'link', fake_link)
+    card = {'name': 'Card', 'rows': [{'kind': 'RATE', 'code': 'FOR-04', 'id': 1, 'section': 'Formwork', 'name': 'Soffit formwork', 'unit': 'm²', 'rate': 5000},
+                                     {'kind': 'RATE', 'code': 'BLK-01', 'id': 2, 'section': 'Walls', 'name': 'Blockwork', 'unit': 'm²', 'rate': 9000}]}
+    boq = [{'code': 'G001', 'section': 'Upper floors', 'description': 'Formwork to soffits', 'unit': 'm²', 'rate_code': 'FOR-04'},
+           {'code': 'G002', 'section': 'Walls', 'description': '225mm blockwork', 'unit': 'm²'}]
+    priced, _ = asyncio.run(cost.link(boq, card))
+    assert asked == ['G002']  # only the line code cannot price itself
+    assert [line['rate'] for line in priced] == [5000, 9000]

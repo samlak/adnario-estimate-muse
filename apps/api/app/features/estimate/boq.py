@@ -54,12 +54,14 @@ def totals(boq: list[dict], pricing: dict) -> dict:
 
 def item_of(code: str, section: str, description: str, members: list[dict], position: int) -> dict:
     confidences = {member['confidence'] for member in members}
+    rate_codes = {member.get('rate_code') for member in members}
     return {
         'code': code, 'bill': BILL_OF[section], 'section': section, 'description': description, 'unit': members[0]['unit'],
         'qty': round(sum(member['qty'] for member in members), 3), 'count': sum(member['count'] for member in members),
         'gids': [gid for member in members for gid in member['gids']], 'lines': [member['code'] for member in members],
         'confidence': 'Low' if 'Low' in confidences else 'Medium' if 'Medium' in confidences else 'High',
         'rate': None, 'rate_item_id': None, 'rate_note': None, 'source': 'group', 'position': position,
+        'rate_code': rate_codes.pop() if len(rate_codes) == 1 else None,  # formwork, beds, bars: priced from this card item
     }
 
 
@@ -109,4 +111,5 @@ def provisional_line(item: dict, position: int) -> dict:
         'code': item['code'], 'bill': item['bill'], 'section': item['section'], 'description': item['description'], 'unit': item['unit'],
         'qty': item.get('qty') or 0, 'count': 0, 'gids': [], 'lines': [], 'confidence': 'Low', 'rate': None, 'rate_item_id': None,
         'rate_note': f'Provisional: {item.get("reason") or item.get("basis")}', 'source': 'provisional', 'position': position,
+        'rate_code': item.get('rate_code'),
     }

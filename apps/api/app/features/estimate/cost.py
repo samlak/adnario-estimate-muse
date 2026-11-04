@@ -57,6 +57,10 @@ async def link(boq: list[dict], card: dict, progress=None) -> tuple[list[dict], 
     items = {row['code']: row for row in card['rows'] if row['kind'] == 'RATE' and row.get('code')}
     shown_items = [{'code': row['code'], 'section': row['section'], 'description': row['name'], 'unit': row['unit']} for row in items.values()]
     todo = [line for line in boq if line.get('rate_note') != 'typed']
+    # formwork, beds and bars know their card item already (DERIVED_RATE): no AI for them
+    fixed = {line['code']: {'line': line['code'], 'item': line['rate_code'], 'why': 'Derived by code: priced from its standard item.'}
+             for line in todo if line.get('rate_code') in items}
+    asked = [line for line in todo if line['code'] not in fixed]
 
     async def one(batch):
         shown = [{'line': line['code'], 'section': line['section'], 'description': line['description'], 'unit': line['unit']} for line in batch]
@@ -72,8 +76,8 @@ async def link(boq: list[dict], card: dict, progress=None) -> tuple[list[dict], 
         async with gate:
             return await one(batch)
 
-    said = {}
-    for task in asyncio.as_completed([guarded(todo[at : at + LINK_BATCH]) for at in range(0, len(todo), LINK_BATCH)]):
+    said = dict(fixed)
+    for task in asyncio.as_completed([guarded(asked[at : at + LINK_BATCH]) for at in range(0, len(asked), LINK_BATCH)]):
         found = await task
         said.update(found)
         if progress:
