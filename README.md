@@ -6,11 +6,21 @@
 
 ## The problem
 
-Before a building goes up, someone has to say what it will cost. In Nigeria and across emerging markets, that work is still done by hand: a quantity surveyor receives the architect's drawings and spends days, often a full week, measuring every wall, column, slab, door and window into a spreadsheet, wording each line the way their firm writes a Bill of Quantities and pricing it from rates kept in yet another spreadsheet. Then the design changes, and much of that week starts again. The contractor's programme of works arrives as a separate PDF, and before anyone can say how much money is needed in March or what is being built in week 12, someone has to match its activities to the BOQ by hand. The client, who is paying for all of it, usually sees none of this until a document is emailed to them. Every hand-over is a copy, a retype and a chance for the numbers to drift apart, so tenders go out late, estimates go out with gaps nobody noticed, and cost overruns are discovered on site instead of on the drawing board.
+Every building starts with one question: *what will it cost?* In Nigeria and across emerging markets, the answer is still produced by hand. A quantity surveyor receives the architect's drawings and disappears for a week, measuring every wall, column, slab, door and window into a spreadsheet, wording each line the way their firm writes a Bill of Quantities, and pricing it from rates kept in yet another spreadsheet. It is slow, skilled and repetitive work, and it is thrown away the moment the design changes. A moved wall or an added floor, and much of that week starts again.
+
+The cost then has to meet the calendar. The contractor's programme of works arrives as a separate PDF, and before anyone can say how much money is needed in March or what is being built in week 12, someone has to match its activities to the BOQ line by line. The client, who is paying for all of it, sees none of this until a document lands in their inbox. Every hand-over between architect, QS, contractor and client is a copy, a retype and a chance for the numbers to drift apart. Tenders go out late, estimates go out with gaps nobody noticed, and cost overruns are found on site, when they are most expensive to fix, instead of on the drawing board.
 
 ## What changes with Adnario Estimate
 
-The QS uploads the design model and has a complete first draft in under an hour: every quantity measured, every line worded in the firm's style, every rate linked to the firm's rate card, the work placed under the contractor's programme, and a monthly cash flow. On the demo buildings, the whole chain from upload to cash flow runs in about ten minutes of machine time, so the QS's days go into checking and judgement instead of counting and typing. Every number can be checked: click a BOQ line and its elements light up in the 3D model. Anything the system is not sure about becomes a review question for the QS, never a silent guess, and anything the design leaves out (excavation depth, hardcore, the fence, drainage, the septic tank) is proposed as a provisional item for the QS to accept or reject.
+The QS uploads the design model and has a complete first draft in under an hour: every quantity measured, every line worded in the firm's style, every rate linked to the firm's rate card, the work placed under the contractor's programme, and a monthly cash flow. On the demo buildings, the whole chain from upload to cash flow runs in about ten minutes of machine time, so the QS's week goes into checking and judgement instead of counting and typing. Nothing is a black box. Click a BOQ line and its elements light up in the 3D model. Anything the system is unsure of becomes a review question for the QS, never a silent guess, and anything the design leaves out (excavation depth, hardcore, the fence, drainage, the septic tank) is proposed as a provisional item for the QS to accept or reject. When the design changes, the estimate updates instead of starting again.
+
+## Why we built it
+
+At Adnario we build project management software for construction, and our users kept asking for the same thing: bring estimating and pricing into one place, on the building model, so a project can follow a true BIM process and everyone can see it in 3D, 4D and 5D, meaning the design, the programme over time and the cost. Adnario Estimate is that place. Architects, quantity surveyors, contractors and clients each bring their own work (the model, the rates, the programme of works, the documents) and all see the same, up-to-date picture of what the project will cost and when.
+
+## Built during the hackathon
+
+All of Adnario Estimate, including every line of code in this repository, was built during the Meta Global AI Developer Hackathon (27 October to 4 November 2026). The git history starts on 2 November. Adnario's existing project management product is a separate codebase, and none of its code is used here. The sample building models are public IFC files, downloaded on first start. The projects, programmes, BOQs and the Adnario Market Rates card are our own demo data, made for this event.
 
 ## Try it
 
@@ -33,7 +43,7 @@ Open http://localhost:8000 and pick a demo account on the sign-in page. Every ac
 | `client@demo.adnario.app` (Viewer) | The amounts and the cash flow, without the rate cards |
 | `admin@demo.adnario.app` (Admin) | The team, invitations and the rate cards |
 
-**About the demo:** two projects are already run and seeded, so you can see the finished result straight away. **Lekki Office Block** (three models: architecture, structure, electrical) has a priced BOQ, the contractor's programme and its cash flow, and **Ikeja Corporate Office** has an estimate with provisional items and a programme. To see it work in action, open **Ikoyi Duplex**, which has only its model uploaded, and run the whole flow yourself: Takeoff, Generate BOQ, Link to cost, then upload its programme PDF from [`apps/api/app/database/seed/samples/ikoyi-duplex/`](apps/api/app/database/seed/samples/ikoyi-duplex).
+**About the demo:** two projects are already run and seeded, so you can see the finished result straight away. **Lekki Office Block** (three models: architecture, structure, electrical) has a priced BOQ, the contractor's programme and its cash flow, and **Ikeja Corporate Office** has an estimate with provisional items and a programme. To see it work live, open **Ikoyi Duplex**, which has only its model uploaded, and run the whole flow yourself: Takeoff, Generate BOQ, Link to cost, then upload its programme PDF from [`apps/api/app/database/seed/samples/ikoyi-duplex/`](apps/api/app/database/seed/samples/ikoyi-duplex).
 
 `docker compose down` stops the app, and `docker compose down -v` also deletes its data, so the next start loads the demo again.
 
@@ -63,7 +73,7 @@ When the architect sends a new model, **Update estimate** carries over every dec
 
 ## How Meta Muse powers it
 
-Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`), called on Meta's Model API. Muse does the work that needs judgement, the work a QS would otherwise do by hand, and code checks every answer it gives:
+Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`), called on Meta's Model API. Muse is not a chatbot bolted on the side. It does the judgement a QS would otherwise do by hand, at seven points in the flow, and code checks every answer before the app uses it:
 
 1. **Reads the building.** Muse reads a summary of the models and the client's documents (briefs, specifications, PDFs) and writes a short description of the project and the facts that matter for the estimate, such as the city and the specification.
 2. **Decides how each element is billed.** For every type of element in the model, Muse chooses the BOQ item, section, unit and measuring method under Nigerian practice (BESMM4R). It sees a compact catalogue of types, never the model file, and never computes a quantity.
@@ -71,9 +81,17 @@ Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`), called on Meta'
 4. **Writes the BOQ in the firm's voice.** Muse groups the measured lines into bills and elements and words them in the firm's house style. Code then checks that every line is used once, the units agree and the quantities add up.
 5. **Links each line to a rate.** Muse picks the item on the firm's rate card that is the same work. Code checks the unit, material and size before the rate is used, and with no true match the rate stays blank for the QS.
 6. **Places the BOQ's work under the programme.** Code reads the contractor's programme PDF, keeping the activities, names, durations and links exactly as the contractor wrote them. Muse then decides which activity does each piece of measured work (the ground floor slab's reinforcement, formwork and concrete, say), so the programme can play over the model and the cost can be spread over time. Code checks every assignment.
-7. **Answers questions.** **Adnario AI**, in the corner of every project, answers questions about the estimate, the programme and the cash flow, such as "What is the total cost, which bill is the biggest, and which month needs the most money?" It answers from read-only look-ups that code works out, and links each answer back to the panel it came from.
+7. **Answers questions as an agent.** **Adnario AI**, in the corner of every project, is a multi-agent assistant: an orchestrator that plans the answer and hands parts of it to model, cost and programme specialists, each with its own read-only look-ups. Ask "What is the total cost, which bill is the biggest, and which month needs the most money?" and it gathers the figures, answers, and links each part back to the panel it came from.
 
 The rule throughout is **code measures, AI interprets**. Quantities come from the geometry and quantity sets in the model, worked out by code ([IfcOpenShell](https://ifcopenshell.org)), and every BOQ number traces back to the model elements it came from. The system never invents a price or a duration: rates come from the firm's own rate card or the QS, and the programme is always the contractor's own.
+
+## How it's implemented
+
+- **Web app** (React, Vite, Tailwind, with xeokit for the 3D viewer) talks only to the API: requests over HTTP, and live progress and changes streamed back over Server-Sent Events, so every open browser on a project updates without a refresh.
+- **API** (FastAPI, Python) does the work. It reads and measures the IFC models with IfcOpenShell, runs the estimate, the BOQ, pricing, the programme and the cash flow, and writes the Excel and PDF exports. Long work, such as a takeoff run, runs as a server task that keeps its progress, so a page that reloads picks up where it was.
+- **Converter** (a small Node service) turns each uploaded IFC model into XKT, the format the 3D viewer loads fast. Only the API calls it.
+- **PostgreSQL** holds every firm's data, kept apart by row-level security, so one firm can never read another's projects.
+- **Muse** is called only from the API, from one module (`apps/api/app/core/llm.py`), on Meta's Model API through LangChain. Adnario AI's orchestrator and specialists are a LangGraph graph. The steps that shape the estimate ask Muse for JSON, and code validates it before anything is saved. The Muse API key never leaves the server.
 
 ## Develop
 
@@ -88,7 +106,3 @@ npm run e2e           # the full flow in a browser, with real calls to Muse
 ## Built with
 
 React, Vite and Tailwind for the web app; FastAPI and PostgreSQL for the API; IfcOpenShell to read and measure the models; xeokit for the 3D viewer; LangChain, LangGraph and Meta Muse Spark for the AI.
-
-## Why we built it
-
-At Adnario we are building a project management tool for construction projects, and we kept getting the same request: bring estimating and pricing into one place, on the building model, so a project can follow a true BIM process and everyone can see it in 3D, 4D and 5D: the design, the programme over time and the cost. Adnario Estimate is that place. Architects, quantity surveyors, contractors and clients each bring in their own work (the model, the rates, the programme of works, the documents) and all see the same, up-to-date picture of what the project will cost and when.
