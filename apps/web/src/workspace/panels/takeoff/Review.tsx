@@ -40,7 +40,8 @@ export function Review({ result }: { result: Result }) {
           const item = result.boq.find((each) => each.lines?.includes(code));
           return item ? result.refs[item.code] ?? item.code : code;
         }))];
-        const gids = [...new Set(lines.flatMap((line) => line.gids))];
+        // code's questions name their own elements (some, like one that could not be measured, are on no line)
+        const gids = question.refs?.length ? question.refs : [...new Set(lines.flatMap((line) => line.gids))];
         return (
           <section key={index} className="group mb-3 rounded-2xl border border-line px-3 py-3 text-[12.5px] leading-[1.5]">
             <p><span className={`pill mr-1.5 uppercase ${TONE[question.severity]}`}>{question.severity}</span>{question.question}</p>

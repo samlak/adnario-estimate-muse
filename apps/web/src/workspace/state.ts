@@ -24,7 +24,7 @@ export type Totals = { bills: Record<string, { name: string; total: number; sect
 export type Result = {
   run: { name: string; seconds: number }; brief: string; context: string; review_summary: string; models: { id: string; name: string }[];
   types: Type[]; takeoff: { ref: string; storey: string | null; type_key: string; status: string; qty: number; unit: string; code?: string; source?: string; description: string }[];
-  takeoff_lines: Line[]; boq: Item[]; questions: { severity: 'high' | 'medium' | 'low'; question: string; line_codes: string[] }[];
+  takeoff_lines: Line[]; boq: Item[]; questions: { severity: 'high' | 'medium' | 'low'; question: string; line_codes: string[]; refs?: string[]; source?: 'code' | 'ai' }[];
   provisional: Provisional[]; pricing: { prelims: number; contingency: number; vat: number; rate_card?: { id: string; title: string } | null; sources: Record<string, { card: string; code: string; description: string }> };
   refs: Record<string, string>; totals: Totals | null;
 };
