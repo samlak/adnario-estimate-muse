@@ -1,14 +1,12 @@
 /** What the QS settles (README §7.3): the types the AI held, the types left out of the BOQ, then each question as its
  * own card with the BOQ items it is about; a click shows their elements. */
-import { MessageSquare } from 'lucide-react';
-import { useApi } from '@/lib/store';
+import { CommentButton } from '../../sheets/CommentButton';
 import { useWs, type Result } from '../../state';
 
 const TONE = { high: 'bg-danger-50 text-danger', medium: 'bg-accent-50 text-accent-600', low: 'bg-canvas text-[#59636e]' };
 
 export function Review({ result }: { result: Result }) {
   const ws = useWs();
-  const comments = useApi<{ on_kind: string; on_ref: string | null }[]>(`/projects/${ws.projectId}/comments`).data ?? [];
   const held = result.types.filter((type) => type.mapping.held);
   const left = result.types.filter((type) => !type.mapping.held && (type.mapping.decision === 'exclude' || type.mapping.decision === 'unmapped') && !/billed from/.test(type.mapping.reason));
   const groups: [string, typeof held][] = [['Held: the AI was unsure. Bill them?', held], ['Left out of the BOQ: include them?', left]];
@@ -43,18 +41,15 @@ export function Review({ result }: { result: Result }) {
           return item ? result.refs[item.code] ?? item.code : code;
         }))];
         const gids = [...new Set(lines.flatMap((line) => line.gids))];
-        const said = comments.filter((comment) => comment.on_kind === 'question' && comment.on_ref === String(index)).length;
         return (
-          <section key={index} className="mb-3 rounded-2xl border border-line px-3 py-3 text-[12.5px] leading-[1.5]">
+          <section key={index} className="group mb-3 rounded-2xl border border-line px-3 py-3 text-[12.5px] leading-[1.5]">
             <p><span className={`pill mr-1.5 uppercase ${TONE[question.severity]}`}>{question.severity}</span>{question.question}</p>
-            {(refs.length > 0 || said > 0) && (
-              <div className="mt-1 flex items-end gap-2">
+            <div className="mt-1 flex items-end gap-2">
                 <button className="flex-1 text-left text-[11.5px] text-[#6b7581] hover:text-primary disabled:hover:text-[#6b7581]" disabled={!gids.length} onClick={() => ws.show(gids)}>
                   {refs.join(', ')}{gids.length > 0 && ` · ${gids.length} ${gids.length === 1 ? 'element' : 'elements'}, click to show`}
                 </button>
-                {said > 0 && <span className="flex items-center gap-1 rounded-md bg-accent-50 px-1.5 py-0.5 text-[11px] text-accent-600"><MessageSquare size={12} /> {said}</span>}
+                <CommentButton topic={{ kind: 'question', ref: String(index), label: question.question }} />
               </div>
-            )}
           </section>
         );
       })}

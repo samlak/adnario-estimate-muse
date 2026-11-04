@@ -6,14 +6,18 @@ import { useConfirm } from '@/components/ui/useConfirm';
 import { errorText } from '@/lib/api';
 import { stamp } from '@/lib/format';
 import { ROLE_NAME, send, useApi, useMe } from '@/lib/store';
-import { type Project } from '../state';
+import { useWs, type Project, type Topic } from '../state';
 import { Member, Comment } from './types';
 
-export function Conversation({ project, onClose }: { project: Project; onClose: () => void }) {
+/** The project's conversation, or one thing's own thread (an element, a BOQ item, a review question): its comments,
+ * and a message posted on it. */
+export function Conversation({ project, topic, onClose }: { project: Project; topic?: Topic | null; onClose: () => void }) {
   const { me } = useMe();
+  const ws = useWs();
   const path = `/projects/${project.id}/comments`;
   // a Contributor cannot see the BOQ, so the server leaves out the comments on its lines too
-  const comments = useApi<Comment[]>(path).data ?? [];
+  const all = useApi<Comment[]>(path).data ?? [];
+  const comments = topic ? all.filter((comment) => comment.on_kind === topic.kind && comment.on_ref === topic.ref) : all;
   const members = useApi<Member[]>(`/projects/${project.id}/members`).data ?? [];
   const [error, setError] = useState('');
   const { ask, dialog } = useConfirm();
@@ -38,10 +42,15 @@ export function Conversation({ project, onClose }: { project: Project; onClose: 
     const body = new FormData();
     body.append('text', text.trim());
     if (file) body.append('file', file);
+    if (topic) {
+      body.append('on_kind', topic.kind);
+      body.append('on_ref', topic.ref);
+      body.append('on_label', topic.label.slice(0, 200));
+    }
     send(path, 'POST', body, path, '/notifications').then(() => { setText(''); setFile(null); setError(''); }).catch((error) => setError(errorText(error)));
   };
   return (
-    <Sheet title="Conversation" onClose={onClose} width={381}
+    <Sheet title={topic ? topic.label : 'Conversation'} onClose={onClose} width={381}
       footer={
         <div className="w-full">
           <div className="relative rounded-xl border border-line px-3 pb-2 pt-2.5 focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-100">
@@ -83,9 +92,9 @@ export function Conversation({ project, onClose }: { project: Project; onClose: 
       }
     >
       <ul className="space-y-4 px-5 py-4">
-        {comments.length === 0 && <p className="py-6 text-center text-[13px] text-[#6b7581]">No comments yet. Start the conversation.</p>}
+        {comments.length === 0 && <p className="mx-auto max-w-[300px] py-6 text-center text-[13.5px] leading-[1.55] text-[#9aa1a9]">No messages yet. Ask a question, share a decision, or @mention someone to bring them in.</p>}
         {comments.map((comment) => {
-          const tagged = comment.on_label !== 'An estimate';
+          const tagged = !topic && comment.on_label !== 'An estimate'; // in a thing's own thread, what it is on goes without saying
           return (
             <li key={comment.id} className="group flex gap-2.5">
               <Avatar name={comment.name} size={26} />
@@ -95,7 +104,7 @@ export function Conversation({ project, onClose }: { project: Project; onClose: 
                   <small className="flex-1 text-[11.5px] text-[#9aa1a9]">{stamp(comment.created_at)}</small>
                   {comment.person_id === me.id && <button className="text-[11.5px] font-semibold text-[#9aa1a9] opacity-0 group-hover:opacity-100" onClick={() => ask({ title: 'Delete your comment?', message: 'It goes for everyone on the project.', onConfirm: () => void send(`/comments/${comment.id}`, 'DELETE', undefined, path) })}>Remove</button>}
                 </p>
-                {tagged ? <p className="mt-1 truncate rounded-md bg-accent-50 px-1.5 py-0.5 text-[11.5px] font-semibold text-accent-600">{comment.on_label}</p> : <p className="text-[11px] font-semibold text-[#9aa1a9]">An estimate</p>}
+                {tagged ? <button className="mt-1 block w-full truncate rounded-md bg-accent-50 px-1.5 py-0.5 text-left text-[11.5px] font-semibold text-accent-600 hover:underline" title="Open its thread" disabled={!comment.on_ref || !['element', 'boq', 'question'].includes(comment.on_kind)} onClick={() => ws.discuss({ kind: comment.on_kind as Topic['kind'], ref: comment.on_ref!, label: comment.on_label })}>{comment.on_label}</button> : !topic && <p className="text-[11px] font-semibold text-[#9aa1a9]">An estimate</p>}
                 <p className="mt-1 whitespace-pre-wrap text-[13px] leading-[1.55]">{comment.text}</p>
                 {comment.file && <a href={`/api/v1/comments/${comment.id}/file`} target="_blank" rel="noreferrer" className="mt-1.5 inline-flex items-center gap-1.5 rounded-lg border border-line px-2 py-1 text-[12px] hover:border-primary-300"><FileText size={13} /> {comment.file.name} · {Math.max(1, Math.round(comment.file.size / 1024))} KB</a>}
               </div>

@@ -18,7 +18,7 @@ import { Versions } from './sheets/Versions';
 import { SidePanel } from './SidePanel';
 import { Sidekick } from './sidekick/Sidekick';
 import './sidekick/sidekick.css';
-import { DATA_PANELS, dayOfWeek, planOf, WsContext, type Card, type Estimate, type Model, type Panel, type Project, type Ws } from './state';
+import { DATA_PANELS, dayOfWeek, planOf, WsContext, type Card, type Estimate, type Model, type Panel, type Project, type Topic, type Ws } from './state';
 import { TopBar } from './top-bar/TopBar';
 import { useLiveUpdates } from './useLiveUpdates';
 import { useNoPageZoom } from './useNoPageZoom';
@@ -44,6 +44,7 @@ export function Workspace() {
   const [picked, setPicked] = useState<Element | null>(null);
   const [elements, setElements] = useState<Element[]>([]);
   const [sheet, setSheet] = useState<'people' | 'conversation' | 'versions' | 'settings' | null>(null);
+  const [topic, setTopic] = useState<Topic | null>(null); // the conversation shows this thing's thread, or the whole project's
   const [tool, setTool] = useState<'cut' | 'measure' | null>(null);
   const [glass, setGlass] = useState(true);
   const [chosenView, setView] = useState<View | null>(null); // null: Annotated once there is a takeoff, else Original
@@ -65,7 +66,7 @@ export function Workspace() {
   const live = work?.kind === 'run' && !work.done ? work : null;
   const looks = useMemo(() => looksOf(result, plan, live), [result, plan, live?.decided, live?.catalogue]);
 
-  const comments = useApi<{ id: string; on_kind: string; on_ref: string | null }[]>(`/projects/${id}/comments`).data ?? [];
+  const comments = useApi<{ id: string; on_kind: string; on_ref: string | null; on_label: string }[]>(`/projects/${id}/comments`).data ?? [];
   const view: View = chosenView ?? (result || live ? 'annotated' : 'original');
   // what is drawn on the model: the run's newest decisions numbered, or a dot per BOQ item; comment pins on elements
   const marks = useMemo(() => marksOf(live, labels, result, view, comments), [live?.feed, labels, result, view, comments]);
@@ -94,6 +95,7 @@ export function Workspace() {
       if (!estimate) return;
       await send(`/estimates/${estimate.id}/programme`, 'PATCH', change, `/projects/${id}/estimate`);
     },
+    discuss: (next) => { setTopic(next); setSheet('conversation'); },
     work,
     start: (kind, body) => {
       if (!estimate) return;
@@ -119,7 +121,7 @@ export function Workspace() {
         <TopBar
           viewer={viewer}
           tool={tool} setTool={setTool} glass={glass} setGlass={setGlass}
-          onSheet={setSheet}
+          onSheet={(next) => { setTopic(null); setSheet(next); }}
         />
         <div className="flex min-h-0 flex-1">
           <Rail items={rail} shown={shown} open={ws.open} />
@@ -141,7 +143,7 @@ export function Workspace() {
                 marks={fourD ? [] : marks}
                 open={line ? line : null}
                 onMark={(key) => {
-                  if (key.startsWith('pin:')) { setSheet('conversation'); return; }
+                  if (key.startsWith('pin:')) { const ref = key.slice(4); ws.discuss({ kind: 'element', ref, label: comments.find((each) => each.on_ref === ref)?.on_label ?? 'An element' }); return; }
                   if (key.startsWith('card:')) { const card = live?.feed.find((each) => 'key' in each && `card:${each.key}` === key) as Card | undefined; if (card) viewer.current?.select(card.gids, false); return; }
                   const item = result && [...result.boq, ...result.takeoff_lines].find((each) => each.code === key);
                   setLine(line === key ? null : key);
@@ -151,14 +153,14 @@ export function Workspace() {
                 onElements={setElements}
               />
               {fourD && <Readout />}
-              {picked && !full && <Properties element={picked} onClose={() => { setPicked(null); viewer.current?.select(null); }} onComments={() => setSheet('conversation')} />}
+              {picked && !full && <Properties element={picked} onClose={() => { setPicked(null); viewer.current?.select(null); }} />}
             </div>
             {fourD && <Dock outline={outline} setOutline={setOutline} roofOff={roofOff} setRoofOff={setRoofOff} canvas={() => viewer.current?.canvas() ?? null} fit={() => viewer.current?.fit(true)} />}
           </div>
         </div>
         {estimate?.result && <Sidekick estimateId={estimate.id} projectId={project.id} projectName={project.name} links={links} />}
         {sheet === 'people' && <People project={project} onClose={() => setSheet(null)} />}
-        {sheet === 'conversation' && <Conversation project={project} onClose={() => setSheet(null)} />}
+        {sheet === 'conversation' && <Conversation project={project} topic={topic} onClose={() => { setSheet(null); setTopic(null); }} />}
         {sheet === 'versions' && <Versions onClose={() => setSheet(null)} />}
         {sheet === 'settings' && <ProjectSettings project={project} onClose={() => setSheet(null)} />}
       </div>

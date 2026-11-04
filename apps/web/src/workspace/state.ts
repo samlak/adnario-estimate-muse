@@ -29,6 +29,8 @@ export type Result = {
   refs: Record<string, string>; totals: Totals | null;
 };
 export type ApiActivity = { id: number; code: string; name: string; summary: boolean; level: number; start: number; finish: number; milestone: boolean; float: number; critical: boolean; cost: number | null; work: { code: string; description: string; qty: number | null; unit: string; shared: boolean }[]; refs: string[]; programmed?: number };
+/** What a comment thread is about: an element, a BOQ item or a review question (its index). */
+export type Topic = { kind: 'element' | 'boq' | 'question'; ref: string; label: string };
 export type ProgrammeLink = { before: number; after: number; kind?: 'FS' | 'SS' | 'FF' | 'SF'; lag?: number };
 /** One change to one activity (PATCH /estimates/{id}/programme). */
 export type ProgrammeEdit = { id: number; name?: string; days?: number; add_link?: { before: number; kind: 'FS' | 'SS'; lag: number }; remove_link?: number };
@@ -96,6 +98,7 @@ export type Ws = {
   activity: number | null;
   setActivity: (id: number | null) => void;
   editProgramme: (change: ProgrammeEdit) => Promise<void>;
+  discuss: (topic: Topic) => void; // open its comment thread
   show: (refs: string[], fly?: boolean) => void; // select these elements in 3D (and fly to them)
   view: 'original' | 'skeleton' | 'annotated';
   setView: (view: 'original' | 'skeleton' | 'annotated') => void;
