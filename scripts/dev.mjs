@@ -24,6 +24,9 @@ for (const [dir, how] of [['apps/web/node_modules', 'npm run setup'], ['apps/con
     break;
   }
 
+// the demo's sample models: downloaded once (they are too big for git), checked every time
+execFileSync('bash', ['apps/api/app/database/seed/samples/download.sh'], { cwd: root, stdio: 'inherit' });
+
 // the database: ours if it is already up, else on the first free port from 55622
 let db;
 try {

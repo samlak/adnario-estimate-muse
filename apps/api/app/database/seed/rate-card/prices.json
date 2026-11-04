@@ -1,0 +1,3594 @@
+[
+ {
+  "name": "225 mm block laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 6000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Backing/screed labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Block laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Carpenter helper / labourer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 8000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Carpenter labour",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 15000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Carpenter/joiner",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 20000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Chevron setting-out and installation labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 8739.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Concrete gang labour",
+  "kind": "LABOUR",
+  "unit": "gang-day",
+  "price": 63000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Concrete mixing, placing and compaction labour",
+  "kind": "LABOUR",
+  "unit": "m³",
+  "price": 25000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Cutting, bending and fixing labour",
+  "kind": "LABOUR",
+  "unit": "t",
+  "price": 85000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Cutting/fixing labour",
+  "kind": "LABOUR",
+  "unit": "m",
+  "price": 304.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Cutting/fixing labour, 146",
+  "kind": "LABOUR",
+  "unit": "m",
+  "price": 146.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Cutting/fixing labour, 243",
+  "kind": "LABOUR",
+  "unit": "m",
+  "price": 243.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Door installation labour",
+  "kind": "LABOUR",
+  "unit": "nr",
+  "price": 35000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Electrical point installation labour",
+  "kind": "LABOUR",
+  "unit": "point",
+  "price": 12000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Electrician",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 22000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Excavation labour",
+  "kind": "LABOUR",
+  "unit": "m³",
+  "price": 4500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Fixing and dressing labour",
+  "kind": "LABOUR",
+  "unit": "m",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Fixing labour",
+  "kind": "LABOUR",
+  "unit": "nr",
+  "price": 5000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Fixing labour (m)",
+  "kind": "LABOUR",
+  "unit": "m",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Floor/wall tiling labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 5500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Flooring installation labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 4791.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Forming, carving, sanding and finishing labour",
+  "kind": "LABOUR",
+  "unit": "m",
+  "price": 3852.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Formwork carpenter",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 15000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Formwork erection and striking labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 6500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "General construction labourer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 10000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Gypsum ceiling specialist labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 6500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Gypsum ceiling specialist labour, 12000",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 12000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Gypsum ceiling specialist labour, 12500",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 12500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Gypsum ceiling specialist labour, 9000",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 9000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Helper",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 8000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Helper / labourer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 8000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Helper labour",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 8000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Installation & dressing labour",
+  "kind": "LABOUR",
+  "unit": "nr",
+  "price": 20000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Installation labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 1522.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Internal/external plastering labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 4000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Laying / laps labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 100.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Laying / tying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 150.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Laying/cutting labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 339.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Manual excavation labour in normal ground",
+  "kind": "LABOUR",
+  "unit": "m³",
+  "price": 6000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Manual trimming and dressing",
+  "kind": "LABOUR",
+  "unit": "m³",
+  "price": 133.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Mason/bricklayer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 18000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Moulding/forming/installation labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 13739.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "POP installer labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 4739.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Painter/decorator",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 18000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Painting labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 650.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Pattern setting-out and laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 6946.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Patterned wood-tile installation labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 6865.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Pipework installation labour",
+  "kind": "LABOUR",
+  "unit": "m",
+  "price": 2500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Placing, levelling and steel-trowelling labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 1400.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Plaster/render labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Plumber fixing labour",
+  "kind": "LABOUR",
+  "unit": "set",
+  "price": 15000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Plumber fixing labour (nr)",
+  "kind": "LABOUR",
+  "unit": "nr",
+  "price": 8000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Plumber fixing labour (nr), 1500",
+  "kind": "LABOUR",
+  "unit": "nr",
+  "price": 1500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Plumber fixing labour (nr), 5000",
+  "kind": "LABOUR",
+  "unit": "nr",
+  "price": 5000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Plumber/pipe fitter",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 22000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Plumbing point installation labour",
+  "kind": "LABOUR",
+  "unit": "point",
+  "price": 15000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Precision narrow-strip laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 10778.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Reinforcement cutting, bending and fixing labour",
+  "kind": "LABOUR",
+  "unit": "kg",
+  "price": 500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Roof covering installation labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 3500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Roofer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 22000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Roofing installation labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 1500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Screeding labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Site supervisor",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 35000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Skimming labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 1239.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Specialist marble laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 5757.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Spreading / backfilling labour",
+  "kind": "LABOUR",
+  "unit": "m³",
+  "price": 1200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Spreading labour",
+  "kind": "LABOUR",
+  "unit": "m³",
+  "price": 1200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Steel fixer/iron bender",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 20000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Surface preparation and painting labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 1800.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Templating, precision cutting and laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 13041.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Testing and commissioning allowance",
+  "kind": "LABOUR",
+  "unit": "point",
+  "price": 2000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Tile laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Tiler",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 22000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Wall tile laying labour",
+  "kind": "LABOUR",
+  "unit": "m²",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Welder/fabricator",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 25000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "0.55 aluminium longspan roofing",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 11500.0,
+  "as_of": "2026-08-27",
+  "note": ""
+ },
+ {
+  "name": "0.55 mm oven-baked aluminium roofing sheet",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 8500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "1.5 mm² copper cable",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 650.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "10 mm² copper cable",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 3900.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "100 mm sandcrete block",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 650.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "1000 gauge polythene damp-proof membrane",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 1200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "10mm bedding, grout, protection consumables",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 1200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "110 mm uPVC soil pipe",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 7000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "110 mm uPVC soil/waste pipe",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 7000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "12.5 mm gypsum ceiling board",
+  "kind": "MATERIAL",
+  "unit": "1.2×2.4m sheet",
+  "price": 16500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "12.5 mm gypsum plasterboard",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 18000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "13A switched socket outlet",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 8000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "13A twin switched socket outlet",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 13100,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "150 mm hollow blocks incl. 5% breakage",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 800.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "16 mm² copper cable",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 6200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "18 mm economical marine plywood facing — 3 casting cycles",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 27500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "18 mm economical marine plywood — 3 cycles",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 27500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "18 mm marine plywood sheet",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 52000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "2,000 litre polyethylene water tank",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 320000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "2.5 mm² copper cable",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 900.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "20 L emulsion paint",
+  "kind": "MATERIAL",
+  "unit": "pail",
+  "price": 99438.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "20 kg tile adhesive",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 22500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "20 mm PVC conduit",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 800.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "230 mm hollow blocks incl. 5% breakage",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "25 mm PPR pipe",
+  "kind": "MATERIAL",
+  "unit": "4 m length",
+  "price": 2500.0,
+  "as_of": "2026-08-27",
+  "note": ""
+ },
+ {
+  "name": "25 mm uPVC pressure pipe",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1800.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "25kg stone adhesive",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 22000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x2 braces / cleats",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x2 braces/cleats — 4 reuses",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x2 bracing/cleats",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x2 cleats / bracing",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x2 cleats/bracing",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x2 noggins / bracing",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x2 pegs/braces",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 framing",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 framing / riser supports",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 joists / runners",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 joists/runners",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 side framing",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 studs",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 studs / runners",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 studs and walers — 4 reuses",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 vertical studs",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x3 vertical studs (3.6m length)",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 1300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 bearers",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 2500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 bottom bearer / strongback",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 secondary bearers",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 2500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 secondary bearers (3.6m length)",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 stringer / bearer allowance",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 2500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 walers",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 walers / strongbacks",
+  "kind": "MATERIAL",
+  "unit": "length",
+  "price": 2500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2x6 walers / strongbacks (3.6m length)",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "2–3 inch nails",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 27000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "300 mm aluminium fascia",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2700.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "3mm HD foam underlay incl. waste",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 1400.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "4 mm² copper cable",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1450.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "50 kg cement incl. 3% batching allowance",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "50 kg cement — 310 kg/m³ + 3% batching allowance",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "50 mm mild-steel hollow section",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 7500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "50 mm uPVC waste pipe",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 3200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "50 × 100 mm treated timber",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "50 × 150 mm treated timber",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 3200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "6 kg dry-powder fire extinguisher",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 55000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "6 mm clear float glass",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 38000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "6 mm² copper cable",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "6-inch sandcrete block",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 800.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "60 mm concrete interlocking paving block",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 14500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "60 × 60 floor tile",
+  "kind": "MATERIAL",
+  "unit": "carton / seller pack",
+  "price": 8000.0,
+  "as_of": "2026-08-27",
+  "note": ""
+ },
+ {
+  "name": "600 mm precast concrete drainage pipe",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 85000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "600 mm wide aluminium ridge capping",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 5400.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "600×300 wall tile incl. 15% waste",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 7500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "600×600 floor tile incl. 15% waste",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 10500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "75 mm uPVC waste pipe",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 4500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "9-inch sandcrete block",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 900.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "A142 BRC welded mesh, 2.4 × 4.8 m sheet",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 68000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "A142 mesh incl. 5% lap/cutting",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 44000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "A142 welded reinforcement mesh",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 68000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "A193 BRC welded mesh, 2.4 × 4.8 m sheet",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 92000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "A193 welded reinforcement mesh",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 92000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "A252 BRC welded mesh, 2.4 × 4.8 m sheet",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 125000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "A98 BRC welded mesh, 2.4 × 4.8 m sheet",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 48000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Acrylic/SBR admixture",
+  "kind": "MATERIAL",
+  "unit": "provisional allowance/m²",
+  "price": 0.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Adhesive, trims, cutting and protection consumables",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 2600.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Adhesive, trims, cutting and protection consumables, 2700",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 2700.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Adhesive, trims, cutting and protection consumables, 3000",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Aluminium glazing supply and installation",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 145000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Bedding, grout, blades/protection consumables",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 4350.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Bedding, grout, cutting/protection consumables",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 2700.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Binding wire",
+  "kind": "MATERIAL",
+  "unit": "roll",
+  "price": 34000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "Binding wire / cutting consumables",
+  "kind": "MATERIAL",
+  "unit": "t",
+  "price": 23175.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Bitumen binder",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 1800.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Bituminous damp-proof course",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1800.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Burnt clay facing brick",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 650.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Cement",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Cement for 1:4 screed",
+  "kind": "MATERIAL",
+  "unit": "50kg bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Cement for 1:6 mortar",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Cement for mortar",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Cement, 42.5 grade, 50 kg bag",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Chain-link fencing mesh",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 8500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Complete WC suite",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 180000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Complete earth electrode set",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 85000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Concrete plasticising admixture",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 4500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Construction bamboo support",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 2500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Construction water",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 15.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Crushed stone base course",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 52000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "DPM material allowance",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 2000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Dangote / BUA cement",
+  "kind": "MATERIAL",
+  "unit": "50 kg bag",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Distribution board, 12 way, three phase (TPN)",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 255000,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Dry-type transformer 45 kVA, three phase",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 3457000,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Drywall screws",
+  "kind": "MATERIAL",
+  "unit": "pcs",
+  "price": 20.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Electric-fence energizer and accessories",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 650000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Electrical back box and accessories",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 2000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Electrical distribution board",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 95000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Emulsion paint",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 5000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "External ceiling board + fixings",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 5000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Fibre-cement board",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 32000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Fibreglass / joint tape",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 150.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Fixings / adhesive / buffers",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Fixings / foam / sealant / minor consumables",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 2000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Fixings / silicone / minor consumables",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 1500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Formwork release oil",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 3000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Formwork support timber",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Furring / secondary channel",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 667.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Gabion basket including tying wire",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 65000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "General-purpose silicone sealant",
+  "kind": "MATERIAL",
+  "unit": "tube",
+  "price": 5500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Gloss paint for timber/metal",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 7500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Granite / coarse aggregate",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 27000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Granite chippings / aggregate",
+  "kind": "MATERIAL",
+  "unit": "tonne (material only)",
+  "price": 15000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "Grout, spacers, protection and cutting consumables",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 1750.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "H20 / Peri primary beam allocation",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 16900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Hanger rods/wires and fixing points",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 250.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Hardcore incl. 10% quantity allowance",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 22500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Hardcore stone",
+  "kind": "MATERIAL",
+  "unit": "tonne (material only)",
+  "price": 15000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "High-yield TMT reinforcement incl. 3% cutting waste",
+  "kind": "MATERIAL",
+  "unit": "t",
+  "price": 1100000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Hydrated lime",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 15000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Imported laterite incl. 10% allowance",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 8000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Jointing compound / joint screed",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 1200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "LED light fitting",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 12000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "LED panel 600 × 1200 mm, recessed, driver included",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 60000,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "LED panel 600 × 600 mm, recessed",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 25000,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Laterite",
+  "kind": "MATERIAL",
+  "unit": "10-tonne trip",
+  "price": 60000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "Light switch, 1 gang 1 way",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 3000,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Light switch, 1 gang 2 way",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 3500,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Lighting switch",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 4500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Linear LED pendant 2400 mm, twin",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 94390,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Main ceiling channel/profile",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 667.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Marine plywood for formwork",
+  "kind": "MATERIAL",
+  "unit": "4 × 8 ft sheet",
+  "price": 24000.0,
+  "as_of": "2026-08-27",
+  "note": ""
+ },
+ {
+  "name": "Mild steel plate and sections",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 1700.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Miniature circuit breaker",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 8500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Miniature circuit breaker, single pole",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 5000,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Minor connectors / sealant",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 750.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Minor connectors / sealant consumables",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 1200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Minor fixing / sealant consumables",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 1500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Moulded case circuit breaker 250 A, 3 pole",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 103000,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Nails",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 27000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Nails / fixings",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 27000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Nails / screws",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 27000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Non-woven geotextile membrane",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 4500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "POP skim material / sandpaper",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "POP, reinforcement and moulding materials",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 7000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "POP/reinforcement/sundry materials",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1800.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "POP/support materials allowance",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 7000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "PPR fittings and accessories allowance",
+  "kind": "MATERIAL",
+  "unit": "item",
+  "price": 12000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "PVC waterstop",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 8500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Peri / Doka H20 beam allocation",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 16900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Peri / Doka H20 primary beam allocation",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 16900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Peri / H20 support allocation",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 16900.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Plaster of Paris",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 15000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Plaster sand",
+  "kind": "MATERIAL",
+  "unit": "10-tonne trip",
+  "price": 70000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "Plaster/sharp sand",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 11200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Powder-coated aluminium framing section",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 7500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Powder-coated aluminium glazed window",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 125000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Precast concrete road kerb",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 6500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Premium 18 mm marine plywood — 5 cycles",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 40000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Quarry dust",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 40000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Razor/barbed security wire",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 5500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Ready-mixed concrete, grade 25",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 145000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Ready-mixed concrete, grade 30",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 158000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Release agent",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 250.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Release agent / small sundries",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 250.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Release agent / small sundries, 300",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Release agent / sundries",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 250.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Release agent / tie sundries",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 250.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Release agent / ties",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 350.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Release agent / ties, 300",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 300.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Release agent, 200",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Rollers, masking, fillers and sundries",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 150.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Roof ridge and flashing accessory",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 8500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Roofing screws / rivets",
+  "kind": "MATERIAL",
+  "unit": "pcs",
+  "price": 75.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Roofing screws with washers/accessories",
+  "kind": "MATERIAL",
+  "unit": "pcs",
+  "price": 100.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Roofing screws, flashings and accessories allowance",
+  "kind": "MATERIAL",
+  "unit": "item",
+  "price": 15000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Roofing underlay/felt",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 2500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Satin/emulsion finish paint",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 6500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Screws/rivets/fixings",
+  "kind": "MATERIAL",
+  "unit": "pcs",
+  "price": 40.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Sealant / minor connection consumables",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Selected ceramic wall tile",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 14000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Selected internal flush door leaf",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 85000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Selected porcelain floor tile",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 18000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Sharp sand",
+  "kind": "MATERIAL",
+  "unit": "10-tonne trip",
+  "price": 70000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "Sharp sand (m³)",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 11200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Sharp sand for 1:4 screed",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 11200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Sharp sand for mortar",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 11200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Sharp sand incl. 10% allowance",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 11200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Shower mixer set",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 95000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Soil-pipe fittings allowance",
+  "kind": "MATERIAL",
+  "unit": "item",
+  "price": 10000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Spacers / grout / minor accessories",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 350.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Spacers / trim / grout allowance",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Stainless-steel floor drain",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 18000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Steel security entrance door set",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 450000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Stone-coated steel roofing tile",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 19000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Structural steel sections",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 1900.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Suspended ceiling grid system",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 8000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Tie-rod / clamp / spacer allocation",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 750.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Tile adhesive, 20 kg bag",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 12000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Tile grout",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 1800.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Torch-on bituminous waterproofing membrane",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 8500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Treated timber material",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Treated timber material, 550",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 550.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Treated timber material, 800",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 800.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Twin-lamp linear fitting 1200 mm (2 × 36 W)",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 28250,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Wall filler/putty",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 1500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Wall primer/sealer",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 4200.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Wash-hand basin with fittings",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 120000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Well-sawn 1x12 plank facing — 4 reuses",
+  "kind": "MATERIAL",
+  "unit": "3.6m length",
+  "price": 3000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "White cement",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 30000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Wire nails (2–3 inch)",
+  "kind": "MATERIAL",
+  "unit": "bag",
+  "price": 27000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "Y12 / 12 mm reinforcement bar",
+  "kind": "MATERIAL",
+  "unit": "12 m length",
+  "price": 12000.0,
+  "as_of": "2026-10-15",
+  "note": ""
+ },
+ {
+  "name": "10-15 tonne tipper haulage",
+  "kind": "PLANT",
+  "unit": "trip",
+  "price": 85000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "500 L concrete mixer",
+  "kind": "PLANT",
+  "unit": "machine (purchase)",
+  "price": 3350000.0,
+  "as_of": "2026-08-27",
+  "note": ""
+ },
+ {
+  "name": "Acrow prop rental allocation — 21-day working cycle",
+  "kind": "PLANT",
+  "unit": "prop-day",
+  "price": 200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Acrow prop rental — 21-day cycle",
+  "kind": "PLANT",
+  "unit": "prop-day",
+  "price": 200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Backhoe loader with operator",
+  "kind": "PLANT",
+  "unit": "hour",
+  "price": 50000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Bulldozer with operator",
+  "kind": "PLANT",
+  "unit": "hour",
+  "price": 85000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Compaction allocation",
+  "kind": "PLANT",
+  "unit": "m³",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Concrete vibrator hire",
+  "kind": "PLANT",
+  "unit": "day",
+  "price": 20000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Excavator diesel",
+  "kind": "PLANT",
+  "unit": "L",
+  "price": 2000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Excavator hire allocation",
+  "kind": "PLANT",
+  "unit": "day",
+  "price": 250000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Handling",
+  "kind": "PLANT",
+  "unit": "m",
+  "price": 200.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Handling / local transport allocation",
+  "kind": "PLANT",
+  "unit": "m²",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Handling, 100",
+  "kind": "PLANT",
+  "unit": "m",
+  "price": 100.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Handling/transport",
+  "kind": "PLANT",
+  "unit": "m²",
+  "price": 1000.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Handling/transport allocation",
+  "kind": "PLANT",
+  "unit": "m²",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Hydraulic excavator with operator",
+  "kind": "PLANT",
+  "unit": "hour",
+  "price": 65000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Light compaction",
+  "kind": "PLANT",
+  "unit": "m³",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Light compaction allocation",
+  "kind": "PLANT",
+  "unit": "m³",
+  "price": 500.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Mixer / small plant",
+  "kind": "PLANT",
+  "unit": "m³",
+  "price": 2769.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Mixer / vibrator / small plant",
+  "kind": "PLANT",
+  "unit": "m³",
+  "price": 2769.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Mixer, vibrator and small-plant allocation",
+  "kind": "PLANT",
+  "unit": "m³",
+  "price": 2769.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Mobile crane with operator",
+  "kind": "PLANT",
+  "unit": "hour",
+  "price": 180000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Mobilisation / demobilisation allocation",
+  "kind": "PLANT",
+  "unit": "m³",
+  "price": 408.0,
+  "as_of": "2026-09-26",
+  "note": ""
+ },
+ {
+  "name": "Motor grader with operator",
+  "kind": "PLANT",
+  "unit": "hour",
+  "price": 85000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Site generator hire",
+  "kind": "PLANT",
+  "unit": "day",
+  "price": 45000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Tubular scaffolding hire",
+  "kind": "PLANT",
+  "unit": "m²/week",
+  "price": 2500.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Vibratory roller with operator",
+  "kind": "PLANT",
+  "unit": "hour",
+  "price": 55000.0,
+  "as_of": "2026-08-09",
+  "note": ""
+ },
+ {
+  "name": "Drywall installer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 20000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Steel erector",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 25000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Ceiling fixer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 20000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Glazier / aluminium installer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 22000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "HVAC technician",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 35000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Lift installation engineer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 60000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Floor layer",
+  "kind": "LABOUR",
+  "unit": "day",
+  "price": 20000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Shop fabrication and priming of steelwork",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 450.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "HSFG bolts, cleats and base plates",
+  "kind": "MATERIAL",
+  "unit": "t",
+  "price": 85000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised profiled steel floor decking, 38 mm deep",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 13500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Shear studs and edge trim",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 1800.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Stair handrail wall bracket",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 4000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised steel stud 150 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2800.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised steel track 150 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2400.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised steel stud 92 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised steel track 92 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1800.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised steel stud 38 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1300.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised furring channel 38 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 900.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Galvanised ceiling stud 45 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "16 mm plasterboard sheet, 1.2 × 2.4 m",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 24000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "16 mm Type-X fire-rated plasterboard sheet, 1.2 × 2.4 m",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 32000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "19 mm exterior plywood sheet, 1.2 × 2.4 m",
+  "kind": "MATERIAL",
+  "unit": "sheet",
+  "price": 38000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "42 mm insulated sandwich wall panel",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 28000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "50 mm mineral wool insulation slab",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 4500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Wall ties, stainless steel",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 150.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Profiled galvanised steel roof decking 0.7 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 11000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "76 mm rigid PIR roof insulation board",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "EPDM roofing membrane 1.2 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 11000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "EPDM bonding adhesive",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 6500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Standing seam aluminium-zinc roof sheet 0.6 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 16000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Standing seam clips and fixings",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 1500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "50 × 75 mm treated timber batten",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Aluminium box gutter with brackets",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 6500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Powder-coated aluminium glazed door with lockset",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 165000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Hardwood door frame with architraves, single",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 65000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Hardwood door frame with architraves, double",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 95000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Ironmongery set, single door: 3 hinges, mortice lever lockset, stop",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 45000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Ironmongery set, double door: 6 hinges, lever lockset, flush bolts, stops",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 85000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Laminate toilet cubicle door with hinges, indicator bolt and coat hook",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 95000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Steel fire-rated door set FD60, single, with closer and panic bar",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 650000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Steel fire-rated door set FD60, double, with closers and panic bars",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 1150000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Mineral fibre acoustic ceiling tile 600 × 600 × 16 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 6500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Compact laminate cubicle panel 25 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 65000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Cubicle legs, brackets and fixings",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 8000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Kitchen base unit with granite worktop",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 280000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Built-in wardrobe, MDF carcass, laminate finish",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 140000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Carpet tile 500 × 500 mm, commercial grade",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 18000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Homogeneous vinyl sheet 2 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 15000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Flooring adhesive",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 1500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Textured masonry paint",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 6500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Epoxy floor coating, two-pack",
+  "kind": "MATERIAL",
+  "unit": "litre",
+  "price": 14000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "150 mm hardwood skirting",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 3500.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Semi-recessed paper towel dispenser and waste receptacle, stainless",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 185000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Stainless steel grab rail 600 mm",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 35000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Toilet paper holder, chrome",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 12000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Liquid soap dispenser",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 15000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Electric hand dryer",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 120000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "380 litre commercial electric water heater",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 2400000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "50 litre electric water heater",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 180000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Booster pump set 1.5 hp with pressure vessel",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 450000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Pipe brackets and fixings",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 800.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Air-cooled screw chiller 633–703 kW",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 185000000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Horizontal air handling unit 17.6 kW, chilled water",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 12000000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Inline circulator pump, up to 5 l/s",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 3200000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Roof upblast centrifugal exhaust fan, 1–2 m³/s",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 4200000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Wall-mounted split air conditioner 1.5 hp, inverter",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 650000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Wall-mounted split air conditioner 2 hp, inverter",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 800000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Ceiling cassette split air conditioner 3 hp",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 1900000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Floor-standing split air conditioner 5 hp",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 2600000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Insulated copper refrigerant pipe pair",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 9000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "150 mm extract fan",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 25000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Anti-vibration mounts, valves and connections, large plant",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 3500000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Valves and connections, medium plant",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 600000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Transformer switchboard section with incomer and outgoing breakers",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 4800000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Diesel generator set 100 kVA, soundproof canopy",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 22000000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Automatic changeover switch 200 A",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 850000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "20 A double-pole switch",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 9000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Cat6 data cable",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 700.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "RJ45 data outlet with faceplate",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 6000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "56 inch ceiling fan with regulator",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 55000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "LED flood light 100 W, external",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 35000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Smoke detector with base",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 25000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Manual call point",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 30000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Fire alarm control panel, 4 zone",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 650000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "9 kg CO2 fire extinguisher",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 85000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Fire alarm cable 1.5 mm², fire-resistant",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1200.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Hydraulic passenger lift 1600 kg (3500 lb), 4 stops",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 85000000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Traction passenger lift 630 kg (8 persons), 4 stops, machine-room-less",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 65000000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Centre-opening lift landing door 1200 × 2100 mm, stainless",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 3800000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "450 mm precast concrete U-drain with cover slab",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 28000.0,
+  "as_of": "2026-11-02",
+  "note": ""
+ },
+ {
+  "name": "Precast prestressed hollow-core plank 150 mm, delivered",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 32000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Precast yard casting allowance (moulds, handling)",
+  "kind": "MATERIAL",
+  "unit": "m³",
+  "price": 45000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Polished granite cladding slab 20 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 55000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Stainless steel cladding fixings and brackets",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 9000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Timber flush fire door leaf FD30 (20 minute)",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 160000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Overhead door closer",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 35000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Vision panel kit, 6 mm wired glass with beads",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 25000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Double-action floor spring with top pivot",
+  "kind": "MATERIAL",
+  "unit": "set",
+  "price": 120000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Glazed timber door leaf with 6 mm toughened glass",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 140000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Engineered timber strip flooring 14 mm",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 28000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Bronze-finish stainless steel tube 50 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 18000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Single-lamp linear LED pendant 2400 mm",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 65000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Wall sconce light fitting, LED",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 18000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Table lamp light fitting",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 15000.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Curving (rolling) of steel sections",
+  "kind": "MATERIAL",
+  "unit": "kg",
+  "price": 350.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "9-inch solid concrete block",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 1100.0,
+  "as_of": "2026-11-02",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "50 × 300 mm sawn hardwood joist",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 6400.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote (scaled from the 50 × 150 mm treated timber price)"
+ },
+ {
+  "name": "50 × 200 mm treated timber",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 4300.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote (scaled from the 50 × 150 mm treated timber price)"
+ },
+ {
+  "name": "Joist hangers and fixings",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 900.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "16 mm solid hardwood strip flooring",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 16500.0,
+  "as_of": "2026-11-03",
+  "note": "Lagos supplier listing, ₦16,500 per m² supply only (November 2026)"
+ },
+ {
+  "name": "Ceramic floor tile 400 × 400 mm incl. 10% waste",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 7000.0,
+  "as_of": "2026-11-03",
+  "note": "Lagos price guides, standard ceramic ₦5,000–9,000 per m² (September 2026): middle of the range"
+ },
+ {
+  "name": "50 mm rigid insulation board (XPS/PIR)",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 9500.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote (scaled from the 76 mm PIR board price)"
+ },
+ {
+  "name": "Insulation board fixings",
+  "kind": "MATERIAL",
+  "unit": "m²",
+  "price": 600.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "8-inch hollow concrete block (190 mm)",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 1000.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote (between the 9-inch sandcrete and 9-inch solid concrete block prices)"
+ },
+ {
+  "name": "Galvanised steel stud 41 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 1400.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote (scaled from the 38 mm stud price)"
+ },
+ {
+  "name": "Galvanised steel stud 136 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2650.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote (between the 92 mm and 150 mm stud prices)"
+ },
+ {
+  "name": "Galvanised steel track 136 mm",
+  "kind": "MATERIAL",
+  "unit": "m",
+  "price": 2250.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote (between the 92 mm and 150 mm track prices)"
+ },
+ {
+  "name": "Wide internal flush door leaf (over 1000 mm)",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 120000.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ },
+ {
+  "name": "Skylight upstand flashing and sealing",
+  "kind": "MATERIAL",
+  "unit": "nr",
+  "price": 25000.0,
+  "as_of": "2026-11-03",
+  "note": "Estimated Lagos market price, November 2026; confirm with a supplier quote"
+ }
+]

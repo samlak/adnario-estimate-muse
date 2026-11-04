@@ -2,7 +2,7 @@
   "name": "adnario-estimate",
   "private": true,
   "scripts": {
-    "setup": "npm install && npm --prefix apps/web install && npm --prefix apps/converter install && cd apps/api && uv sync",
+    "setup": "npm install && npm --prefix apps/web install && npm --prefix apps/converter install && cd apps/api && uv sync && cd ../.. && npm run samples",
     "dev": "node scripts/dev.mjs",
     "build": "npm --prefix apps/web run build",
     "test": "npm run test:api && npm run test:web",
@@ -10,7 +10,8 @@
     "test:web": "npm --prefix apps/web test",
     "e2e": "playwright test -c e2e/playwright.config.ts",
     "e2e:report": "playwright show-report e2e/report",
-    "e2e:install": "playwright install chromium"
+    "e2e:install": "playwright install chromium",
+    "samples": "bash apps/api/app/database/seed/samples/download.sh"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.2"

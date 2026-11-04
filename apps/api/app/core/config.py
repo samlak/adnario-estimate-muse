@@ -27,8 +27,8 @@ class env:
     DATA = Path(os.environ.get('DATA_DIR', API / 'data'))
     WEB_DIST = Path(os.environ.get('WEB_DIST', ROOT / 'apps' / 'web' / 'dist'))
     DEMO = os.environ.get('DEMO', '1') == '1'  # the sign-in page's demo accounts, and the demo seed
-    SAMPLES = Path(os.environ.get('SAMPLES_DIR', ROOT / 'overview' / 'samples'))
-    RATE_CARD = Path(os.environ.get('RATE_CARD_DIR', ROOT / 'overview' / 'rate-card'))
+    SAMPLES = Path(os.environ.get('SAMPLES_DIR', API / 'app' / 'database' / 'seed' / 'samples'))
+    RATE_CARD = Path(os.environ.get('RATE_CARD_DIR', API / 'app' / 'database' / 'seed' / 'rate-card'))
 
 
 

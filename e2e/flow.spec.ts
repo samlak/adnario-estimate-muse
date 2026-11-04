@@ -1,11 +1,11 @@
 /** The whole process, end to end, in a real browser against the running app (README §7): sign in, a new project
  * with its IFC model, the takeoff run, Generate BOQ, Link to cost, an edit with undo, the exports, the programme,
  * the cash flow, Adnario AI, and who may see what. The AI steps call Muse, so a run takes a few minutes.
- * The sample used is Ikoyi Duplex (overview/samples). The project it makes is deleted at the end. */
+ * The sample used is Ikoyi Duplex (apps/api/app/database/seed/samples). The project it makes is deleted at the end. */
 import { expect, test, type Browser, type Page } from '@playwright/test';
 import path from 'node:path';
 
-const SAMPLES = path.resolve(__dirname, '../overview/samples/ikoyi-duplex');
+const SAMPLES = path.resolve(__dirname, '../apps/api/app/database/seed/samples/ikoyi-duplex');
 const PASSWORD = 'demo-password';
 const NAME = `E2E Duplex ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`;
 const AI = 5 * 60_000; // an AI step: the slowest answers take a few minutes

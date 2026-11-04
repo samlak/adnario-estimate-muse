@@ -1,8 +1,8 @@
 # Adnario Estimate
 
 From building model to a measured, priced bill of quantities, a programme and a cash flow. How the app works is in
-[`overview/README.md`](overview/README.md); `overview/` holds the reference material (screenshots, rate card,
-samples, the sidekick walkthrough) and nothing runs from it but the data the app reads.
+[`overview/README.md`](overview/README.md); `overview/` holds the reference material (screenshots, the sidekick
+walkthrough) and nothing runs from it: the rate card and the demo samples the app reads are in `apps/api/app/database/seed`.
 
 | App | What it is | Port |
 |---|---|---|
@@ -35,12 +35,15 @@ npm run dev       # installs on the first run, then starts db, api (live reload)
 
 Open the address it prints (http://localhost:3000) and sign in from **Demo accounts** (password `demo-password`).
 
-An empty database is seeded with the demo firm (README §13): Lekki Office Block (three models), Ikeja Corporate
-Office (one model) and Ikoyi Duplex, from `overview/samples`. The models are converted in the background; with a Muse
-key, Lekki and Ikeja are then run end to end (takeoff, BOQ, rates, programme), which takes a few minutes, so they open
-finished. Ikoyi is left with only its model, to run the whole flow live from the app; its programme PDF is in
-`overview/samples/ikoyi-duplex`. A second firm, Northbridge Cost Consultants (`admin@northbridge.adnario.app`), shows
-that one firm never sees another's data.
+An empty database is seeded with the demo firm (README §13), with no AI and no key: Lekki Office Block (three models)
+and Ikoyi Duplex open finished (takeoff, BOQ, rates, programme), from the estimates saved in
+`apps/api/app/database/seed/samples/<project>/estimate.json`; Ikeja Corporate Office has only its model, to run the
+whole flow live from the app (that needs a Muse key; its programme PDF is in `samples/ikeja-office`). The sample IFC
+models are public files, too big for git: `npm run dev` (and the Docker build) downloads them once with
+`samples/download.sh` and checks each is the exact file the saved estimates were made from. A second firm, Northbridge
+Cost Consultants (`admin@northbridge.adnario.app`), shows that one firm never sees another's data.
+
+After a better run, save it as the demo's: `cd apps/api && uv run python -m app.database.seed.export`.
 
 To start again from an empty database: `docker compose down -v`.
 

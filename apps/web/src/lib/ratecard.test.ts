@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import shippedPrices from '../../../../overview/rate-card/prices.json';
-import shippedRates from '../../../../overview/rate-card/rates.json';
+import shippedPrices from '../../../api/app/database/seed/rate-card/prices.json';
+import shippedRates from '../../../api/app/database/seed/rate-card/rates.json';
 import { lineOf, outputOf, rateOf, type Price, type Rate } from './ratecard';
 
 // the shipped library, checked against the rates the sample BOQ prints
