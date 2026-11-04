@@ -6,17 +6,12 @@ Measuring takes each quantity from the cheapest reliable source: the standard IF
 Revit exporter's bugs), Revit's own dimensions, then the geometry. Doors and windows get their size from the element,
 never from a name."""
 
-import re
 from collections import Counter, defaultdict
 
 import ifcopenshell.util.element as E
 import ifcopenshell.util.unit as U
 
-SKIP = ('IfcOpeningElement', 'IfcSpace', 'IfcVirtualElement', 'IfcAnnotation', 'IfcFeatureElement', 'IfcGrid')
-STEEL_DENSITY = 7.85  # t/m³
-# when the same element is in two models, which one bills it: the structure governs the frame, foundations and
-# structural slabs; the architecture everything else
-STRUCTURAL = ('IfcBeam', 'IfcColumn', 'IfcFooting', 'IfcPile', 'IfcMember')
+from app.features.estimate.constants import LINEAR, SKIP, STRUCTURAL
 
 
 def number(value):
@@ -31,9 +26,6 @@ def split_name(name: str | None) -> tuple[str | None, str]:
     if len(parts) >= 2:
         return parts[0], ':'.join(parts[1:])
     return None, parts[0] if parts else 'Unnamed'
-
-
-LINEAR = ('length', 'width', 'height', 'perimeter', 'thickness')
 
 
 def layers_of(element, scale: float = 1.0) -> list[dict]:
@@ -196,4 +188,3 @@ def catalogue(elements: list[dict]) -> list[dict]:
     return types
 
 
-GENERIC = re.compile(r'^\s*(type\s*\d+|default|generic|standard|untitled|unnamed|\d+)\s*$', re.I)

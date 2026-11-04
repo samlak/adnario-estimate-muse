@@ -8,8 +8,8 @@ import collections
 import json
 from datetime import date, timedelta
 
-from app.features.sidekick.constants import MAX_ROWS
 from app.features.estimate.boq import display_refs, totals
+from app.features.sidekick.constants import MAX_ROWS
 from app.features.sidekick.definitions import TOOLS
 
 

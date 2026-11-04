@@ -3,26 +3,13 @@ a provisional item taken in, a type billed or left out. Each edit is one step of
 floor."""
 
 import copy
-from typing import Literal
 
 from fastapi import HTTPException
-from pydantic import BaseModel, Field
 
 from app.features.estimate import boq as boqs
-from app.features.estimate import prompts
+from app.features.estimate.constants import BILL_OF, SECTIONS, UNITS
+from app.features.estimate.schemas import Edit
 from app.features.estimate.takeoff import roll_up
-
-class Edit(BaseModel):
-    op: Literal['rate', 'percent', 'add_provisional', 'add_line', 'remove_line', 'line', 'type']
-    code: str | None = None
-    rate: float | None = Field(None, ge=0)
-    name: Literal['prelims', 'contingency', 'vat'] | None = None
-    value: float | None = Field(None, ge=0, le=100)
-    section: str | None = None
-    description: str | None = Field(None, max_length=400)
-    qty: float | None = Field(None, ge=0)
-    unit: str | None = None
-    decision: Literal['bill', 'exclude'] | None = None
 
 
 def mutable(result: dict) -> dict:
@@ -67,11 +54,11 @@ def apply(result: dict, edit: Edit) -> None:
             raise HTTPException(409, 'Not a provisional item, or already in the BOQ')
         result['boq'] = boqs.ordered([*result.get('boq', []), boqs.provisional_line({**item, 'qty': edit.qty if edit.qty is not None else item.get('qty')}, len(lines))])
     elif edit.op == 'add_line':
-        if edit.section not in prompts.SECTIONS or not edit.description or edit.unit not in prompts.UNITS:
+        if edit.section not in SECTIONS or not edit.description or edit.unit not in UNITS:
             raise HTTPException(422, 'A line needs one of our sections, a description and a unit')
         number = 1 + max([int(c[1:]) for c in lines if c.startswith('Q') and c[1:].isdigit()] or [0])
         result['boq'] = boqs.ordered([*result.get('boq', []), {
-            'code': f'Q{number:03d}', 'bill': prompts.BILL_OF[edit.section], 'section': edit.section, 'description': edit.description,
+            'code': f'Q{number:03d}', 'bill': BILL_OF[edit.section], 'section': edit.section, 'description': edit.description,
             'unit': edit.unit, 'qty': edit.qty or 0, 'count': 0, 'gids': [], 'lines': [], 'confidence': 'High', 'rate': edit.rate,
             'rate_item_id': None, 'rate_note': 'typed' if edit.rate is not None else None, 'source': 'qs', 'position': 1000 + number}])
     elif edit.op == 'line':

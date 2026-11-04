@@ -7,7 +7,11 @@ import pytest
 
 from app.core.access import Actor
 from app.core.config import env
-from app.features.programme.service import cash_flow, easter, parse_rows, read_pdf, schedule, shown, working_days
+from app.features.programme.calendar import easter, working_days
+from app.features.programme.cash_flow import cash_flow
+from app.features.programme.schedule import schedule
+from app.features.programme.service import shown
+from app.features.programme.uploaded import parse_rows, read_pdf
 
 LEKKI = env.SAMPLES / 'lekki-office' / 'Lekki_Office_Block_Programme.pdf'
 

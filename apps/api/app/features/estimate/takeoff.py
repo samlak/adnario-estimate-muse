@@ -5,14 +5,8 @@ provisional quantities worked out. No AI here: everything can be repeated."""
 import re
 from collections import defaultdict
 
-from app.features.estimate import prompts
-from app.features.estimate.read import GENERIC, STEEL_DENSITY, geometry_quantities
-
-MATERIALS = {
-    'concrete': ('concrete', 'cement', 'cast'), 'steel': ('steel', 'metal', 'iron'), 'timber': ('timber', 'wood', 'plywood'),
-    'block': ('block', 'masonry', 'cmu', 'sandcrete'), 'brick': ('brick',), 'glass': ('glass', 'glazing'),
-    'aluminium': ('aluminium', 'aluminum'), 'plasterboard': ('plasterboard', 'gypsum', 'drywall'),
-}
+from app.features.estimate.constants import BILL_OF, GENERIC, MATERIALS, METHODS, SECTIONS, STEEL_DENSITY
+from app.features.estimate.read import geometry_quantities
 
 
 def identity(entry: dict) -> tuple:
@@ -32,10 +26,10 @@ def check_mapping(entry: dict, answer: dict | None) -> dict:
         unit = {'m2': 'm²', 'm3': 'm³', 'no': 'nr', 'nr.': 'nr', 'tonne': 't', 'tonnes': 't'}.get(str(item.get('unit')).lower(), item.get('unit'))
         method = item.get('method')
         section = item.get('section')
-        if section not in prompts.SECTIONS:
+        if section not in SECTIONS:
             problems.append(f'section {section!r} is not one of ours')
             continue
-        if method not in prompts.METHODS or prompts.METHODS[method] != unit:
+        if method not in METHODS or METHODS[method] != unit:
             problems.append(f'{method} is not measured in {unit}')
             continue
         layer = item.get('layer')
@@ -157,7 +151,7 @@ def roll_up(rows: list[dict]) -> list[dict]:
     for row in rows:
         if row['status'] == 'billed':
             groups[(row['section'], row['description'], row['unit'])].append(row)
-    order = {section: at for at, section in enumerate(prompts.SECTIONS)}
+    order = {section: at for at, section in enumerate(SECTIONS)}
     lines = []
     for number, ((section, description, unit), members) in enumerate(sorted(groups.items(), key=lambda item: (order.get(item[0][0], 99), item[0][1])), start=1):
         confidences = [member.get('confidence', 'High') for member in members]
@@ -167,7 +161,7 @@ def roll_up(rows: list[dict]) -> list[dict]:
         for member in members:
             member['code'] = code
         lines.append({
-            'code': code, 'section': section, 'bill': prompts.BILL_OF[section], 'description': description, 'unit': unit,
+            'code': code, 'section': section, 'bill': BILL_OF[section], 'description': description, 'unit': unit,
             'qty': round(sum(member['qty'] for member in members), 3), 'count': len(refs), 'gids': refs, 'confidence': confidence,
             'derived': members[0].get('derived'), 'type_keys': sorted({member['type_key'] for member in members}),
         })

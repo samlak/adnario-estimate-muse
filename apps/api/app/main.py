@@ -9,13 +9,20 @@ from fastapi import APIRouter, FastAPI, Request
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
-from app.database import connection as db
 from app.core import live
-from app.database.seed import service as seed
 from app.core.config import env
-from app.features import auth, models, org, projects, ratecards
-from app.features.estimate import router as estimate
-from app.features.sidekick import router as sidekick
+from app.database import connection as db
+from app.database.seed import service as seed
+from app.features.auth.router import router as auth
+from app.features.comments.router import router as comments
+from app.features.estimate.router import router as estimate
+from app.features.models.router import router as models
+from app.features.notifications.router import router as notifications
+from app.features.orgs.router import router as orgs
+from app.features.programme.router import router as programme
+from app.features.projects.router import router as projects
+from app.features.rate_cards.router import router as rate_cards
+from app.features.sidekick.router import router as sidekick
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('adnario')
@@ -39,8 +46,8 @@ async def lifespan(_: FastAPI):
 app = FastAPI(title='Adnario Estimate', lifespan=lifespan)
 app.add_middleware(GZipMiddleware, minimum_size=2000)
 api = APIRouter(prefix='/api/v1')
-for feature in (auth, org, projects, models, ratecards, estimate, sidekick):
-    api.include_router(feature.router)
+for feature in (auth, orgs, projects, comments, notifications, models, rate_cards, estimate, programme, sidekick):
+    api.include_router(feature)
 
 
 @api.get('/health')

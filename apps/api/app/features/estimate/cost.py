@@ -4,12 +4,8 @@ the unit and copies the rate in. A rate the QS typed is never touched; nothing i
 import asyncio
 import re
 
-from app.core import llm
-from app.core.constants import MODEL_FAST
-from app.features.estimate import prompts
-
-BATCH = 40
-COUNTED = {'nr', 'point', 'set', 'item'}
+from app.features.estimate import ai
+from app.features.estimate.constants import COUNTED, LINK_BATCH
 
 
 def same_unit(a: str, b: str) -> bool:
@@ -65,7 +61,7 @@ async def link(boq: list[dict], card: dict, progress=None) -> tuple[list[dict], 
     async def one(batch):
         shown = [{'line': line['code'], 'section': line['section'], 'description': line['description'], 'unit': line['unit']} for line in batch]
         try:
-            answer = await llm.ask_json(MODEL_FAST, prompts.LINK.replace('B1A', 'G001'), f'Rate card items:\n{shown_items}\n\nBOQ lines:\n{shown}', 'low')
+            answer = await ai.link(shown_items, shown)
             return {each.get('line'): each for each in answer.get('links') or []}
         except Exception:
             return {}
@@ -77,7 +73,7 @@ async def link(boq: list[dict], card: dict, progress=None) -> tuple[list[dict], 
             return await one(batch)
 
     said = {}
-    for task in asyncio.as_completed([guarded(todo[at : at + BATCH]) for at in range(0, len(todo), BATCH)]):
+    for task in asyncio.as_completed([guarded(todo[at : at + LINK_BATCH]) for at in range(0, len(todo), LINK_BATCH)]):
         found = await task
         said.update(found)
         if progress:

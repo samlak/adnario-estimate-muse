@@ -6,7 +6,7 @@ import json
 import pytest
 
 from app.core.config import env
-from app.features.ratecards import output_of, rate_of
+from app.features.rate_cards.buildup import output_of, rate_of
 
 BLOCKWORK = {
     'code': 'W1',

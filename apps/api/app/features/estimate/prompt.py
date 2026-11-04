@@ -1,20 +1,7 @@
 """The AI's rules for the estimate: what each step is asked, and the shape of the answer. The AI decides what a thing
 is and how it is billed; code measures, adds up and checks every answer (README §2)."""
 
-# Nigerian elemental order: bill B the building, C the services, D the external works
-BILLS = {
-    'B': ('Main Building', ['Substructure', 'Frame', 'Upper floors', 'Stairs', 'Walls', 'Roof', 'Windows', 'Doors',
-                            'Wall finishes', 'Floor finishes', 'Ceiling finishes', 'Fittings and furnishings']),
-    'C': ('M&E Services', ['Sanitary installations', 'Plumbing and drainage', 'Mechanical installations',
-                           'Electrical installations', 'Lift installations', 'Fire protection']),
-    'D': ('External Works', ['External works', 'Drainage', 'Fencing and gates']),
-}
-SECTIONS = [section for _, sections in BILLS.values() for section in sections]
-BILL_OF = {section: bill for bill, (_, sections) in BILLS.items() for section in sections}
-UNITS = {'m', 'm²', 'm³', 'nr', 't', 'kg', 'item'}
-METHODS = {
-    'count': 'nr', 'length': 'm', 'area': 'm²', 'volume': 'm³', 'weight': 't', 'item': 'item',
-}
+from app.features.estimate.constants import SECTIONS
 
 STYLE = """BOQ wording, as a Nigerian contractor's bill reads (BESMM4R):
 - "Reinforced in-situ concrete (1:2:4 - 19mm aggregate) in foundation walls"
@@ -119,3 +106,8 @@ code scales the rate by the size, so pick the closest kind (a casement window fo
 element is that element's work (a slab edge is slab concrete). When none is, answer null. Never state a rate.
 
 Answer with JSON only: {"links": [{"line": "B1A", "item": "CON-01" or null, "why": "short reason"}]}"""
+
+CONTEXT = (
+    'Summarise these project documents for a quantity surveyor: what is to be built, where, the specification and '
+    'anything excluded. Plain text, at most 200 words.'
+)

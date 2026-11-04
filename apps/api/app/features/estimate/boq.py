@@ -4,11 +4,8 @@ B1A style: bill letter, element number (sections present, in Nigerian order), it
 
 import asyncio
 
-from app.core import llm
-from app.core.constants import MODEL_SMART
-from app.features.estimate import prompts
-
-LETTERS = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
+from app.features.estimate import ai
+from app.features.estimate.constants import BILL_OF, BILLS, LETTERS, SECTIONS
 
 
 def letter(at: int) -> str:
@@ -16,7 +13,7 @@ def letter(at: int) -> str:
 
 
 def ordered(boq: list[dict]) -> list[dict]:
-    order = {section: at for at, section in enumerate(prompts.SECTIONS)}
+    order = {section: at for at, section in enumerate(SECTIONS)}
     return sorted(boq, key=lambda line: (line['bill'], order.get(line['section'], 99), line.get('position', 0)))
 
 
@@ -42,7 +39,7 @@ def totals(boq: list[dict], pricing: dict) -> dict:
     bills: dict[str, dict] = {}
     unpriced = 0
     for line in ordered(boq):
-        bill = bills.setdefault(line['bill'], {'name': prompts.BILLS[line['bill']][0], 'total': 0.0, 'sections': {}})
+        bill = bills.setdefault(line['bill'], {'name': BILLS[line['bill']][0], 'total': 0.0, 'sections': {}})
         value = amount(line)
         unpriced += value is None
         bill['sections'][line['section']] = bill['sections'].get(line['section'], 0.0) + (value or 0)
@@ -58,7 +55,7 @@ def totals(boq: list[dict], pricing: dict) -> dict:
 def item_of(code: str, section: str, description: str, members: list[dict], position: int) -> dict:
     confidences = {member['confidence'] for member in members}
     return {
-        'code': code, 'bill': prompts.BILL_OF[section], 'section': section, 'description': description, 'unit': members[0]['unit'],
+        'code': code, 'bill': BILL_OF[section], 'section': section, 'description': description, 'unit': members[0]['unit'],
         'qty': round(sum(member['qty'] for member in members), 3), 'count': sum(member['count'] for member in members),
         'gids': [gid for member in members for gid in member['gids']], 'lines': [member['code'] for member in members],
         'confidence': 'Low' if 'Low' in confidences else 'Medium' if 'Medium' in confidences else 'High',
@@ -76,7 +73,7 @@ def check_groups(lines: list[dict], answer: dict | None) -> list[dict]:
         codes = [code for code in item.get('lines') or [] if code in by_code and code not in used]
         if not codes or len({by_code[code]['unit'] for code in codes}) > 1:
             continue
-        section = item.get('section') if item.get('section') in prompts.SECTIONS else by_code[codes[0]]['section']
+        section = item.get('section') if item.get('section') in SECTIONS else by_code[codes[0]]['section']
         description = str(item.get('description') or '').strip()[:400] or by_code[codes[0]]['description']
         used.update(codes)
         boq.append(item_of(f'G{len(boq) + 1:03d}', section, description, [by_code[code] for code in codes], len(boq)))
@@ -94,11 +91,11 @@ async def group(lines: list[dict]) -> list[dict]:
             return []
         shown = [{key: line[key] for key in ('code', 'section', 'description', 'unit', 'count')} for line in mine]
         try:
-            return mine, await llm.ask_json(MODEL_SMART, prompts.GROUP, f'Measured lines:\n{shown}', 'low')
+            return mine, await ai.group(shown)
         except Exception:
             return mine, None
 
-    found = await asyncio.gather(*(one(bill) for bill in prompts.BILLS))
+    found = await asyncio.gather(*(one(bill) for bill in BILLS))
     boq = []
     for each in found:
         if each:

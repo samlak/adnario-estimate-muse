@@ -7,16 +7,13 @@ import time
 from collections import Counter, defaultdict
 from collections.abc import AsyncIterator
 
+from app.core.constants import MODEL_FAST, PERCENT
 from app.database import connection as db
-from app.core import llm
-from app.core.constants import MODEL_FAST, MODEL_SMART, PERCENT
-from app.features.estimate import prompts
+from app.features.estimate import ai
+from app.features.estimate.constants import BILL_OF, MAP_BATCH, PARALLEL, SECTIONS, UNITS
 from app.features.estimate.read import catalogue, read_models
 from app.features.estimate.takeoff import card_of, check_mapping, derive, identity, measure, provisional_qty, roll_up
-from app.features.models import open_ifc
-
-BATCH = 22  # types per Map call
-PARALLEL = 4
+from app.features.models.files import open_ifc
 
 
 async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
@@ -45,7 +42,7 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     yield stage('Context')
     context = info.get('text', '')
     if context:
-        context = await llm.ask_text(MODEL_SMART, 'Summarise these project documents for a quantity surveyor: what is to be built, where, the specification and anything excluded. Plain text, at most 200 words.', context[:60000], 'low')
+        context = await ai.summarise(context)
     yield stage('Context', 'done')
 
     yield stage('Read')
@@ -74,7 +71,7 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
                 'classes': dict(Counter(element['class'] for element in elements).most_common()),
                 'types': [f'{entry["class"]} {entry["family"] or ""} {entry["type"]} ×{entry["count"]}' for entry in types][:150]}
     try:
-        seen = await llm.ask_text(MODEL_FAST, prompts.SEE, f'Project: {project["name"]}, {project["location"]}. {project["description"]}\n{context}\nModel: {overview}', 'low')
+        seen = await ai.see(f'Project: {project["name"]}, {project["location"]}. {project["description"]}\n{context}\nModel: {overview}')
     except Exception as error:
         seen = f'- The model could not be summarised: {error}'
     yield 'seen', {'text': seen}
@@ -82,7 +79,7 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
 
     # the Map step: as each batch is answered, code measures it at once
     yield stage('Map')
-    yield 'log', {'text': f'{len(types)} types in {-(-len(types) // BATCH)} batches, {PARALLEL} at a time ({MODEL_FAST})'}
+    yield 'log', {'text': f'{len(types)} types in {-(-len(types) // MAP_BATCH)} batches, {PARALLEL} at a time ({MODEL_FAST})'}
     carried = {identity(entry): entry['mapping'] for entry in (before or {}).get('types', []) if entry.get('mapping') and entry['mapping'].get('decision') != 'unmapped'}
     members: dict[str, list[dict]] = defaultdict(list)
     for element in elements:
@@ -115,7 +112,7 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
 
     async def map_batch(batch: list[dict]):
         try:
-            answer = await llm.ask_json(MODEL_FAST, prompts.MAP, ask(batch), 'low')
+            answer = await ai.map_types(ask(batch))
             said = {item.get('key'): item for item in answer.get('types', [])} if isinstance(answer, dict) else {}
         except Exception:
             said = {}
@@ -127,7 +124,7 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
         async with gate:
             return await map_batch(batch)
 
-    tasks = [asyncio.create_task(guarded(pending[at : at + BATCH])) for at in range(0, len(pending), BATCH)]
+    tasks = [asyncio.create_task(guarded(pending[at : at + MAP_BATCH])) for at in range(0, len(pending), MAP_BATCH)]
     for task in asyncio.as_completed(tasks):
         batch, said = await task
         for entry in batch:
@@ -162,7 +159,7 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     user = (f'Project: {project["name"]} for {project["client"]}, {project["location"]}. {project["description"]}\nDocuments: {context or "none given"}\n'
             f'Model overview: {overview}\nMeasured lines: {shown_lines}\nHeld: {held}\nLeft out: {left}')
     try:
-        review = await llm.ask_json(MODEL_SMART, prompts.REVIEW, user, 'low')
+        review = await ai.review(user)
     except Exception as error:
         review = {'brief': '', 'summary': f'The review could not run: {error}', 'questions': [], 'provisional': []}
     yield 'brief', {'text': review.get('brief', '')}
@@ -175,10 +172,10 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     ]
     provisional = []
     for number, item in enumerate(review.get('provisional') or [], start=1):
-        section = item.get('section') if item.get('section') in prompts.SECTIONS else 'External works'
-        unit = {'m2': 'm²', 'm3': 'm³'}.get(item.get('unit'), item.get('unit')) if item.get('unit') in prompts.UNITS | {'m2', 'm3'} else 'item'
+        section = item.get('section') if item.get('section') in SECTIONS else 'External works'
+        unit = {'m2': 'm²', 'm3': 'm³'}.get(item.get('unit'), item.get('unit')) if item.get('unit') in UNITS | {'m2', 'm3'} else 'item'
         provisional.append({
-            'code': f'P{number:02d}', 'description': str(item.get('description', ''))[:300], 'section': section, 'bill': prompts.BILL_OF[section],
+            'code': f'P{number:02d}', 'description': str(item.get('description', ''))[:300], 'section': section, 'bill': BILL_OF[section],
             'unit': unit, 'basis': item.get('basis') or 'none', 'reason': str(item.get('reason', ''))[:300],
             'qty': provisional_qty(item.get('basis') or 'none', elements, rows),
         })

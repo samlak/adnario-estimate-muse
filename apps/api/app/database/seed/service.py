@@ -6,13 +6,14 @@ Update estimate) runs the flow live."""
 import asyncio
 import logging
 
-from app.database import connection as db
 from app.core.config import env
 from app.core.constants import DEMO_PASSWORD
-from app.features.auth import hashed
-from app.features.models import add_model, convert
-from app.features.ratecards import copy_library, top_up
+from app.database import connection as db
 from app.database.seed.constants import DEMO, PEOPLE, PROJECTS
+from app.features.auth.utils import hashed
+from app.features.models.convert import convert
+from app.features.models.service import add_model
+from app.features.rate_cards.library import copy_library, top_up
 
 log = logging.getLogger('adnario.seed')
 
@@ -74,7 +75,7 @@ def seed() -> list[tuple]:
 async def finish(work: list[tuple]) -> None:
     """Convert every model, then (with a Muse key) run every demo estimate to the end."""
     from app.core import runs
-    from app.features.estimate.router import generate, link, start_run
+    from app.features.estimate.jobs import generate, link, start_run
     from app.features.programme import service as programmes
 
     for org, _, models, _, _ in work:
