@@ -16,11 +16,11 @@ The QS uploads the design model and has a complete first draft in under an hour:
 
 ## Why we built it
 
-At Adnario we build project management software for construction, and in every conversation with firms and organisations in the industry we heard the same request: bring estimating and pricing into one place, on the building model, so a project can follow a true BIM process and everyone can see it in 3D, 4D and 5D, meaning the design, the programme over time and the cost. Adnario Estimate is that place. Architects, quantity surveyors, contractors and clients each bring their own work (the model, the rates, the programme of works, the documents) and all see the same, up-to-date picture of what the project will cost and when.
+At Adnario we build project management software for construction, and some of the organisations we spoke to asked us for the same thing: bring estimating and pricing into one place, on the building model, so a project can follow a true BIM process and everyone can see it in 3D, 4D and 5D, meaning the design, the programme over time and the cost. Adnario Estimate is that place. Architects, quantity surveyors, contractors and clients each bring their own work (the model, the rates, the programme of works, the documents) and all see the same, up-to-date picture of what the project will cost and when.
 
 ## Built during the hackathon
 
-All the code in this repository was built during this hackathon. Adnario's existing project management product is a separate codebase and is not connected to this one. The Adnario Market Rates card that every firm starts from is built from Nigerian market data on materials, labour and plant that we had already collected, so the prices in the demo reflect what building really costs.
+All the code in this repository was written during this hackathon. Adnario's existing project management product is a separate codebase and is not connected to this one. The Adnario Market Rates card that every firm starts from is built from Nigerian market data on materials, labour and plant that we had already collected, so the prices in the demo reflect what building really costs.
 
 ## Try it
 
@@ -61,35 +61,25 @@ The architect, QS, contractor and client all work on the same project, each seei
 
 ## How Meta Muse powers it
 
-Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`) on Meta's Model API. Muse is not a chatbot bolted on the side. It does the judgement a QS would otherwise do by hand, in two ways: as a set of steps inside the estimate pipeline, and as Adnario AI, an agent that answers questions about the whole project.
+Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`) on Meta's Model API. Muse does the judgement a QS would otherwise do by hand, and code checks every answer before the app uses it:
 
-The rule throughout is **code measures, AI interprets**. Quantities come from the geometry and quantity sets in the model, worked out by code ([IfcOpenShell](https://ifcopenshell.org)), and every BOQ number traces back to the model elements it came from. Muse decides what things *are* and how they are billed; it never computes a quantity, invents a price or sets a duration. Every answer it gives is checked by code before the app uses it.
+1. **Reads the building.** Muse reads a summary of the models and the client's documents and writes the brief every later step works from: the project, the city, the specification.
+2. **Decides how each element is billed.** Muse sees a compact catalogue of the model's types, never the model file, and chooses each one's BOQ item, unit and measuring method under Nigerian practice (BESMM4R). Code measures each batch as its answer arrives, so the 3D model fills in live, and holds anything low-confidence for the QS.
+3. **Asks instead of guessing.** Muse reviews the draft, writes the questions a QS would ask, and proposes provisional items for work the design does not show.
+4. **Writes the BOQ in the firm's voice.** Muse groups and words the measured lines in the firm's house style. Code checks every line is used once, the units agree and the quantities add up.
+5. **Links each line to a rate.** Muse picks the rate card item that is the same work. Code checks the unit, material and size, and with no true match the rate stays blank for the QS.
+6. **Places the BOQ's work under the programme.** Muse decides which of the contractor's activities does each piece of measured work, and code sends back any answer that names an activity that does not exist.
+7. **Answers questions as an agent.** **Adnario AI** is a Muse orchestrator that hands parts of a question to model, cost and programme specialists, each with its own read-only look-ups worked out by code. It shows which look-ups it used, links its answer to the panels the figures came from, and never shows money to a role that may not see it.
 
-### The estimate pipeline
+The rule throughout is **code measures, AI interprets**. Quantities come from the model's geometry, worked out by code ([IfcOpenShell](https://ifcopenshell.org)), and every BOQ number traces back to the elements it came from. Muse never computes a quantity, invents a price or sets a duration.
 
-1. **Reads the building.** Muse reads a summary of the models and the client's documents (briefs, specifications, PDFs) and writes a short description of the project and the facts that matter for the estimate, such as the city and the specification. Every later step is given this context.
-2. **Decides how each element is billed.** Code groups the model's elements into types and sends Muse a compact catalogue of them (class, name, material, layers, size, count), never the model file. For every type, Muse chooses the BOQ item, section, unit and measuring method under Nigerian practice (BESMM4R). The catalogue goes in batches, several at once, and code measures each batch the moment its answer arrives, which is why the 3D model fills in live. Confidence is code's, not the model's: it comes from checks anyone can repeat, and a low-confidence mapping is held for the QS instead of billed.
-3. **Asks instead of guessing.** Muse reviews the whole draft (the measured lines, the types held back and the types left out) alongside the questions code has already raised. It writes the review questions a QS would ask and proposes provisional items for work the design does not show, such as excavation, hardcore, drainage or the fence. Code then measures each provisional item from what it says it is based on.
-4. **Writes the BOQ in the firm's voice.** Muse groups the measured lines into bills and elements and words them in the firm's house style. Code then checks that every line is used once, the units agree and the quantities add up.
-5. **Links each line to a rate.** Muse picks the item on the firm's rate card that is the same work. Code checks the unit, material and size before the rate is used, and with no true match the rate stays blank for the QS.
-6. **Places the BOQ's work under the programme.** Code reads the contractor's programme PDF, keeping the activities, names, durations and links exactly as the contractor wrote them. Muse decides which activity does each piece of measured work (the ground floor slab's reinforcement, formwork and concrete, say). Code checks every assignment, and any answer that names an activity not in the programme is sent back to Muse to try again.
+## How it's implemented
 
-Each step asks Muse for a structured JSON answer. If the answer is not valid, Muse is asked again with the error. When a new model version arrives, only the types Muse has not seen before are sent, and every earlier decision is kept.
-
-### Adnario AI, the agent
-
-In the corner of every project, **Adnario AI** answers questions about the estimate, the programme and the cash flow, such as *"What is the total cost, which bill is the biggest, and which month needs the most money?"*
-
-- **An orchestrator with specialists.** A Muse orchestrator plans the answer and hands parts of it to three Muse specialists, for the model and takeoff, the cost and the programme. Each has its own set of read-only look-ups.
-- **Answers from the data, not from memory.** More than a dozen look-ups (the BOQ totals, a single BOQ line, elements by storey, the activities in a given week, the cash flow by month, and more) are worked out by code from the project's own estimate. Independent look-ups run side by side, and the agent takes up to ten rounds to reach an answer.
-- **Shows its work.** The answer streams in, each look-up it used is listed under it ("Worked: 2 look-ups, 7 s"), and the answer links to the panels its figures came from.
-- **Respects roles.** An architect asking about the project gets no quantities or money: the cost specialist and the money look-ups are not available to them.
-
-### How it's implemented
-
-Every call to Muse goes through one module on the server ([`apps/api/app/core/llm.py`](apps/api/app/core/llm.py)), using LangChain's client for the Chat Completions format that Meta's Model API speaks. Adnario AI's orchestrator and specialists are a LangGraph graph. The Muse API key is read from `.env` on the server and never reaches the browser.
-
-Around the AI, the web app (React, with xeokit for the 3D viewer) talks to a FastAPI server that measures the models with IfcOpenShell and stores each firm's data in PostgreSQL, kept apart by row-level security. A small Node service converts each IFC model for the viewer. Long work, such as a takeoff run, streams its progress to the browser as it happens.
+- **Web app** (React, Vite, Tailwind, with xeokit for the 3D viewer) talks only to the API: requests over HTTP, with live progress and changes streamed back over Server-Sent Events.
+- **API** (FastAPI, Python) does the work: it measures the IFC models with IfcOpenShell, runs the estimate, the BOQ, pricing, the programme and the cash flow, and writes the Excel and PDF exports.
+- **Converter** (a small Node service) turns each IFC model into XKT, the format the 3D viewer loads fast.
+- **PostgreSQL** holds every firm's data, kept apart by row-level security.
+- **Muse** is called only from the API, through one module ([`apps/api/app/core/llm.py`](apps/api/app/core/llm.py)) using LangChain, with Adnario AI built as a LangGraph graph. The API key never leaves the server.
 
 ## Develop
 
