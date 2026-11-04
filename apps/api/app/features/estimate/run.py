@@ -12,7 +12,9 @@ from app.database import connection as db
 from app.features.estimate import ai
 from app.features.estimate.constants import BILL_OF, MAP_BATCH, PARALLEL, SECTIONS, UNITS
 from app.features.estimate.read import catalogue, read_models
-from app.features.estimate.takeoff import card_of, check_mapping, derive, identity, measure, provisional_qty, roll_up
+from app.features.estimate.takeoff import (
+    BARS, card_of, check_mapping, concrete_of, derive, identity, issues, measure, provisional_qty, provisional_rebar, reinforce, roll_up,
+)
 from app.features.models.files import open_ifc
 
 
@@ -50,16 +52,18 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     for cls, count in sorted(Counter(element['class'] for element in elements).items(), key=lambda kv: kv[1]):
         measured = sum(1 for element in elements if element['class'] == cls and element['q'])
         yield 'log', {'text': f'{cls}: {count} read, {measured} with quantities'}
+    shaped = sum(1 for element in elements if element.get('shape') is not None)
+    yield 'log', {'text': f'{shaped} solid elements read as 3D shapes (formwork from their faces, and any quantity the model leaves out)'}
     yield stage('Read', 'done', elements=len(elements))
 
     yield stage('Catalogue')
-    types = catalogue(elements)
+    types = catalogue([element for element in elements if element['class'] not in BARS])  # bars are code's, under their concrete
     type_of = {}
     for entry in types:
         for ref in entry['gids']:
             type_of[ref] = entry['key']
     for element in elements:
-        element['type_key'] = type_of[element['ref']]
+        element['type_key'] = type_of.get(element['ref'])
     # which elements make up each type: the viewer fills them in as the AI decides each type
     yield 'catalogue', {'types': {entry['key']: entry['gids'] for entry in types}}
     yield 'log', {'text': f'{len(elements)} elements → {len(types)} distinct types (this is what the AI reads, not the file)'}
@@ -135,17 +139,22 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     yield stage('Map', 'done')
 
     yield stage('Derive')
-    derived = derive(elements, rows)
+    derived = derive(elements, rows, summaries)
+    concrete = concrete_of(elements, rows)
+    bar_rows, lost_bars = reinforce(elements, rows, concrete)
+    derived += bar_rows
     rows += derived
     sums: dict[str, float] = defaultdict(float)
     for row in derived:
         sums[row['description']] += row['qty']
     for description, qty in sums.items():
-        yield 'log', {'text': f'{"Bed" if "formwork" not in description.lower() else "Formwork"}: {description}: {qty:,.2f} m²'}
+        unit = next(row['unit'] for row in derived if row['description'] == description)
+        yield 'log', {'text': f'{"Formwork" if "formwork" in description.lower() else "Reinforcement" if unit == "t" else "Bed"}: {description}: {qty:,.2f} {unit}'}
     yield stage('Derive', 'done', rows=len(derived))
 
     yield stage('BOQ')
     lines = roll_up(rows)
+    found = issues(elements, types, rows, lost_bars)
     yield 'log', {'text': f'{len(lines)} BOQ lines from {len(rows)} takeoff rows; {sum(1 for row in rows if row.get("source") == "geometry")} measured from geometry'}
     yield stage('BOQ', 'done', lines=len(lines))
 
@@ -157,7 +166,8 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     held = [{'type': f'{entry["class"]} {entry["type"]}', 'count': entry['count'], 'why': entry['mapping']['reason']} for entry in types if entry['mapping'].get('held')]
     left = [{'type': f'{entry["class"]} {entry["type"]}', 'count': entry['count'], 'why': entry['mapping']['reason']} for entry in types if entry['mapping']['decision'] in ('exclude', 'unmapped')]
     user = (f'Project: {project["name"]} for {project["client"]}, {project["location"]}. {project["description"]}\nDocuments: {context or "none given"}\n'
-            f'Model overview: {overview}\nMeasured lines: {shown_lines}\nHeld: {held}\nLeft out: {left}')
+            f'Model overview: {overview}\nMeasured lines: {shown_lines}\nHeld: {held}\nLeft out: {left}\n'
+            f'Code already asks: {[question["question"] for question in found]}')
     try:
         review = await ai.review(user)
     except Exception as error:
@@ -165,19 +175,20 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     yield 'brief', {'text': review.get('brief', '')}
     yield stage('Brief', 'done')
     codes = {line['code'] for line in lines}
-    questions = [
-        {'severity': q.get('severity') if q.get('severity') in ('high', 'medium', 'low') else 'medium', 'question': str(q.get('question', ''))[:600],
+    questions = found + [
+        {'source': 'ai', 'refs': [], 'severity': q.get('severity') if q.get('severity') in ('high', 'medium', 'low') else 'medium', 'question': str(q.get('question', ''))[:600],
          'line_codes': [code for code in q.get('lines') or [] if code in codes]}
         for q in review.get('questions') or [] if q.get('question')
     ]
     provisional = []
-    for number, item in enumerate(review.get('provisional') or [], start=1):
+    suggested = provisional_rebar(elements, rows, concrete, bar_rows) + [item for item in review.get('provisional') or [] if item.get('basis') != 'reinforcement']
+    for number, item in enumerate(suggested, start=1):
         section = item.get('section') if item.get('section') in SECTIONS else 'External works'
         unit = {'m2': 'm²', 'm3': 'm³'}.get(item.get('unit'), item.get('unit')) if item.get('unit') in UNITS | {'m2', 'm3'} else 'item'
         provisional.append({
             'code': f'P{number:02d}', 'description': str(item.get('description', ''))[:300], 'section': section, 'bill': BILL_OF[section],
-            'unit': unit, 'basis': item.get('basis') or 'none', 'reason': str(item.get('reason', ''))[:300],
-            'qty': provisional_qty(item.get('basis') or 'none', elements, rows),
+            'unit': unit, 'basis': item.get('basis') or 'none', 'reason': str(item.get('reason', ''))[:300], 'rate_code': item.get('rate_code'),
+            'qty': item['qty'] if item.get('basis') == 'reinforcement' else provisional_qty(item.get('basis') or 'none', elements, rows, unit, summaries),
         })
     yield stage('Review', 'done', questions=len(questions))
 

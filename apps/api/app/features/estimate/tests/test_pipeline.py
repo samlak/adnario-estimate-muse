@@ -2,6 +2,7 @@
 Generate BOQ and Link to cost. What is checked is code's part: every answer checked, measured and added up."""
 
 import asyncio
+import json
 from contextlib import contextmanager
 
 import ifcopenshell
@@ -78,9 +79,19 @@ def test_the_run_measures_the_model_and_checks_every_answer(monkeypatch):
     assert walls > 100  # m² of wall in a two-storey house
     assert all(line['code'].startswith('L') for line in result['takeoff_lines'])
     # the review's answers checked: an unknown line dropped, an odd severity made medium, a foreign section made ours
-    assert result['questions'][0]['line_codes'] == ['L001'] and result['questions'][1]['severity'] == 'medium'
-    assert (result['provisional'][0]['section'], result['provisional'][0]['unit']) == ('External works', 'm²')
+    asked = [question for question in result['questions'] if question['source'] == 'ai']
+    assert asked[0]['line_codes'] == ['L001'] and asked[1]['severity'] == 'medium'
+    clearance = next(item for item in result['provisional'] if item['basis'] == 'footprint')
+    assert (clearance['section'], clearance['unit']) == ('External works', 'm²')
+    # reinforcement is code's: the model has no bars, so the concrete's comes in provisional by element, in tonnes
+    assert all(item['unit'] == 't' and item['qty'] > 0 for item in result['provisional'] if item['basis'] == 'reinforcement')
     assert result['city'] == 'Lagos'
+    # code's part of the takeoff: the slabs' beds and formwork from their faces, every question code found, and a result
+    # that holds no shapes or IFC entities (it is saved as JSON)
+    derived = {row['derived'] for row in result['takeoff'] if row.get('derived')}
+    assert {'dpm', 'anti_termite'} <= derived and all(row['basis'] in ('faces', 'dimensions') for row in result['takeoff'] if row.get('derived'))
+    assert all(question['source'] in ('code', 'ai') for question in result['questions'])
+    json.dumps(result)
 
 
 def test_a_run_without_models_stops(monkeypatch):

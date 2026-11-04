@@ -6,12 +6,14 @@ Measuring takes each quantity from the cheapest reliable source: the standard IF
 Revit exporter's bugs), Revit's own dimensions, then the geometry. Doors and windows get their size from the element,
 never from a name."""
 
+import re
 from collections import Counter, defaultdict
 
 import ifcopenshell.util.element as E
 import ifcopenshell.util.unit as U
 
-from app.features.estimate.constants import LINEAR, SKIP, STRUCTURAL
+from app.features.estimate.constants import LINEAR, RULES, SHAPED, SKIP, STRUCTURAL
+from app.features.estimate.shapes import read_shapes
 
 
 def number(value):
@@ -68,12 +70,17 @@ def quantities(element, scale: float = 1.0) -> tuple[dict, str]:
         out['width'] = qto.get('Width')
         out['height'] = qto.get('Height') or qto.get('Depth')
         out['perimeter'] = qto.get('Perimeter')
+        out['surface'] = qto.get('OuterSurfaceArea') or qto.get('GrossSurfaceArea') or qto.get('NetSurfaceArea')
+        out['section'] = qto.get('CrossSectionArea')
+        out['net'] = bool(qto.get('NetSideArea')) and out['area'] == qto.get('NetSideArea')
     if revit:
         source = 'quantity set' if qto else 'Revit dimensions'
         for key, mine in (('length', 'Length'), ('area', 'Area'), ('volume', 'Volume'), ('width', 'Width'), ('perimeter', 'Perimeter'), ('thickness', 'Thickness')):
             out[key] = out.get(key) or revit.get(mine)
+        out['net'] = out.get('net') or (not qto and bool(revit.get('Area')) and element.is_a('IfcWall'))  # Revit's wall area is net
         out['length'] = out.get('length') or number(psets.get('PSet_Revit_Structural', {}).get('Cut Length'))
     out['width'] = out.get('width') or revit_type.get('Width')
+    out['length'] = out.get('length') or (revit_type.get('Length') if element.is_a('IfcFooting') else None)
     out['height'] = out.get('height') or revit_type.get('Height') or number(psets.get('PSet_Revit_Constraints', {}).get('Unconnected Height'))
     out['thickness'] = out.get('thickness') or revit_type.get('Foundation Thickness') or revit_type.get('Thickness') or revit_type.get('Default Thickness')
     for attribute, key in (('OverallWidth', 'width'), ('OverallHeight', 'height')):  # a door or window: its own size
@@ -86,6 +93,9 @@ def quantities(element, scale: float = 1.0) -> tuple[dict, str]:
     # Revit writes some perimeters in metres in a mm model: none can be shorter than a circle's of the same area
     if raw_perimeter and out.get('area') and out['perimeter'] < 2 * (3.1416 * out['area']) ** 0.5:
         out['perimeter'] = raw_perimeter
+    if element.is_a('IfcFooting') and not out.get('volume') and all(out.get(key) for key in ('length', 'width', 'thickness')):
+        out['volume'] = out['length'] * out['width'] * out['thickness']  # a pad that states only its type's size
+        source = 'Revit type dimensions'
     if element.is_a('IfcDoor') or element.is_a('IfcWindow'):
         if out.get('width') and out['width'] > 20:  # mm
             out['width'] /= 1000
@@ -94,26 +104,27 @@ def quantities(element, scale: float = 1.0) -> tuple[dict, str]:
     return {key: value for key, value in out.items() if value}, source
 
 
-def geometry_quantities(element) -> dict:
-    """The last resort: measured from the shape (slow, and Revit's own figures are better when there are any)."""
-    import ifcopenshell.geom as G
-    import ifcopenshell.util.shape as S
+def openings_of(element, shapes: dict) -> list[float]:
+    """The area (m²) of each opening cut in the element: its two larger sizes, from the opening's own shape."""
+    areas = []
+    for rel in getattr(element, 'HasOpenings', None) or []:
+        shape = shapes.get(rel.RelatedOpeningElement.id())
+        if shape:
+            a, b, _ = sorted(shape.size, reverse=True)
+            areas.append(float(a * b))
+    return areas
 
-    settings = G.settings()
-    settings.set('use-world-coords', True)
-    try:
-        shape = G.create_shape(settings, element).geometry
-    except Exception:
-        return {}
-    return {
-        'volume': S.get_volume(shape), 'area': S.get_max_side_area(shape), 'footprint': S.get_footprint_area(shape),
-        'length': max(S.get_x(shape), S.get_y(shape)), 'height': S.get_z(shape),
-    }
+
+def structural(element) -> bool:
+    """A slab or wall the structural engineer owns: Revit's Structural tick, or IFC's LoadBearing."""
+    psets = E.get_psets(element)
+    return any(values.get(key) is True for name, values in psets.items() for key in ('Structural', 'LoadBearing')
+               if name in ('PSet_Revit_Structural', 'Pset_SlabCommon', 'Pset_WallCommon'))
 
 
 def read_models(models: list[dict], open_ifc) -> tuple[list[dict], list[dict]]:
-    """Every element of every model: [{ref, gid, model, class, family, type, storey, layers, q, source}], and a summary
-    per model with its storeys."""
+    """Every element of every model: [{ref, gid, model, class, family, type, storey, layers, q, source, shape}], and a
+    summary per model with its storeys. shape (and the entity, ifc) stay in memory for the run; they are never saved."""
     elements = []
     summaries = []
     by_gid: dict[str, list[dict]] = defaultdict(list)
@@ -121,7 +132,9 @@ def read_models(models: list[dict], open_ifc) -> tuple[list[dict], list[dict]]:
         ifc = open_ifc(model)
         scale = U.calculate_unit_scale(ifc)
         storeys = [{'name': storey.Name, 'elevation': number(getattr(storey, 'Elevation', None))} for storey in ifc.by_type('IfcBuildingStorey')]
-        summaries.append({'model': model['name'], 'storeys': storeys, 'schema': ifc.schema})
+        for storey in storeys:
+            storey['elevation'] = storey['elevation'] * scale if storey['elevation'] is not None else None
+        mine = []
         for element in ifc.by_type('IfcElement'):
             if any(element.is_a(skip) for skip in SKIP):
                 continue
@@ -137,20 +150,56 @@ def read_models(models: list[dict], open_ifc) -> tuple[list[dict], list[dict]]:
                 'class': element.is_a(), 'family': family, 'type': type_name, 'name': element.Name,
                 'storey': storey_of(element), 'layers': layers_of(element, scale),
                 'material': ', '.join(sorted({m.Name for m in (E.get_materials(element) or []) if getattr(m, 'Name', None)}))[:200],
-                'q': q, 'source': source,
+                'q': q, 'source': source, 'ifc': element, 'file': ifc, 'scale': scale,  # the file kept open while its entities are used
+                'structural': (element.is_a('IfcSlab') or element.is_a('IfcWall')) and structural(element),
             }
+            mine.append(record)
+        shape_elements(ifc, mine)
+        frame = ('IfcBeam', 'IfcColumn', 'IfcFooting', 'IfcPile')  # not members: a curtain wall's mullions are members too
+        share = sum(1 for r in mine if r['class'].startswith(frame)) / max(1, sum(1 for r in mine if r['class'].startswith(SHAPED)))
+        is_structural = share >= 0.7 or bool(re.search(r'(?<![A-Z])STR(UCT\w*)?(?![A-Z])', model['name'].upper()))
+        summaries.append({'model': model['name'], 'storeys': storeys, 'schema': ifc.schema, 'structural': is_structural})
+        for record in mine:
+            record['structural_model'] = is_structural
             elements.append(record)
-            by_gid[element.GlobalId].append(record)
-    # the same element in two models is billed once
-    for gid, copies in by_gid.items():
+            by_gid[record['gid']].append(record)
+    # the same element in two models is billed once: the structure governs the frame, foundations and structural slabs
+    # and walls; the architecture everything else
+    for copies in by_gid.values():
         if len(copies) < 2:
             continue
-        structural = next((copy for copy in copies if 'STR' in copy['model'].upper()), None)
-        governing = structural if structural and copies[0]['class'].startswith(STRUCTURAL) else next((c for c in copies if c is not structural), copies[0])
+        frame = copies[0]['class'].startswith(STRUCTURAL) or any(copy['structural'] and copy['class'].startswith(('IfcSlab', 'IfcWall')) for copy in copies)
+        structure = next((copy for copy in copies if copy['structural_model']), None)
+        governing = structure if structure and frame else next((copy for copy in copies if not copy['structural_model']), copies[0])
         for copy in copies:
             if copy is not governing:
                 copy['duplicate_of'] = governing['model']
     return elements, summaries
+
+
+def shape_elements(ifc, records: list[dict]) -> None:
+    """Each solid element's shape, read in one pass (and any element the model gives no quantities); then what the shapes
+    correct: a volume 1000 times too big, and a net wall area with the small openings it should not have lost."""
+    wanted = [record for record in records if record['class'].startswith(SHAPED) or not record['q']]
+    shapes = read_shapes(ifc, [record['ifc'] for record in wanted])
+    for record in wanted:
+        record['shape'] = shapes.get(record['ifc'].id())
+    openings = [rel.RelatedOpeningElement for record in records if record['class'].startswith(('IfcWall', 'IfcSlab'))
+                for rel in getattr(record['ifc'], 'HasOpenings', None) or []]
+    opening_shapes = read_shapes(ifc, openings, world=False)  # in its own axes: a slanted wall's window keeps its size
+    for record in records:
+        q, shape = record['q'], record.get('shape')
+        if shape and q.get('volume') and shape.volume and 500 < q['volume'] / shape.volume < 2000:
+            q['volume'] /= 1000
+            record['fixed'] = 'volume ÷ 1000 (the model stated it 1000 times too big)'
+        if record['class'].startswith(('IfcWall', 'IfcSlab')):
+            areas = openings_of(record['ifc'], opening_shapes)
+            record['openings'] = areas
+            small = sum(area for area in areas if area <= RULES['wall_void'])
+            if small and q.pop('net', False) and q.get('area') and record['class'].startswith('IfcWall'):
+                q['area'] += small  # voids of 0.5 m² or less are not deducted
+                record['added_back'] = round(small, 3)
+        q.pop('net', None)
 
 
 def size_of(element: dict) -> str | None:

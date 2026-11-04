@@ -58,12 +58,15 @@ Answer with:
 - facts: {"use": "", "frame": "", "storeys": "", "city": "", "exclusions": ""} from what you were given; "" when unknown.
 - summary: two or three sentences for the QS on how far the takeoff can be trusted and what to check.
 - questions: what the QS must answer before the BOQ can be trusted, each {"severity": "high"|"medium"|"low",
-  "question": "...", "lines": ["L012"]} with the measured lines it is about (may be empty).
+  "question": "...", "lines": ["L012"]} with the measured lines it is about (may be empty). "Code already asks" lists
+  the questions code found by measuring (elements not measured, sizes that disagree, missing formwork...): never repeat
+  one; ask what only reading the whole takeoff shows, and mention them in the summary when they matter.
 - provisional: work the job needs that the design does not show (site clearance, excavation, disposal, backfill,
-  hardcore, reinforcement, lintels, damp-proof course, plaster, screed, tiling, painting, fence wall and gates,
+  hardcore, lintels, damp-proof course, plaster, screed, tiling, painting, fence wall and gates,
   drainage, septic tank, borehole, generator...). Each {"description", "section", "unit", "basis", "reason"}, where
-  basis is one of: footprint, excavation, surplus, backfill, hardcore, reinforcement, lintels, dpc, plaster,
-  floor_finish, wall_finish, perimeter_fence, none. Code works out the quantity from the basis; never give one.
+  basis is one of: footprint, excavation, surplus, backfill, hardcore, lintels, dpc, plaster, floor_finish,
+  wall_finish, perimeter_fence, none. Code works out the quantity from the basis; never give one. Reinforcement is
+  code's (measured from the bars, or provisional by element): never suggest it.
 
 """
     + STYLE
