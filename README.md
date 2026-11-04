@@ -61,7 +61,15 @@ The architect, QS, contractor and client all work on the same project, each seei
 
 ## How Meta Muse powers it
 
-Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`) on Meta's Model API. Muse does the judgement a QS would otherwise do by hand, and code checks every answer before the app uses it:
+Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`) on Meta's Model API, in two roles: as the agent behind Adnario AI, and as the judgement inside the estimate pipeline.
+
+### Adnario AI, the agent
+
+Muse powers the agentic capability of **Adnario AI**, the assistant in the corner of every project. Ask it *"What is the total cost, which bill is the biggest, and which month needs the most money?"* and a Muse orchestrator plans the answer, hands parts of it to model, cost and programme specialists, and each specialist gathers the figures through its own read-only look-ups, worked out by code from the project's estimate. The answer streams back with the look-ups it used and links to the panels its figures came from, and it never shows money to a role that may not see it.
+
+### The estimate pipeline
+
+Inside the pipeline, Muse does the judgement a QS would otherwise do by hand, and code checks every answer before the app uses it:
 
 1. **Reads the building.** Muse reads a summary of the models and the client's documents and writes the brief every later step works from: the project, the city, the specification.
 2. **Decides how each element is billed.** Muse sees a compact catalogue of the model's types, never the model file, and chooses each one's BOQ item, unit and measuring method under Nigerian practice (BESMM4R). Code measures each batch as its answer arrives, so the 3D model fills in live, and holds anything low-confidence for the QS.
@@ -69,7 +77,6 @@ Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`) on Meta's Model 
 4. **Writes the BOQ in the firm's voice.** Muse groups and words the measured lines in the firm's house style. Code checks every line is used once, the units agree and the quantities add up.
 5. **Links each line to a rate.** Muse picks the rate card item that is the same work. Code checks the unit, material and size, and with no true match the rate stays blank for the QS.
 6. **Places the BOQ's work under the programme.** Muse decides which of the contractor's activities does each piece of measured work, and code sends back any answer that names an activity that does not exist.
-7. **Answers questions as an agent.** **Adnario AI** is a Muse orchestrator that hands parts of a question to model, cost and programme specialists, each with its own read-only look-ups worked out by code. It shows which look-ups it used, links its answer to the panels the figures came from, and never shows money to a role that may not see it.
 
 The rule throughout is **code measures, AI interprets**. Quantities come from the model's geometry, worked out by code ([IfcOpenShell](https://ifcopenshell.org)), and every BOQ number traces back to the elements it came from. Muse never computes a quantity, invents a price or sets a duration.
 
