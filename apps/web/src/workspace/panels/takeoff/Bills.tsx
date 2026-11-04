@@ -48,7 +48,7 @@ export function Bills({ result }: { result: Result }) {
             <Fragment key={name}>
               <tr className="border-b border-line bg-[#f7f9fb] font-semibold"><td className="px-3 py-2.5">{shown[0]}{index + 1}</td><td className="py-2.5" colSpan={4}>{name}</td><td className="py-2.5 pr-4 text-right">{naira(value)}</td></tr>
               {result.boq.filter((line) => line.bill === shown[0] && line.section === name).map((line) => (
-                <tr key={line.code} className="group cursor-pointer border-b border-line align-top hover:bg-paper" title="Show it on the model" onClick={() => { ws.setLine(line.code); ws.show(line.gids); }}>
+                <tr key={line.code} id={`boq-${line.code}`} className="group cursor-pointer border-b border-line align-top hover:bg-paper" title="Show it on the model" onClick={() => { ws.setLine(line.code); ws.show(line.gids); }}>
                   <td className="px-3 py-2 text-[#6b7581]">{result.refs[line.code]}</td>
                   <td className="py-2 pr-3">{line.description}<CommentButton topic={{ kind: 'boq', ref: line.code, label: `${result.refs[line.code] ?? ''} ${line.description}`.trim() }} /></td>
                   <td className="py-1.5 text-right"><Edit line={line} field="qty" /></td>

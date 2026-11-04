@@ -36,6 +36,24 @@ export function Conversation({ project, topic, onClose }: { project: Project; to
     setText(text.slice(0, from) + before + text.slice(from, to) + after + text.slice(to));
     setTimeout(() => area.focus());
   };
+  // a tag goes to what it is on (the element in 3D, the BOQ item, the review question) and opens its thread
+  const go = (comment: Comment) => {
+    const ref = comment.on_ref!, result = ws.result;
+    const scroll = (id: string) => setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: 'center', behavior: 'smooth' }), 150);
+    if (comment.on_kind === 'element') ws.show([ref], true);
+    else if (comment.on_kind === 'boq') {
+      ws.open('takeoff'); ws.setBoqTab('boq'); ws.setLine(ref);
+      const line = result?.boq.find((each) => each.code === ref);
+      if (line) ws.show(line.gids, true);
+      scroll(`boq-${ref}`);
+    } else if (comment.on_kind === 'question') {
+      ws.open('takeoff'); ws.setBoqTab('review');
+      const question = result?.questions[Number(ref)];
+      if (question) ws.show(question.refs?.length ? question.refs : [...new Set(result!.takeoff_lines.filter((line) => question.line_codes.includes(line.code)).flatMap((line) => line.gids))], true);
+      scroll(`question-${ref}`);
+    }
+    ws.discuss({ kind: comment.on_kind as Topic['kind'], ref, label: comment.on_label });
+  };
   const post = () => {
     if (!text.trim()) return;
     // mentioning someone notifies them; someone in the firm who is not on the project is added to it (the server)
@@ -104,7 +122,7 @@ export function Conversation({ project, topic, onClose }: { project: Project; to
                   <small className="flex-1 text-[11.5px] text-[#9aa1a9]">{stamp(comment.created_at)}</small>
                   {comment.person_id === me.id && <button className="text-[11.5px] font-semibold text-[#9aa1a9] opacity-0 group-hover:opacity-100" onClick={() => ask({ title: 'Delete your comment?', message: 'It goes for everyone on the project.', onConfirm: () => void send(`/comments/${comment.id}`, 'DELETE', undefined, path) })}>Remove</button>}
                 </p>
-                {tagged ? <button className="mt-1 block w-full truncate rounded-md bg-accent-50 px-1.5 py-0.5 text-left text-[11.5px] font-semibold text-accent-600 hover:underline" title="Open its thread" disabled={!comment.on_ref || !['element', 'boq', 'question'].includes(comment.on_kind)} onClick={() => ws.discuss({ kind: comment.on_kind as Topic['kind'], ref: comment.on_ref!, label: comment.on_label })}>{comment.on_label}</button> : !topic && <p className="text-[11px] font-semibold text-[#9aa1a9]">An estimate</p>}
+                {tagged ? <button className="mt-1 block w-full truncate rounded-md bg-accent-50 px-1.5 py-0.5 text-left text-[11.5px] font-semibold text-accent-600 hover:underline" title="Go to it, and open its thread" disabled={!comment.on_ref || !['element', 'boq', 'question'].includes(comment.on_kind)} onClick={() => go(comment)}>{comment.on_label}</button> : !topic && <p className="text-[11px] font-semibold text-[#9aa1a9]">An estimate</p>}
                 <p className="mt-1 whitespace-pre-wrap text-[13px] leading-[1.55]">{comment.text}</p>
                 {comment.file && <a href={`/api/v1/comments/${comment.id}/file`} target="_blank" rel="noreferrer" className="mt-1.5 inline-flex items-center gap-1.5 rounded-lg border border-line px-2 py-1 text-[12px] hover:border-primary-300"><FileText size={13} /> {comment.file.name} · {Math.max(1, Math.round(comment.file.size / 1024))} KB</a>}
               </div>

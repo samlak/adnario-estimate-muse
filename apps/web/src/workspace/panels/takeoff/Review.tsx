@@ -43,7 +43,7 @@ export function Review({ result }: { result: Result }) {
         // code's questions name their own elements (some, like one that could not be measured, are on no line)
         const gids = question.refs?.length ? question.refs : [...new Set(lines.flatMap((line) => line.gids))];
         return (
-          <section key={index} className="group mb-3 rounded-2xl border border-line px-3 py-3 text-[12.5px] leading-[1.5]">
+          <section key={index} id={`question-${index}`} className="group mb-3 rounded-2xl border border-line px-3 py-3 text-[12.5px] leading-[1.5]">
             <p><span className={`pill mr-1.5 uppercase ${TONE[question.severity]}`}>{question.severity}</span>{question.question}</p>
             <div className="mt-1 flex items-end gap-2">
                 <button className="flex-1 text-left text-[11.5px] text-[#6b7581] hover:text-primary disabled:hover:text-[#6b7581]" disabled={!gids.length} onClick={() => ws.show(gids)}>
