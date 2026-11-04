@@ -20,7 +20,7 @@ At Adnario we build project management software for construction, and some of th
 
 ## Built during the hackathon
 
-All the code in this repository was written during this hackathon. Adnario's existing project management product is a separate codebase and is not connected to this one. The Adnario Market Rates card that every firm starts from is built from Nigerian market data on materials, labour and plant that we had already collected, so the prices in the demo reflect what building really costs.
+All the code in this repository was written during this hackathon. Adnario's existing project management product is a separate codebase and is not connected to this one. The Adnario Market Rates card that every firm starts from is built from Nigerian market data on materials, labour and plant that we had already collected.
 
 ## Try it
 
