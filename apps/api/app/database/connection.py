@@ -11,7 +11,7 @@ from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb, set_json_dumps
 from psycopg_pool import ConnectionPool
 
-from app.config import env
+from app.core.config import env
 
 set_json_dumps(lambda value: json.dumps(value, default=str))
 pool = ConnectionPool(env.DATABASE_URL, min_size=1, max_size=12, open=False, kwargs={'row_factory': dict_row, 'autocommit': False})

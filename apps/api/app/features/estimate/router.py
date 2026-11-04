@@ -12,9 +12,10 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
-from app import db, runs
-from app.access import Actor, CurrentActor, check_estimate, find_project, need_edit
-from app.config import env
+from app.database import connection as db
+from app.core import runs
+from app.core.access import Actor, CurrentActor, check_estimate, find_project, need_edit
+from app.core.config import env
 from app.features.estimate import boq as boqs
 from app.features.estimate import cost, exports
 from app.features.estimate import run as runner

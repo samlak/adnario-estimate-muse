@@ -4,8 +4,8 @@ B1A style: bill letter, element number (sections present, in Nigerian order), it
 
 import asyncio
 
-from app import llm
-from app.config import MODEL_SMART
+from app.core import llm
+from app.core.constants import MODEL_SMART
 from app.features.estimate import prompts
 
 LETTERS = 'ABCDEFGHJKLMNPQRSTUVWXYZ'

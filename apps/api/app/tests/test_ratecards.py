@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from app.config import env
+from app.core.config import env
 from app.features.ratecards import output_of, rate_of
 
 BLOCKWORK = {

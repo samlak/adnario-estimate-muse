@@ -8,8 +8,8 @@ import re
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
-from app import llm
-from app.config import MODEL_FAST
+from app.core import llm
+from app.core.constants import MODEL_FAST
 from app.features.estimate.boq import totals
 
 ROW = re.compile(r'^(\d+) (.+?) (\d+) days? (\d\d \w{3} \d{4}) (\d\d \w{3} \d{4}) ?(.*)$')

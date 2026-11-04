@@ -4,7 +4,7 @@ circle's."""
 import ifcopenshell
 import pytest
 
-from app.config import env
+from app.core.config import env
 from app.features.estimate.read import read_models
 
 IKEJA = env.SAMPLES / 'ikeja-office' / 'Ikeja_Office.ifc'

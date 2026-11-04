@@ -10,9 +10,10 @@ from uuid import UUID
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
-from app import db
-from app.access import CurrentActor, NotFound
-from app.config import env
+from app.database import connection as db
+from app.core.access import CurrentActor
+from app.core.errors import NotFound
+from app.core.config import env
 
 router = APIRouter()
 LIBRARY = 'Adnario Market Rates'

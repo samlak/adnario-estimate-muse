@@ -6,27 +6,15 @@ Update estimate) runs the flow live."""
 import asyncio
 import logging
 
-from app import db
-from app.config import DEMO_PASSWORD, env
+from app.database import connection as db
+from app.core.config import env
+from app.core.constants import DEMO_PASSWORD
 from app.features.auth import hashed
 from app.features.models import add_model, convert
 from app.features.ratecards import copy_library, top_up
+from app.database.seed.constants import DEMO, PEOPLE, PROJECTS
 
 log = logging.getLogger('adnario.seed')
-DEMO = 'Demo Partners QS'
-PEOPLE = [
-    ('Ada Okafor', 'admin@demo.adnario.app', 'admin'),
-    ('Tunde Bello', 'qs@demo.adnario.app', 'qs'),
-    ('Chidi Eze', 'architect@demo.adnario.app', 'contributor'),
-    ('Ngozi Adeyemi', 'client@demo.adnario.app', 'viewer'),
-]
-PROJECTS = [
-    ('Lekki Office Block', 'Lekki Gardens Holdings', 'Lekki, Lagos', 'Two-storey steel-framed office block with lifts, HVAC plant and full electrical fit-out.',
-     'lekki-office', ['Office_ARC.ifc', 'Office_STR.ifc', 'Office_ELE.ifc'], 'Lekki_Office_Block_Programme.pdf'),
-    ('Ikeja Corporate Office', 'Ikeja Holdings Ltd', 'Ikeja, Lagos', 'Corporate office building, architectural model only.',
-     'ikeja-office', ['Ikeja_Office.ifc'], 'Ikeja_Corporate_Office_Programme.pdf'),
-    ('Ikoyi Duplex', 'Private client', 'Ikoyi, Lagos', 'Two-storey residential duplex.', 'ikoyi-duplex', ['Ifc2x3_Duplex_Architecture.ifc'], 'Ikoyi_Duplex_Programme.pdf'),
-]
 
 
 def seed() -> list[tuple]:
@@ -85,7 +73,7 @@ def seed() -> list[tuple]:
 
 async def finish(work: list[tuple]) -> None:
     """Convert every model, then (with a Muse key) run every demo estimate to the end."""
-    from app import runs
+    from app.core import runs
     from app.features.estimate.router import generate, link, start_run
     from app.features.programme import service as programmes
 

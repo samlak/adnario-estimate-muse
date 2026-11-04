@@ -7,8 +7,9 @@ import time
 from collections import Counter, defaultdict
 from collections.abc import AsyncIterator
 
-from app import db, llm
-from app.config import MODEL_FAST, MODEL_SMART, PERCENT
+from app.database import connection as db
+from app.core import llm
+from app.core.constants import MODEL_FAST, MODEL_SMART, PERCENT
 from app.features.estimate import prompts
 from app.features.estimate.read import catalogue, read_models
 from app.features.estimate.takeoff import card_of, check_mapping, derive, identity, measure, provisional_qty, roll_up

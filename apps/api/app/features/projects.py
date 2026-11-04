@@ -10,9 +10,11 @@ from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
-from app import db, live
-from app.access import CurrentActor, Forbidden, NotFound, find_project
-from app.config import env
+from app.database import connection as db
+from app.core import live
+from app.core.access import CurrentActor, find_project
+from app.core.errors import Forbidden, NotFound
+from app.core.config import env
 
 router = APIRouter()
 UPLOAD_LIMIT = 50 * 1024 * 1024

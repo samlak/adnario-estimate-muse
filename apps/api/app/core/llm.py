@@ -19,7 +19,8 @@ from langgraph.graph.message import add_messages
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Send
 
-from app.config import MODEL_TIMEOUT, MUSE_BASE_URL, env
+from app.core.config import MUSE_BASE_URL, env
+from app.core.constants import MODEL_TIMEOUT
 
 Content = str | list[dict]
 

@@ -5,8 +5,8 @@ from datetime import date
 
 import pytest
 
-from app.access import Actor
-from app.config import env
+from app.core.access import Actor
+from app.core.config import env
 from app.features.programme.service import cash_flow, easter, parse_rows, read_pdf, schedule, shown, working_days
 
 LEKKI = env.SAMPLES / 'lekki-office' / 'Lekki_Office_Block_Programme.pdf'

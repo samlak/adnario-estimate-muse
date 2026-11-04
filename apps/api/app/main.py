@@ -9,8 +9,10 @@ from fastapi import APIRouter, FastAPI, Request
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
-from app import db, live, seed
-from app.config import env
+from app.database import connection as db
+from app.core import live
+from app.database.seed import service as seed
+from app.core.config import env
 from app.features import auth, models, org, projects, ratecards
 from app.features.estimate import router as estimate
 from app.features.sidekick import router as sidekick

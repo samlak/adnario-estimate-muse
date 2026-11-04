@@ -4,8 +4,8 @@
 from collections.abc import AsyncIterator
 from datetime import date
 
-from app import llm
-from app.config import MODEL_FAST, MODEL_SMART
+from app.core import llm
+from app.core.constants import MODEL_FAST, MODEL_SMART
 from app.features.sidekick.constants import (
     EFFORT,
     MAX_STEPS,

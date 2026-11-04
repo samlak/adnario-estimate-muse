@@ -47,7 +47,7 @@ To start again from an empty database: `docker compose down -v`.
 ## Checks
 
 ```
-npm test          # unit tests: the API's (pytest; route tests use a separate adnario_test database) and the web app's (vitest)
+npm test          # unit tests, no database or AI needed: the API's (pytest) and the web app's (vitest)
 ```
 
 ## End-to-end test

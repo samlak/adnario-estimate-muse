@@ -7,9 +7,11 @@ import bcrypt
 from fastapi import APIRouter, HTTPException, Response
 from pydantic import BaseModel, EmailStr, Field
 
-from app import db
-from app.access import COOKIE, PERMISSIONS, SESSION_DAYS, CurrentActor, NotFound, new_session, token_hash
-from app.config import env
+from app.database import connection as db
+from app.core.access import CurrentActor, new_session, token_hash
+from app.core.constants import COOKIE, PERMISSIONS, SESSION_DAYS
+from app.core.errors import NotFound
+from app.core.config import env
 
 router = APIRouter()
 FAILURES = 5  # in ten minutes, per email

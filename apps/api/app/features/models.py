@@ -15,9 +15,10 @@ from fastapi import APIRouter, BackgroundTasks, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
-from app import db
-from app.access import CurrentActor, Forbidden, NotFound, find_project
-from app.config import env
+from app.database import connection as db
+from app.core.access import CurrentActor, find_project
+from app.core.errors import Forbidden, NotFound
+from app.core.config import env
 from app.features.projects import notify
 
 router = APIRouter()

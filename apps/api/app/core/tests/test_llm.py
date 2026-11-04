@@ -3,7 +3,7 @@
 import pytest
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 
-from app.llm import _json_of, history, messages
+from app.core.llm import _json_of, history, messages
 
 
 def test_json_is_found_however_it_is_wrapped():

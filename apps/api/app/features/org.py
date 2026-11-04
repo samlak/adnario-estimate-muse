@@ -6,8 +6,9 @@ from typing import Literal
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, EmailStr, Field
 
-from app import db
-from app.access import CurrentActor, NotFound
+from app.database import connection as db
+from app.core.access import CurrentActor
+from app.core.errors import NotFound
 from app.features.auth import invite_token
 
 router = APIRouter()

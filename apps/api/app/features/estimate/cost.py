@@ -4,8 +4,8 @@ the unit and copies the rate in. A rate the QS typed is never touched; nothing i
 import asyncio
 import re
 
-from app import llm
-from app.config import MODEL_FAST
+from app.core import llm
+from app.core.constants import MODEL_FAST
 from app.features.estimate import prompts
 
 BATCH = 40

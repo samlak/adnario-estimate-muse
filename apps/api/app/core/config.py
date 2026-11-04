@@ -3,8 +3,8 @@
 import os
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]  # the repo
-API = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[4]  # the repo
+API = Path(__file__).resolve().parents[2]
 
 
 def _load_env() -> None:
@@ -31,9 +31,5 @@ class env:
     RATE_CARD = Path(os.environ.get('RATE_CARD_DIR', ROOT / 'overview' / 'rate-card'))
 
 
+
 MUSE_BASE_URL = os.environ.get('MUSE_BASE_URL', 'https://api.meta.ai/v1')
-MODEL_FAST = os.environ.get('MODEL_FAST', 'muse-spark-1.3')
-MODEL_SMART = os.environ.get('MODEL_SMART', 'muse-spark-1.3')
-MODEL_TIMEOUT = 180  # seconds, retried twice
-PERCENT = {'prelims': 5.0, 'contingency': 5.0, 'vat': 7.5}
-DEMO_PASSWORD = 'demo-password'

@@ -8,9 +8,9 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from app import runs
-from app.access import Actor, CurrentActor, check_estimate, find_project
-from app import db
+from app.core import runs
+from app.core.access import Actor, CurrentActor, check_estimate, find_project
+from app.database import connection as db
 from app.features.sidekick import ai, service
 from app.features.sidekick.constants import RESULT_SHOWN, TITLE_LENGTH
 from app.features.sidekick.schemas import Ask, Chat, ChatSummary

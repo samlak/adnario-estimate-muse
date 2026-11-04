@@ -9,7 +9,7 @@ from collections.abc import AsyncIterator
 
 from fastapi.responses import StreamingResponse
 
-KEEP = 600
+from app.core.constants import RUN_KEPT_SECONDS as KEEP
 
 
 class Run:

@@ -7,7 +7,7 @@ from collections import defaultdict
 
 import psycopg
 
-from app.config import env
+from app.core.config import env
 
 listeners: dict[str, set[asyncio.Queue]] = defaultdict(set)
 

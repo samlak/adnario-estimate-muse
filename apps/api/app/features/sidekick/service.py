@@ -1,8 +1,9 @@
 import json
 from uuid import UUID
 
-from app.access import Actor, NotFound
-from app.db import Connection
+from app.core.access import Actor
+from app.core.errors import NotFound
+from app.database.connection import Connection
 from app.features.programme.service import shown
 from app.features.sidekick.constants import TITLE_LENGTH
 from app.features.sidekick.tools import Tools

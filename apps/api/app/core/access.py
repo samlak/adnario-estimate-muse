@@ -10,29 +10,9 @@ from uuid import UUID
 
 from fastapi import Cookie, Depends, HTTPException
 
-from app import db
-
-COOKIE = 'adnario_session'
-SESSION_DAYS = 30
-
-PERMISSIONS = {
-    'admin': {'see_estimate', 'edit_estimate', 'see_rates', 'edit_rates', 'see_programme', 'upload', 'comment',
-              'create_project', 'manage_org', 'delete_project', 'all_projects', 'accept_versions', 'manage_members'},
-    'qs': {'see_estimate', 'edit_estimate', 'see_rates', 'edit_rates', 'see_programme', 'upload', 'comment',
-           'create_project', 'accept_versions', 'manage_members'},
-    'contributor': {'see_programme', 'upload', 'comment', 'create_project'},
-    'viewer': {'see_estimate', 'see_programme', 'comment'},
-}
-
-
-class NotFound(HTTPException):
-    def __init__(self, what: str = 'Not found'):
-        super().__init__(404, what)
-
-
-class Forbidden(HTTPException):
-    def __init__(self, what: str = 'Your role does not allow that'):
-        super().__init__(403, what)
+from app.core.constants import PERMISSIONS, SESSION_DAYS
+from app.core.errors import Forbidden, NotFound
+from app.database import connection as db
 
 
 @dataclass(frozen=True)
