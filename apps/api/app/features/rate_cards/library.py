@@ -27,11 +27,13 @@ def copy_library(connection, org_id) -> UUID:
 
 
 def top_up(connection) -> int:
-    """Library work items added since a firm's card was copied (by code), appended to every Adnario Market Rates card."""
+    """Library work items added since a firm's card was copied (by code), appended to every Adnario Market Rates card;
+    an item the firm deleted is not added back."""
     rates = json.loads((env.RATE_CARD / 'rates.json').read_text())
     added = 0
-    for card in connection.execute('select id, org_id from rate_cards where name = %s', [LIBRARY]).fetchall():
+    for card in connection.execute('select id, org_id, removed from rate_cards where name = %s', [LIBRARY]).fetchall():
         have = {row['code'] for row in connection.execute("select code from rate_rows where card_id = %s and kind = 'RATE'", [card['id']])}
+        have |= set(card.get('removed') or [])  # what the firm deleted stays deleted
         last = connection.execute('select coalesce(max(position), 0) as at from rate_rows where card_id = %s', [card['id']]).fetchone()['at']
         new = [r for r in rates if r['code'] not in have]
         for at, r in enumerate(new, last + 1):

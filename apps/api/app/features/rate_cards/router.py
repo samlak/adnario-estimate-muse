@@ -1,4 +1,4 @@
-"""Rate cards (README §6, §10): every firm starts from Adnario Market Rates, copied from overview/rate-card. Rows are
+"""Rate cards (README §6, §10): every firm starts from Adnario Market Rates, copied from database/seed/rate-card. Rows are
 prices (material, labour, plant) or work items with a build-up; a rate is Σ(quantity × price) plus the additions, to
 the naira, and stays blank when a price is missing. Change a price and every rate built on it changes."""
 

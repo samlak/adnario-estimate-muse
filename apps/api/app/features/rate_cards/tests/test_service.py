@@ -36,6 +36,52 @@ def test_a_change_with_nothing_in_it_writes_nothing(connection):
 def test_a_change_to_an_unknown_row_is_not_found(connection):
     with pytest.raises(NotFound):
         service.change_row(connection, 'r1', RowChange(price=950))
-    connection.on('update rate_rows', {'id': 'r1'})
+    connection.on('from rate_rows where id', {'card_id': 'c1', 'kind': 'MATERIAL', 'code': None, 'name': 'Block'})
     service.change_row(connection, 'r1', RowChange(price=950))
-    assert 'price = %s' in connection.calls[-1][0]
+    assert connection.ran('update rate_rows set price')
+
+
+def built_on(connection, row, lines):
+    """A card with one row about to change, and one work item built up from these lines."""
+    return (connection.on('from rate_rows where id', row)
+            .on("kind = 'RATE' and lines @>", [{'id': 'w1', 'lines': lines}]))
+
+
+LINES = [{'kind': 'MATERIAL', 'price': 'Block', 'qty': 10}, {'kind': 'WORK', 'rate': 'W2', 'qty': 1}]
+
+
+def test_a_renamed_price_is_followed_by_every_build_up_on_it(connection):
+    built_on(connection, {'card_id': 'c1', 'kind': 'MATERIAL', 'code': None, 'name': 'Block'}, LINES)
+    service.change_row(connection, 'r1', RowChange(name='Sandcrete block'))
+    (lines, _), = connection.ran('update rate_rows set lines')
+    assert lines.obj == [{**LINES[0], 'price': 'Sandcrete block'}, LINES[1]]
+
+
+def test_a_deleted_price_goes_from_the_build_ups(connection):
+    built_on(connection, {'card_id': 'c1', 'kind': 'MATERIAL', 'code': None, 'name': 'Block'}, LINES)
+    service.delete_row(connection, 'r1')
+    assert connection.ran('delete from rate_rows') == [['r1']]
+    (lines, _), = connection.ran('update rate_rows set lines')
+    assert lines.obj == [LINES[1]]
+
+
+def test_a_deleted_or_recoded_library_item_is_not_added_back(connection):
+    built_on(connection, {'card_id': 'c1', 'kind': 'RATE', 'code': 'W2', 'name': 'Plaster'}, LINES)
+    service.delete_row(connection, 'r2')
+    assert connection.ran('array_append(removed') == [['W2', 'c1', 'W2']]
+    (lines, _), = connection.ran('update rate_rows set lines')
+    assert lines.obj == [LINES[0]]  # the work item built on it is worked out without it
+
+    connection.calls.clear()
+    service.change_row(connection, 'r2', RowChange(code='W9'))
+    assert connection.ran('array_append(removed')
+    (lines, _), = connection.ran('update rate_rows set lines')
+    assert lines.obj[1]['rate'] == 'W9'
+
+
+def test_a_new_item_with_no_build_up_keeps_an_empty_list(connection):
+    from app.features.rate_cards.schemas import Row
+    from app.testing.fakes import actor
+    service.add_row(connection, actor(), 'c1', Row(kind='RATE', name='Own item', code='OWN-01', lines=[], additions={}))
+    params, = connection.ran('insert into rate_rows')
+    assert params[-2].obj == [] and params[-1].obj == {}  # stored as JSON, not a Postgres array

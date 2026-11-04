@@ -42,20 +42,56 @@ def add_row(connection: Connection, actor: Actor, card_id: UUID, body: Row) -> d
         'insert into rate_rows (org_id, card_id, position, kind, code, section, name, unit, price, lines, additions, as_of)'
         ' values (%s, %s, (select coalesce(max(position), 0) + 1 from rate_rows where card_id = %s), %s, %s, %s, %s, %s, %s, %s, %s, current_date) returning id',
         [actor.org_id, card_id, card_id, body.kind, body.code, body.section, body.name, body.unit, body.price,
-         body.lines and db.Jsonb(body.lines), body.additions and db.Jsonb(body.additions)],
+         None if body.lines is None else db.Jsonb(body.lines), None if body.additions is None else db.Jsonb(body.additions)],
     ).fetchone()
 
 
 def change_row(connection: Connection, row_id: UUID, body: RowChange) -> None:
+    """A row changed in place; a renamed price, or a work item given a new code, is followed by every build-up on it."""
     changes = body.model_dump(exclude_unset=True)
     if not changes:
         return
+    before = _row(connection, row_id)
     sets = ', '.join(f'{key} = %s' for key in changes)
     values = [db.Jsonb(value) if key in JSON_FIELDS and value is not None else value for key, value in changes.items()]
-    if not connection.execute(f'update rate_rows set {sets}, as_of = current_date where id = %s returning id', [*values, row_id]).fetchone():
-        raise NotFound()
+    connection.execute(f'update rate_rows set {sets}, as_of = current_date where id = %s', [*values, row_id])
+    if before['kind'] != 'RATE' and changes.get('name') not in (None, before['name']):
+        _follow(connection, before['card_id'], 'price', before['name'], changes['name'])
+    if before['kind'] == 'RATE' and before['code'] and 'code' in changes and changes['code'] != before['code']:
+        _follow(connection, before['card_id'], 'rate', before['code'], changes['code'])
+        _removed(connection, before['card_id'], before['code'])
 
 
 def delete_row(connection: Connection, row_id: UUID) -> None:
-    """BOQs already priced keep their rates: a rate is copied into the BOQ when it is linked."""
+    """The row goes from the firm's card (the library is not touched, and a library item deleted is not added back);
+    a rate built up from it is worked out again without it. BOQs already priced keep their rates: a rate is copied
+    into the BOQ when it is linked."""
+    before = _row(connection, row_id)
     connection.execute('delete from rate_rows where id = %s', [row_id])
+    if before['kind'] == 'RATE':
+        if before['code']:
+            _follow(connection, before['card_id'], 'rate', before['code'], None)
+            _removed(connection, before['card_id'], before['code'])
+    else:
+        _follow(connection, before['card_id'], 'price', before['name'], None)
+
+
+def _row(connection: Connection, row_id: UUID) -> dict:
+    row = connection.execute('select card_id, kind, code, name from rate_rows where id = %s', [row_id]).fetchone()
+    if row is None:
+        raise NotFound()
+    return row
+
+
+def _follow(connection: Connection, card_id, key: str, old: str, new: str | None) -> None:
+    """Every build-up line on the card that names `old` (a price by name, or a work item by code) names `new`, or
+    goes when it is None."""
+    for row in connection.execute(
+        "select id, lines from rate_rows where card_id = %s and kind = 'RATE' and lines @> %s", [card_id, db.Jsonb([{key: old}])]
+    ).fetchall():
+        lines = [line if line.get(key) != old else {**line, key: new} for line in row['lines'] if new is not None or line.get(key) != old]
+        connection.execute('update rate_rows set lines = %s where id = %s', [db.Jsonb(lines), row['id']])
+
+
+def _removed(connection: Connection, card_id, code: str) -> None:
+    connection.execute('update rate_cards set removed = array_append(removed, %s) where id = %s and not %s = any(removed)', [code, card_id, code])

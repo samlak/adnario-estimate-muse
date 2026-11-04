@@ -37,6 +37,6 @@ describe('rate card', () => {
   });
 
   it('reads the output per gang-day from labour in days', () => {
-    expect(outputOf(rate('CON-01'), prices)).toEqual({ perDay: 8, gang: '1 concrete gang labour' });
+    expect(outputOf(rate('CON-01'), prices)).toMatchObject({ perDay: 8, hours: 1, gang: '1 concrete gang labour' });
   });
 });

@@ -19,8 +19,11 @@ class Row(BaseModel):
 
 
 class RowChange(BaseModel):
-    name: str | None = None
+    name: str | None = Field(None, min_length=1, max_length=400)
+    code: str | None = Field(None, max_length=40)
+    section: str | None = Field(None, max_length=160)
     unit: str | None = None
+    labour_basis: Literal['day', 'hour'] | None = None
     price: float | None = Field(None, ge=0)
     lines: list[dict] | None = None
     additions: dict | None = None

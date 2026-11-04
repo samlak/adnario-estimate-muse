@@ -21,3 +21,9 @@ def test_only_new_library_items_are_added(connection):
     connection.on('from rate_cards where name', [{'id': 'c1', 'org_id': 'o1'}]).on("select code from rate_rows", have).on('max(position)', {'at': 500})
     assert top_up(connection) == 2
     assert [params[3] for params in connection.ran('insert into rate_rows')] == [rate['code'] for rate in RATES[-2:]]
+
+
+def test_an_item_the_firm_deleted_is_not_added_back(connection):
+    have = [{'code': rate['code']} for rate in RATES[:-2]]
+    connection.on('from rate_cards where name', [{'id': 'c1', 'org_id': 'o1', 'removed': [RATES[-1]['code']]}]).on('select code from rate_rows', have).on('max(position)', {'at': 500})
+    assert top_up(connection) == 1

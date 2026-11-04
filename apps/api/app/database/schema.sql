@@ -111,6 +111,8 @@ create table if not exists rate_rows (
   as_of date,
   note text not null default ''
 );
+alter table rate_cards add column if not exists removed text[] not null default '{}'; -- library codes the firm took off its card
+alter table rate_rows add column if not exists labour_basis text not null default 'day'; -- its labour shown per day, or as hours per unit
 
 create table if not exists comments (
   org_id uuid not null references orgs on delete cascade,

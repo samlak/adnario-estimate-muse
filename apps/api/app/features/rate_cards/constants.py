@@ -1,6 +1,6 @@
 from datetime import date
 
-LIBRARY = 'Adnario Market Rates'  # the card every firm starts from, copied from overview/rate-card
+LIBRARY = 'Adnario Market Rates'  # the card every firm starts from, copied from database/seed/rate-card
 PRICES_OF = date(2026, 11, 2)  # the date the library's prices are from
 KINDS = ('MATERIAL', 'LABOUR', 'PLANT', 'RATE')
 JSON_FIELDS = ('lines', 'additions')
