@@ -9,7 +9,6 @@ never from a name."""
 import re
 from collections import Counter, defaultdict
 
-import ifcopenshell
 import ifcopenshell.util.element as E
 import ifcopenshell.util.unit as U
 

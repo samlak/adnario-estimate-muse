@@ -1,7 +1,7 @@
-"""The estimate run's code side: the AI's mapping checked and given code's confidence, quantities measured, formwork and
+"""The takeoff's code side: the AI's mapping checked and given code's confidence, quantities measured, formwork and
 blinding derived from concrete, rows rolled up into lines, provisional quantities worked out."""
 
-from app.features.estimate.run import check_mapping, derive, measure, provisional_qty, roll_up
+from app.features.estimate.takeoff import check_mapping, derive, measure, provisional_qty, roll_up
 
 
 def entry(**extra):

@@ -5,7 +5,6 @@ Which models: MODEL_FAST and MODEL_SMART in core/constants.py.
 Every model is Meta Muse, on Meta's Model API (MUSE_BASE_URL, key MUSE_API_KEY)."""
 
 import asyncio
-import base64
 import functools
 from collections.abc import AsyncIterator, Callable
 from dataclasses import dataclass
@@ -19,7 +18,6 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Send
-from pydantic import BaseModel
 
 from app.config import MODEL_TIMEOUT, MUSE_BASE_URL, env
 
