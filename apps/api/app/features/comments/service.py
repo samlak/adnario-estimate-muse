@@ -13,7 +13,7 @@ from app.features.notifications.service import notify
 
 
 def folder(org_id, project_id):
-    return env.FILES / str(org_id) / str(project_id) / 'attachments'
+    return env.DATA / str(org_id) / str(project_id) / 'attachments'
 
 
 def comments(connection: Connection, actor: Actor, project_id: UUID) -> list[dict]:

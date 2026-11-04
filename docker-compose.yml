@@ -26,12 +26,12 @@ services:
     environment:
       DATABASE_URL: postgresql://adnario:adnario@db:5432/adnario
       CONVERTER_URL: http://converter:8100
-      FILES_DIR: /data/files
-    volumes: [files:/data/files]
+      DATA_DIR: /data
+    volumes: [data:/data]
     depends_on:
       db: {condition: service_healthy}
       converter: {condition: service_started}
 
 volumes:
   db:
-  files:
+  data:

@@ -60,7 +60,7 @@ def delete(connection: Connection, actor: Actor, project_id: UUID) -> None:
     """The project, its rows and its files."""
     find_project(connection, actor, project_id)
     connection.execute('delete from projects where id = %s', [project_id])
-    shutil.rmtree(env.FILES / str(actor.org_id) / str(project_id), ignore_errors=True)
+    shutil.rmtree(env.DATA / str(actor.org_id) / str(project_id), ignore_errors=True)
 
 
 def members(connection: Connection, actor: Actor, project_id: UUID) -> list[dict]:

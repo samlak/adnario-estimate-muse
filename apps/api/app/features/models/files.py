@@ -8,7 +8,7 @@ from app.features.models.constants import OPEN_CACHED
 
 
 def folder(org_id, project_id) -> Path:
-    path = env.FILES / str(org_id) / str(project_id) / 'models'
+    path = env.DATA / str(org_id) / str(project_id) / 'models'
     path.mkdir(parents=True, exist_ok=True)
     return path
 

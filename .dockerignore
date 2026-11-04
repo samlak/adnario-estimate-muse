@@ -2,6 +2,6 @@
 **/.venv
 **/dist
 **/__pycache__
-apps/api/files
+apps/api/data
 graft
 .env

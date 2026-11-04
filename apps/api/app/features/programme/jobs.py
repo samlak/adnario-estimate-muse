@@ -12,7 +12,7 @@ from app.features.programme.service import build
 def store(connection: Connection, actor: Actor, estimate_id, data: bytes):
     """The PDF, kept beside the project's files; its path."""
     estimate, _ = editable(connection, actor, estimate_id)
-    path = env.FILES / str(actor.org_id) / str(estimate['project_id']) / 'programme.pdf'
+    path = env.DATA / str(actor.org_id) / str(estimate['project_id']) / 'programme.pdf'
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(data)
     return path

@@ -1,19 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { can } from '@/lib/store';
-import { dayOfWeek, iso, planOf, weekOf, type ApiProgramme } from './state';
-
-const programme = {
-  start: '2026-12-01',
-  days: ['2026-12-01', '2026-12-02', '2026-12-03', '2026-12-08', '2026-12-09'],
-  activities: [
-    { id: 1, code: '1', name: 'SITE', summary: true, level: 0, start: 0, finish: 5 },
-    { id: 2, code: '2', name: 'Clear', summary: false, level: 1, start: 0, finish: 2 },
-    { id: 3, code: '3', name: 'Set out', summary: false, level: 1, start: 2, finish: 5 },
-    { id: 4, code: '4', name: 'Handover', summary: false, level: 1, start: 5, finish: 5 },
-  ],
-  links: [{ before: 2, after: 3 }, { before: 3, after: 4 }],
-  cash_flow: [],
-} as unknown as ApiProgramme;
+import { programme } from '@/testing/data';
+import { dayOfWeek, iso, planOf, weekOf } from './state';
 
 describe('the programme as the panels draw it', () => {
   it('is nothing without a programme', () => {

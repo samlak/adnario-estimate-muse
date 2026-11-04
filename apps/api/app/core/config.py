@@ -24,7 +24,7 @@ class env:
     DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://adnario:adnario@localhost:55622/adnario')
     MUSE_API_KEY = os.environ.get('MUSE_API_KEY', '')
     CONVERTER_URL = os.environ.get('CONVERTER_URL', 'http://localhost:8100')
-    FILES = Path(os.environ.get('FILES_DIR', API / 'files'))
+    DATA = Path(os.environ.get('DATA_DIR', API / 'data'))
     WEB_DIST = Path(os.environ.get('WEB_DIST', ROOT / 'apps' / 'web' / 'dist'))
     DEMO = os.environ.get('DEMO', '1') == '1'  # the sign-in page's demo accounts, and the demo seed
     SAMPLES = Path(os.environ.get('SAMPLES_DIR', ROOT / 'overview' / 'samples'))

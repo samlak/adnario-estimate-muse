@@ -1,11 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import type { Price, Rate } from '@/lib/ratecard';
+import { prices, rates } from '@/testing/data';
 import { groupsOf, tabsOf } from './groups';
 
-const rate = (code: string, section: string, description = code) => ({ code, section, description }) as Rate;
-const price = (name: string, kind: Price['kind']) => ({ name, kind }) as Price;
-const RATES = [rate('A1', 'Substructure', 'Excavate'), rate('A2', 'Substructure'), rate('B1', 'Frame')];
-const PRICES = [price('Sand', 'MATERIAL'), price('Cement', 'MATERIAL'), price('Mason', 'LABOUR')];
+const RATES = rates;
+const PRICES = prices;
 
 describe('rate card rows', () => {
   it('heads work items by section, then prices by kind A to Z', () => {

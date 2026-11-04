@@ -5,7 +5,10 @@ dist/
 .venv/
 __pycache__/
 .env
-apps/api/files/
+apps/api/data/
 e2e/results/
 e2e/report/
 apps/api/.coverage
+.ruff_cache/
+.pytest_cache/
+.DS_Store
