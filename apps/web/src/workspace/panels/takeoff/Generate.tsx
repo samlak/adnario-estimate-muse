@@ -1,4 +1,4 @@
-/** The BOQ in the Takeoff panel (README §7.3): Generate BOQ, its items with quantities and rates the QS can change,
+/** The BOQ in the Takeoff panel: Generate BOQ, its items with quantities and rates the QS can change,
  * a line added by hand, and the bills as a document in full view. */
 import { ListChecks, Loader2 } from 'lucide-react';
 import { useWs } from '../../state';

@@ -1,4 +1,4 @@
-"""The takeoff's code side (README §7.2): the AI's mapping of each type checked and given code's confidence, each element
+"""The takeoff's code side: the AI's mapping of each type checked and given code's confidence, each element
 measured, formwork, blinding and membranes derived from the faces of the in-situ concrete, reinforcement measured or
 made provisional, the rows rolled up into measured lines, code's own review questions, and provisional quantities
 worked out. No AI here: everything can be repeated. The measuring rules are RULES in constants.py (BESMM4R, in the

@@ -1,4 +1,4 @@
-"""The cash flow as Excel (README §9)."""
+"""The cash flow as Excel."""
 
 import io
 import re

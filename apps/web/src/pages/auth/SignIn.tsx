@@ -1,4 +1,4 @@
-/** Sign in and Create an account (README §5): the navy side with the promise, the form on paper. */
+/** Sign in and Create an account: the navy side with the promise, the form on paper. */
 import { Lock, Mail } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';

@@ -1,4 +1,4 @@
-"""Comments (README §6): on the project, a model, an element or a BOQ line, with @mentions and an attachment."""
+"""Comments: on the project, a model, an element or a BOQ line, with @mentions and an attachment."""
 
 from uuid import UUID
 

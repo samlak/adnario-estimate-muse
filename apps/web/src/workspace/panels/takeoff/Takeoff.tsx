@@ -1,4 +1,4 @@
-/** The Takeoff panel (README §7.2–7.3): the start card or the run's card, then Takeoff, BOQ, Review, Provisional and
+/** The Takeoff panel: the start card or the run's card, then Takeoff, BOQ, Review, Provisional and
  * Types. Full view shows the bills as a document: Summary, A Preliminaries, then each bill. */
 import { CircleCheck, FileSpreadsheet, FileText, ListChecks, ListRestart, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 import { useWs } from '../../state';

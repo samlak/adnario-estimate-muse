@@ -1,4 +1,4 @@
-/** The dock under the model (README §7.5): the 4D player that builds the model day by day, and the Gantt under it.
+/** The dock under the model: the 4D player that builds the model day by day, and the Gantt under it.
  * In full view it is the whole workspace; otherwise its top edge drags it taller or shorter, or down to the player alone. */
 import { useEffect, useState } from 'react';
 import { Resizer } from '@/components/ui/Resizer';

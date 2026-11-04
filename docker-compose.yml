@@ -1,4 +1,4 @@
-# The whole app: `docker compose up --build`, then open http://localhost:8000 (README §13).
+# The whole app: `docker compose up --build`, then open http://localhost:8000.
 # For development with live reload use `npm run dev`, which starts only the database from here.
 services:
   db:

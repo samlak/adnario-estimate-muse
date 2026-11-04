@@ -1,4 +1,4 @@
-"""The demo firm's people and projects (README §13); each project's files are in samples/<folder>."""
+"""The demo firm's people and projects; each project's files are in samples/<folder>."""
 
 DEMO = 'Demo Partners QS'
 PEOPLE = [

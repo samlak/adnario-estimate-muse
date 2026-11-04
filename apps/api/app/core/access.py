@@ -1,4 +1,4 @@
-"""Who is asking, and what their role lets them do (README §4). The web app hides what a person cannot do, but the
+"""Who is asking, and what their role lets them do. The web app hides what a person cannot do, but the
 server alone decides: every route checks here."""
 
 import hashlib

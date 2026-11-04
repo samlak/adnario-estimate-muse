@@ -1,4 +1,4 @@
-"""Settings, from the environment and the repo root's .env (README §11)."""
+"""Settings, from the environment and the repo root's .env."""
 
 import os
 from pathlib import Path

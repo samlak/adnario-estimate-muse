@@ -1,4 +1,4 @@
-/** The workspace's bar (README §7): back to projects, the project and its takeoff, the viewer's tools, versions,
+/** The workspace's bar: back to projects, the project and its takeoff, the viewer's tools, versions,
  * people and comments, and the account. */
 import { Box, Boxes, ChevronDown, ChevronLeft, Crosshair, Eraser, Eye, EyeOff, FileUp, History, MapPin, MessagesSquare, PanelsTopLeft, Plus, Ruler, Scissors, Square, Users } from 'lucide-react';
 import { useState } from 'react';

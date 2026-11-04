@@ -1,5 +1,5 @@
 """The API: every route under /api/v1, the database migrated and the demo seeded at start, live updates listened
-for, and in production the built web app served from the same port (README §3)."""
+for, and in production the built web app served from the same port."""
 
 import asyncio
 import logging

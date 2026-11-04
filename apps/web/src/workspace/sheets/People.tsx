@@ -1,5 +1,5 @@
 /** The workspace's sheets: People on the project, the Conversation (comments, mentions, attachments), and the
- * models' Versions. README §7. */
+ * models' Versions. */
 import { UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { Avatar } from '@/components/ui/Avatar';

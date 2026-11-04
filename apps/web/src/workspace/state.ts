@@ -1,5 +1,5 @@
 /** The workspace's shared state: the project, its models and estimate from the API, which panel is open, the 4D
- * player's day, what is selected, and the long work running on the server (README §7). */
+ * player's day, what is selected, and the long work running on the server. */
 import { createContext, useContext } from 'react';
 import { parse } from '@/lib/calendar';
 

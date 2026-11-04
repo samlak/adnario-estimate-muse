@@ -1,4 +1,4 @@
-/** IFC → XKT (README §3): the viewer loads XKT fast; loading IFC in the browser crashes xeokit. POST an IFC as the body
+/** IFC → XKT: the viewer loads XKT fast; loading IFC in the browser crashes xeokit. POST an IFC as the body
  * of /convert and get its XKT back. Colours are fixed on the way: glass see-through, nothing left black. */
 import http from 'node:http';
 import { convert2xkt } from '@xeokit/xeokit-convert/src/convert2xkt.js';

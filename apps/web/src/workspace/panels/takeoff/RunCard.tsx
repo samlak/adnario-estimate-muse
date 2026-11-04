@@ -1,4 +1,4 @@
-/** The Takeoff panel before and during the run (README §7.2): the start card, then the run's live card with its
+/** The Takeoff panel before and during the run: the start card, then the run's live card with its
  * stages, the types as the AI maps them and the confidence legend. */
 import { Bot, ChevronDown, ChevronRight, ChevronUp, CircleCheck, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';

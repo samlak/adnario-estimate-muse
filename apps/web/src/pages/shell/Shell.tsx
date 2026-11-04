@@ -1,4 +1,4 @@
-/** The app outside a project (README §6): the sidebar's four pages, the header with the notification bell and the
+/** The app outside a project: the sidebar's four pages, the header with the notification bell and the
  * account menu, and the sheets they open. */
 import { Building2, FileText, FolderKanban, LayoutGrid } from 'lucide-react';
 import { useEffect, useState } from 'react';

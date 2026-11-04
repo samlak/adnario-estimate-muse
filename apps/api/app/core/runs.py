@@ -1,6 +1,6 @@
 """Long work (an estimate run, linking rates, reading a programme, an answer from Adnario AI) runs as a server task.
 It keeps every event it sends, so a page that reloads or comes back is replayed everything from the start and then
-follows live; leaving the page does not stop the work. Finished runs are kept 10 minutes (README §3, §11)."""
+follows live; leaving the page does not stop the work. Finished runs are kept 10 minutes."""
 
 import asyncio
 import json

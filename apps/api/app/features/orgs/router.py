@@ -1,4 +1,4 @@
-"""Organisation (README §6, Admin): the team, invitations as links, roles, and the firm's details. A firm always
+"""Organisation (Admin): the team, invitations as links, roles, and the firm's details. A firm always
 keeps at least one Admin."""
 
 from fastapi import APIRouter

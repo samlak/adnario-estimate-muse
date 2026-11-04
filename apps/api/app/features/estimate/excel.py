@@ -1,4 +1,4 @@
-"""The BOQ as Excel (README §9): a Summary sheet, then a sheet per bill; rates in a yellow column, every amount a
+"""The BOQ as Excel: a Summary sheet, then a sheet per bill; rates in a yellow column, every amount a
 live formula written with its value."""
 
 import io

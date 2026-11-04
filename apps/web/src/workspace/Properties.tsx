@@ -1,4 +1,4 @@
-/** The properties of the element clicked in the model (README §7.1): what it is, its quantities, where it is in the
+/** The properties of the element clicked in the model: what it is, its quantities, where it is in the
  * BOQ, and its comments. */
 import { ChevronDown, ChevronUp, MessageSquare, X } from 'lucide-react';
 import { Conf } from '@/components/ui/Conf';

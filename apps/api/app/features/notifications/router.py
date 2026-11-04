@@ -1,4 +1,4 @@
-"""Notifications (README §6): a mention, being added to a project, a model version accepted or rejected."""
+"""Notifications: a mention, being added to a project, a model version accepted or rejected."""
 
 from uuid import UUID
 

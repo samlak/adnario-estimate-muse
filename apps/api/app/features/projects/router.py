@@ -1,4 +1,4 @@
-"""Projects (README §6, §7): the list, a project, the people on it, and the live stream of changes for an open
+"""Projects: the list, a project, the people on it, and the live stream of changes for an open
 workspace."""
 
 from uuid import UUID

@@ -1,7 +1,6 @@
 # Adnario Estimate: web app
 
-The React + Vite + Tailwind web app described in `../../overview/README.md`, built to match the screenshots in
-`../../overview/demo`. Everything it shows comes from the API (`../api`), proxied under `/api`.
+The React + Vite + Tailwind web app. Everything it shows comes from the API (`../api`), proxied under `/api`.
 
 ```
 npm run dev     # from the repo root: starts the database, API, converter and this app together

@@ -1,4 +1,4 @@
-"""Building models (README §7.1): an IFC upload is converted to XKT on the converter for the viewer and kept for the
+"""Building models: an IFC upload is converted to XKT on the converter for the viewer and kept for the
 estimate run. A new export of a model already there becomes its next version: the server works out, element by
 element by GlobalId, what was added, removed or changed, and a QS or Admin accepts or rejects it."""
 

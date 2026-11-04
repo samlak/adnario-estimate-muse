@@ -1,4 +1,4 @@
-/** Asks first: every delete does (README §6). */
+/** Asks first: every delete does. */
 export function Confirm({ title, message, label = 'Delete', onConfirm, onCancel }: {
   title: string;
   message: string;

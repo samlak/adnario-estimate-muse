@@ -1,5 +1,5 @@
 """The AI's rules for the estimate: what each step is asked, and the shape of the answer. The AI decides what a thing
-is and how it is billed; code measures, adds up and checks every answer (README §2)."""
+is and how it is billed; code measures, adds up and checks every answer."""
 
 from app.features.estimate.constants import SECTIONS
 

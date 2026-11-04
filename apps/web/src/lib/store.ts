@@ -75,7 +75,7 @@ export function useMe() {
   return { me: data?.person as Person, firm: data?.firm as Firm, permissions: data?.can ?? [], error, loading: loading && !data };
 }
 
-/** What each role may do (README §4); the server decides in the end. */
+/** What each role may do; the server decides in the end. */
 export const can = (role: Role) => ({
   seeMoney: role !== 'contributor',
   seeRateCards: role === 'admin' || role === 'qs',

@@ -1,4 +1,4 @@
-/** Dashboard and Projects (README §6), the New project sheet, and the profile page. */
+/** Dashboard and Projects, the New project sheet, and the profile page. */
 import { AtSign, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';

@@ -1,4 +1,4 @@
-/** What the QS settles (README §7.3): the types the AI held, the types left out of the BOQ, then each question as its
+/** What the QS settles: the types the AI held, the types left out of the BOQ, then each question as its
  * own card with the BOQ items it is about; a click shows their elements. */
 import { CommentButton } from '../../sheets/CommentButton';
 import { useWs, type Result } from '../../state';

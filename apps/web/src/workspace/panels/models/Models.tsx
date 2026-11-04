@@ -1,5 +1,5 @@
 /** The Models panel (show or hide each model, nudge it into line, delete it, accept or reject a new version) and the
- * Tree panel (the models' elements by class and storey, to find and isolate them). README §7.1. */
+ * Tree panel (the models' elements by class and storey, to find and isolate them). */
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Confirm } from '@/components/ui/Confirm';

@@ -1,4 +1,4 @@
-/** The Cost panel (README §7.4): the total, the rate card it is priced from, what is priced bill by bill, the lines
+/** The Cost panel: the total, the rate card it is priced from, what is priced bill by bill, the lines
  * still without a rate, and the summary percentages, which the QS changes per estimate. A Viewer sees the amounts,
  * not the card. */
 import { Banknote, Box, CircleCheck, Link2, Loader2, Maximize2 } from 'lucide-react';

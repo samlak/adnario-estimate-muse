@@ -1,4 +1,4 @@
-"""The QS's edits to an estimate's result (README §7.5): a rate typed, a percentage, a line added, changed or removed,
+"""The QS's edits to an estimate's result: a rate typed, a percentage, a line added, changed or removed,
 a provisional item taken in, a type billed or left out. Each edit is one step of undo and redo; the run is the
 floor."""
 

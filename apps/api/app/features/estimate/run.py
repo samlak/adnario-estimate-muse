@@ -1,4 +1,4 @@
-"""The estimate run (README §7.2): Context, Read, Catalogue, Brief, Map, Derive, takeoff lines, Review, streamed as
+"""The estimate run: Context, Read, Catalogue, Brief, Map, Derive, takeoff lines, Review, streamed as
 it goes. Code measures and adds up; the AI decides what each type is and how it is billed, and code checks every
 answer. Confidence is code's, from checks anyone can repeat; a Low mapping is held for the QS, not billed."""
 

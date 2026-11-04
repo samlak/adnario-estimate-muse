@@ -1,4 +1,4 @@
-"""The programme (README §8): the contractor's programme of works is read from its PDF by code, put on the Nigerian
+"""The programme: the contractor's programme of works is read from its PDF by code, put on the Nigerian
 working calendar, and checked with the critical path method (float and the critical path from its own links). The AI
 says which activity does each piece of the BOQ's work (an item on a storey); code checks every answer, then works out
 each activity's cost and the cash flow by month."""

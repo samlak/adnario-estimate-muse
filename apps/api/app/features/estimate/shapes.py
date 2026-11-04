@@ -1,4 +1,4 @@
-"""Shapes (README §7.2): each solid element's surface in world coordinates, in metres, read once for the whole model
+"""Shapes: each solid element's surface in world coordinates, in metres, read once for the whole model
 (ifcopenshell.geom on every core). A shape knows its volume, its box, and each triangle's area, centre and which way it
 faces: a top, a bottom (a soffit, an underside) or a side. Formwork, beds and the checks are worked out from these, and
 so is any quantity the model does not state.

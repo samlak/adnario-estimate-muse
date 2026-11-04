@@ -1,4 +1,4 @@
-/** The programme's Gantt chart in the dock (README §7.5): activities under their headings, bars on the working
+/** The programme's Gantt chart in the dock: activities under their headings, bars on the working
  * calendar by day, week or month, links between them and the critical path in red. */
 import { useEffect, useMemo, useRef } from 'react';
 import { addDays, parse } from '@/lib/calendar';

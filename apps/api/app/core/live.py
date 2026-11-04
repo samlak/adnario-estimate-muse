@@ -1,4 +1,4 @@
-"""Live updates (README §3): the database sends a notice when a model, estimate, comment or member changes, and every
+"""Live updates: the database sends a notice when a model, estimate, comment or member changes, and every
 open browser on that project is told to re-read, over Server-Sent Events."""
 
 import asyncio

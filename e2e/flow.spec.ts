@@ -1,4 +1,4 @@
-/** The whole process, end to end, in a real browser against the running app (README §7): sign in, a new project
+/** The whole process, end to end, in a real browser against the running app: sign in, a new project
  * with its IFC model, the takeoff run, Generate BOQ, Link to cost, an edit with undo, the exports, the programme,
  * the cash flow, Adnario AI, and who may see what. The AI steps call Muse, so a run takes a few minutes.
  * The sample used is Ikoyi Duplex (apps/api/app/database/seed/samples). The project it makes is deleted at the end. */

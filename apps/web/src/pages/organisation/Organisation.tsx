@@ -1,4 +1,4 @@
-/** Organisation (README §6, Admin): Team and Organisation details. There is no email: an invitation is a link the
+/** Organisation (Admin): Team and Organisation details. There is no email: an invitation is a link the
  * Admin shares. A firm always keeps at least one Admin. */
 import { useState } from 'react';
 import { Team } from './Team';

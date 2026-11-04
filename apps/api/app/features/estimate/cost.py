@@ -1,4 +1,4 @@
-"""Link to cost (README §7.4): the AI picks, for each BOQ item, the rate card item that is the same work; code checks
+"""Link to cost: the AI picks, for each BOQ item, the rate card item that is the same work; code checks
 the unit and copies the rate in. A rate the QS typed is never touched; nothing is guessed (no match, no rate)."""
 
 import asyncio

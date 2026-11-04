@@ -1,4 +1,4 @@
-/** The Programme (README §7.5): the contractor's activities under their headings with dates and the critical path;
+/** The Programme: the contractor's activities under their headings with dates and the critical path;
  * the dock under the model with the 4D player and the Gantt chart; the readout over the model. */
 import { Box, CalendarDays, Maximize2, Upload } from 'lucide-react';
 import { Empty } from '@/components/ui/Empty';

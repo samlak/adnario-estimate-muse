@@ -1,4 +1,4 @@
-/** The API (FastAPI, README §3), under /api/v1. */
+/** The API (FastAPI), under /api/v1. */
 export class ApiError extends Error {
   constructor(message: string, public status: number) {
     super(message);

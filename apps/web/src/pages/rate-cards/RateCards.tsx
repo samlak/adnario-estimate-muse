@@ -1,4 +1,4 @@
-/** Rate cards (README §6): the firm's copy of Adnario Market Rates, edited in place. Rows are work items (with their
+/** Rate cards: the firm's copy of Adnario Market Rates, edited in place. Rows are work items (with their
  * build-ups) or prices (material, labour, plant); every cell is typed over, rows are added and deleted (after asking).
  * Change a price and every rate built on it changes. The library itself is never changed. */
 import { Fragment, useMemo, useState } from 'react';

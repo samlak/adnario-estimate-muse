@@ -1,5 +1,5 @@
 // `npm run dev`: the database (Docker), the API (live reload), the IFC converter and the web app, together.
-// Each takes its port from README §11, or the next free one; Ctrl-C stops them all.
+// Each takes its own port, or the next free one; Ctrl-C stops them all.
 import { execFileSync, spawn } from 'node:child_process';
 import net from 'node:net';
 import { existsSync } from 'node:fs';

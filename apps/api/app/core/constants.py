@@ -1,4 +1,4 @@
-"""App-wide constants: the model, the default percentages, sessions and what each role may do (README §4, §11)."""
+"""App-wide constants: the model, the default percentages, sessions and what each role may do."""
 
 import os
 

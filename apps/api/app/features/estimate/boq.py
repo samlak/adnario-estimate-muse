@@ -1,4 +1,4 @@
-"""Generate BOQ (README §7.3): the AI groups the measured lines into the contractor's items and words them; code
+"""Generate BOQ: the AI groups the measured lines into the contractor's items and words them; code
 checks every line is used once, no item mixes units, every section is ours, and adds the quantities up. Refs are
 B1A style: bill letter, element number (sections present, in Nigerian order), item letter (I and O skipped)."""
 

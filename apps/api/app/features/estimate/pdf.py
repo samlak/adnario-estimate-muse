@@ -1,4 +1,4 @@
-"""The BOQ as a PDF tender document (README §9)."""
+"""The BOQ as a PDF tender document."""
 
 import io
 import re
@@ -25,7 +25,7 @@ def pdf_fonts() -> tuple[str, str, str]:
 
 
 def boq_pdf(project: dict, result: dict) -> bytes:
-    """The BOQ as a tender document, laid out as the samples (overview/samples/*/..._BOQ.pdf): a navy cover, the
+    """The BOQ as a tender document, laid out as the samples (database/seed/samples/*/..._BOQ.pdf): a navy cover, the
     General Summary and notes, then each bill under its elements, carried to the summary."""
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import A4

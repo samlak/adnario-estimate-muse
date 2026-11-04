@@ -1,4 +1,4 @@
-"""The demo (README §13): a firm with three projects from samples/, and a second firm that never sees the first's
+"""The demo: a firm with three projects from samples/, and a second firm that never sees the first's
 data. Seeded once, into an empty database, with no AI: the FINISHED projects get their saved estimate (takeoff, BOQ,
 rates, programme), the others are left to run from the app. Models are converted in the background."""
 

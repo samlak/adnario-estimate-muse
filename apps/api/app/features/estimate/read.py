@@ -1,4 +1,4 @@
-"""Read and Catalogue (README §7.2): code reads every element of every model (class, type, storey, materials, layers,
+"""Read and Catalogue: code reads every element of every model (class, type, storey, materials, layers,
 quantities), and groups them into types (same model, class, type name, build-up and size). That compact catalogue is
 what the AI reads, never the IFC file.
 

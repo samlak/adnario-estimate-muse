@@ -1,4 +1,4 @@
-"""The estimate's routes (README §7.2–7.6): the project's estimate, its run, Generate BOQ, Link to cost, the QS's edits
+"""The estimate's routes: the project's estimate, its run, Generate BOQ, Link to cost, the QS's edits
 with undo and redo, and the exports. Long work streams (core/runs.py) and can be followed again."""
 
 import asyncio

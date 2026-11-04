@@ -1,4 +1,4 @@
-/** The Cash flow (README §7.6): the money spread over the programme, month by month, as an S-curve of the
+/** The Cash flow: the money spread over the programme, month by month, as an S-curve of the
  * cumulative value and a table; a month opens to the activities that worked in it. */
 import { Box, CalendarDays, ChevronDown, ChevronRight, Download, LineChart, Maximize2 } from 'lucide-react';
 import { Empty } from '@/components/ui/Empty';

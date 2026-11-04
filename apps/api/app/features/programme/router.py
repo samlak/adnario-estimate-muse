@@ -1,4 +1,4 @@
-"""The programme's route (README §8): the contractor's programme uploaded as a PDF, then read and linked to the BOQ as
+"""The programme's route: the contractor's programme uploaded as a PDF, then read and linked to the BOQ as
 long work that streams (core/runs.py)."""
 
 import asyncio

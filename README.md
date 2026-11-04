@@ -75,24 +75,6 @@ Adnario Estimate runs on **Meta Muse Spark** (`muse-spark-1.3`), called on Meta'
 
 The rule throughout is **code measures, AI interprets**. Quantities come from the geometry and quantity sets in the model, worked out by code ([IfcOpenShell](https://ifcopenshell.org)), and every BOQ number traces back to the model elements it came from. The system never invents a price or a duration: rates come from the firm's own rate card or the QS, and the programme is always the contractor's own.
 
-## How it's implemented
-
-```
- Browser (React web app)                         Server (Python API)                 Outside
- ┌────────────────────────────┐   HTTP + SSE    ┌──────────────────────────────┐   ┌────────────────────┐
- │ Sign-in, Dashboard,        │ ──────────────▶ │ Auth, projects, people       │   │ Meta Model API     │
- │ Projects, Rate cards,      │                 │ Takeoff (measuring, no AI)   │──▶│ muse-spark-1.3     │
- │ Organisation               │ ◀────────────── │ Estimate run, BOQ, rates     │   │                    │
- │                            │  streamed       │ Programme, cash flow         │   └────────────────────┘
- │ Project workspace:         │  progress       │ Adnario AI (LangGraph)       │
- │  3D viewer (xeokit),       │                 │ Exports (Excel, PDF)         │   ┌────────────────────┐
- │  panels, Adnario AI        │                 └──────┬───────────────┬───────┘   │ IFC → XKT          │
- └────────────────────────────┘                        │               └──────────▶│ converter (Node)   │
-                                                 ┌─────▼──────────────────┐        └────────────────────┘
-                                                 │ PostgreSQL + file store│
-                                                 └────────────────────────┘
-```
-
 ## Develop
 
 To work on the code with live reload you need Docker (for the database), [Node.js](https://nodejs.org) 20+ and [uv](https://docs.astral.sh/uv/).
@@ -102,8 +84,6 @@ npm run dev           # installs on the first run, then starts the database, API
 npm test              # unit tests, no database or AI needed
 npm run e2e           # the full flow in a browser, with real calls to Muse
 ```
-
-[`overview/README.md`](overview/README.md) walks through every screen and the rules each part follows.
 
 ## Built with
 

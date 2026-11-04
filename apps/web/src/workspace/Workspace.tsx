@@ -1,4 +1,4 @@
-/** The project workspace (README §7): the bar, the rail, the side panel, the 3D model, the properties of the clicked
+/** The project workspace: the bar, the rail, the side panel, the 3D model, the properties of the clicked
  * element, the programme's dock, and Adnario AI at the bottom right. */
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';

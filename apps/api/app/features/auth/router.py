@@ -1,4 +1,4 @@
-"""Signing in (README §5): sign up makes a firm and its Admin, with Adnario Market Rates; a session is a random token in
+"""Signing in: sign up makes a firm and its Admin, with Adnario Market Rates; a session is a random token in
 a cookie, only its hash stored; failed sign-ins are limited; invitations are links (there is no email)."""
 
 from fastapi import APIRouter, Response

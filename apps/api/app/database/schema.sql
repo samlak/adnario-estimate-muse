@@ -164,7 +164,7 @@ begin
   end loop;
 end $$;
 
--- every change tells the open browsers on that project to re-read (README §3, live updates)
+-- every change tells the open browsers on that project to re-read (live updates)
 create or replace function notify_change() returns trigger language plpgsql as $$
 declare row record;
 begin
