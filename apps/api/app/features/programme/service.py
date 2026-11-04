@@ -295,19 +295,3 @@ def shown(actor, programme: dict | None) -> dict | None:
     hidden = {**programme, 'cash_flow': [], 'unpriced': []}
     hidden['activities'] = [{**a, 'cost': None, 'work': [{**w, 'qty': None} for w in a.get('work') or []]} for a in programme['activities']]
     return hidden
-
-
-if __name__ == '__main__':
-    import sys
-    from pathlib import Path
-
-    assert easter(2027) == date(2027, 3, 28)
-    sample = Path(__file__).resolve().parents[5] / 'overview/samples/lekki-office/Lekki_Office_Block_Programme.pdf'
-    title, rows = read_pdf(sample)
-    plan = schedule(rows)
-    assert title == 'LEKKI OFFICE BLOCK' and len(rows) == 189 and plan['end'] == 239, (title, len(rows), plan['end'])
-    levels = {row['id']: row['level'] for row in rows}
-    assert levels[1] == 0 and levels[31] == 1 and levels[32] == 2 and levels[75] == 1 and levels[80] == 2 and levels[33] == 3, levels
-    tasks = {a['id']: a for a in plan['activities']}
-    assert tasks[189]['critical'] and tasks[188]['critical'], tasks[189]
-    print('ok', sum(a.get('critical', False) for a in plan['activities'] if not a['summary']), 'critical', file=sys.stderr)

@@ -113,13 +113,3 @@ def provisional_line(item: dict, position: int) -> dict:
         'qty': item.get('qty') or 0, 'count': 0, 'gids': [], 'lines': [], 'confidence': 'Low', 'rate': None, 'rate_item_id': None,
         'rate_note': f'Provisional: {item.get("reason") or item.get("basis")}', 'source': 'provisional', 'position': position,
     }
-
-
-if __name__ == '__main__':  # the refs and the summary arithmetic, as the Lekki sample shows them
-    boq = [{'code': f'X{n}', 'bill': 'B', 'section': 'Substructure', 'position': n, 'qty': 1, 'rate': 100} for n in range(10)]
-    boq += [{'code': 'Y', 'bill': 'B', 'section': 'Ceiling finishes', 'position': 0, 'qty': 2, 'rate': None}]
-    refs = display_refs(boq)
-    assert refs['X7'] == 'B1H' and refs['X8'] == 'B1J' and refs['Y'] == 'B2A', refs
-    t = totals(boq, {'prelims': 5, 'contingency': 5, 'vat': 7.5})
-    assert t['measured'] == 1000 and round(t['total'], 2) == round(1000 * 1.05 * 1.05 * 1.075, 2) and t['unpriced'] == 1
-    print('ok')

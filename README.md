@@ -47,7 +47,7 @@ To start again from an empty database: `docker compose down -v`.
 ## Checks
 
 ```
-npm run check     # the web app's rate and calendar arithmetic, and the API's BOQ refs, summary and programme reading
+npm test          # unit tests: the API's (pytest; route tests use a separate adnario_test database) and the web app's (vitest)
 ```
 
 ## End-to-end test

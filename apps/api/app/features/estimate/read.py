@@ -198,14 +198,3 @@ def catalogue(elements: list[dict]) -> list[dict]:
 
 
 GENERIC = re.compile(r'^\s*(type\s*\d+|default|generic|standard|untitled|unnamed|\d+)\s*$', re.I)
-
-
-if __name__ == '__main__':  # the mm-authored sample: lengths in metres, perimeters never shorter than a circle's
-    from app.config import env
-
-    found, _ = read_models([{'id': 'x', 'name': 'Ikeja_Office.ifc'}], lambda m: ifcopenshell.open(env.SAMPLES / 'ikeja-office' / m['name']))
-    mullions = [e['q']['length'] for e in found if e['class'] == 'IfcMember' and e['q'].get('length')]
-    assert mullions and max(mullions) < 10, max(mullions)
-    pad = next(e['q'] for e in found if e['type'].startswith('Pad 1'))
-    assert pad['perimeter'] > 100 and pad['height'] == 0.3, pad
-    print('ok')

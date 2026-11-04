@@ -181,13 +181,3 @@ def delete_row(row_id: UUID, actor: CurrentActor):
     with db.in_org(actor.org_id) as connection:
         connection.execute('delete from rate_rows where id = %s', [row_id])
     return {'ok': True}
-
-
-if __name__ == '__main__':
-    import json
-
-    rates = {r['code']: r for r in json.loads((env.RATE_CARD / 'rates.json').read_text())}
-    prices = {p['name']: p['price'] for p in json.loads((env.RATE_CARD / 'prices.json').read_text()) if p.get('price') is not None}
-    assert all(rate_of(item, prices, rates) is not None for item in rates.values()), 'a rate is blank'
-    assert rate_of(rates['CON-15'], prices, rates) == 5499  # blinding: 0.05 of CON-02, as the sample BOQ prices it
-    print('ok', len(rates), 'rates')

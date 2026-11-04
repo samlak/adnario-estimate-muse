@@ -5,7 +5,7 @@ The React + Vite + Tailwind web app described in `../../overview/README.md`, bui
 
 ```
 npm run dev     # from the repo root: starts the database, API, converter and this app together
-npm run check   # the rate and calendar arithmetic, against the screenshots' numbers
+npm test        # unit tests (vitest), beside the file they test: name.test.ts
 ```
 
 | Where | What |

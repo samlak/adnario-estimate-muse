@@ -97,16 +97,3 @@ async def link(boq: list[dict], card: dict, progress=None) -> tuple[list[dict], 
         line.update(rate=round(item['rate'] * by, 2), rate_item_id=str(item['id']), rate_note=why)
         sources[str(item['id'])] = {'card': card['name'], 'code': item['code'], 'description': item['name']}
     return boq, sources
-
-
-if __name__ == '__main__':
-    assert same_unit('m2', 'm²') and same_unit('nr', 'point') and not same_unit('m', 'm²')
-    assert check_link({'unit': 'm³'}, {'code': 'C1', 'unit': 'm²', 'rate': 5}).startswith('C1 is priced')
-    window = {'unit': 'nr', 'description': 'Casement window, 819 x 759mm, glazed'}
-    assert scale(window, {'unit': 'm²', 'name': 'Aluminium windows'}) == 0.6216
-    assert scale(window, {'unit': 'nr', 'name': 'Casement window, 1200 x 1200mm'}) == round(0.819 * 0.759 / 1.44, 4)
-    assert scale({'unit': 'nr', 'description': 'Base cabinet, 1000mm wide'}, {'unit': 'm', 'name': 'Base units'}) == 1
-    assert scale({'unit': 'nr', 'description': 'Shade support'}, {'unit': 'm', 'name': 'Posts'}) is None
-    assert scale({'unit': 'nr', 'description': 'Door, 915 x 2134mm'}, {'unit': 'nr', 'name': 'Door set'}) == 1
-    assert prompts.SECTIONS
-    print('ok')
