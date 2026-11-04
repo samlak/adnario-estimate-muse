@@ -377,6 +377,7 @@ def roll_up(rows: list[dict]) -> list[dict]:
 
 # ── Code's own review: what it could not settle, as questions for the QS ──
 
+AIR = re.compile(r'\bair\b|cavity|void', re.I)  # a build-up's air space is never billed
 SIZE = re.compile(r'(\d{2,5}(?:\.\d+)?)\s*[x×]\s*(\d{2,5}(?:\.\d+)?)\s*[x×]\s*(\d{2,5}(?:\.\d+)?)|(\d{2,5})\s*[x×]\s*(\d{2,5})\s*mm', re.I)
 
 
@@ -426,7 +427,7 @@ def issues(elements: list[dict], types: list[dict], rows: list[dict], lost_bars:
         layers = entry.get('layers') or []
         used = {item.get('layer') for item in mapping.get('items') or []}
         if mapping.get('decision') == 'bill' and layers and used - {None}:
-            missing = [layer for at, layer in enumerate(layers) if at not in used]
+            missing = [layer for at, layer in enumerate(layers) if at not in used and not AIR.search(layer['material'])]
             if missing:
                 ask('medium', f'{named(entry["key"])} is billed layer by layer, but its {", ".join(f"{l["thickness_mm"]}mm {l["material"]}" for l in missing)} '
                     f'{"is" if len(missing) == 1 else "are"} not billed: should {"it" if len(missing) == 1 else "they"} be?', entry['gids'])
@@ -515,6 +516,21 @@ def duplicates(elements: list[dict], rows: list[dict], named) -> list[dict]:
 
 # ── Provisional quantities ──
 
+# what a provisional item is, from its words, when the basis the AI gave cannot give its unit
+BASIS_WORDS = (('disposal', 'surplus'), ('surplus', 'surplus'), ('cart away', 'surplus'), ('backfill', 'backfill'), ('excavat', 'excavation'),  # the particular first
+               ('hardcore', 'hardcore'), ('lintel', 'lintels'), ('damp-proof course', 'dpc'), ('dpc', 'dpc'), ('plaster', 'plaster'),
+               ('render', 'plaster'), ('screed', 'floor_finish'), ('tiling', 'floor_finish'), ('paint', 'wall_finish'), ('emulsion', 'wall_finish'),
+               ('fence', 'perimeter_fence'), ('clearance', 'footprint'), ('clear site', 'footprint'), ('topsoil', 'footprint'))
+
+
+def basis_of(description: str, basis: str, unit: str) -> str:
+    """The basis to work the quantity from: the AI's when it can give the unit, else the one the words name."""
+    if basis in UNITS_OF and unit in UNITS_OF[basis]:
+        return basis
+    said = (description or '').lower()
+    return next((named for words, named in BASIS_WORDS if words in said and unit in UNITS_OF[named]), basis)
+
+
 UNITS_OF = {'footprint': ('m²',), 'hardcore': ('m³', 'm²'), 'excavation': ('m³',), 'backfill': ('m³',), 'surplus': ('m³',),
             'lintels': ('m',), 'dpc': ('m',), 'plaster': ('m²',), 'wall_finish': ('m²',), 'floor_finish': ('m²',), 'perimeter_fence': ('m',)}
 
@@ -522,8 +538,8 @@ UNITS_OF = {'footprint': ('m²',), 'hardcore': ('m³', 'm²'), 'excavation': ('m
 def provisional_qty(basis: str, elements: list[dict], rows: list[dict], unit: str = '', summaries: list[dict] | None = None) -> float | None:
     """A provisional item's quantity in its unit, worked out by code from what it is based on (the AI never gives one).
     A lump sum (item, nr) is 1; a unit the basis cannot give is None."""
-    if unit in ('item', 'nr') and basis != 'none':
-        return 1.0
+    if unit in ('item', 'nr'):
+        return 1.0  # a lump sum
     if basis not in UNITS_OF or (unit and unit not in UNITS_OF[basis]):
         return None
     billed = [row for row in rows if row['status'] == 'billed']

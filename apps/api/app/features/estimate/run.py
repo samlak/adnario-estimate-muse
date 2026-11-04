@@ -13,7 +13,7 @@ from app.features.estimate import ai
 from app.features.estimate.constants import BILL_OF, MAP_BATCH, PARALLEL, SECTIONS, UNITS
 from app.features.estimate.read import catalogue, read_models
 from app.features.estimate.takeoff import (
-    BARS, card_of, check_mapping, concrete_of, derive, identity, issues, measure, provisional_qty, provisional_rebar, reinforce, roll_up,
+    BARS, basis_of, card_of, check_mapping, concrete_of, derive, identity, issues, measure, provisional_qty, provisional_rebar, reinforce, roll_up,
 )
 from app.features.models.files import open_ifc
 
@@ -185,10 +185,11 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
     for number, item in enumerate(suggested, start=1):
         section = item.get('section') if item.get('section') in SECTIONS else 'External works'
         unit = {'m2': 'm²', 'm3': 'm³'}.get(item.get('unit'), item.get('unit')) if item.get('unit') in UNITS | {'m2', 'm3'} else 'item'
+        basis = item.get('basis') if item.get('basis') == 'reinforcement' else basis_of(item.get('description', ''), item.get('basis') or 'none', unit)
         provisional.append({
             'code': f'P{number:02d}', 'description': str(item.get('description', ''))[:300], 'section': section, 'bill': BILL_OF[section],
-            'unit': unit, 'basis': item.get('basis') or 'none', 'reason': str(item.get('reason', ''))[:300], 'rate_code': item.get('rate_code'),
-            'qty': item['qty'] if item.get('basis') == 'reinforcement' else provisional_qty(item.get('basis') or 'none', elements, rows, unit, summaries),
+            'unit': unit, 'basis': basis or 'none', 'reason': str(item.get('reason', ''))[:300], 'rate_code': item.get('rate_code'),
+            'qty': item['qty'] if item.get('basis') == 'reinforcement' else provisional_qty(basis, elements, rows, unit, summaries),
         })
     yield stage('Review', 'done', questions=len(questions))
 

@@ -2,7 +2,7 @@
 blinding derived from concrete, rows rolled up into lines, provisional quantities worked out."""
 
 from app.features.estimate.takeoff import (
-    check_mapping, concrete_of, derive, issues, measure, provisional_qty, provisional_rebar, reinforce, roll_up,
+    basis_of, check_mapping, concrete_of, derive, issues, measure, provisional_qty, provisional_rebar, reinforce, roll_up,
 )
 from app.features.estimate.tests.test_shapes import box
 
@@ -108,8 +108,16 @@ def test_provisional_quantities_come_from_what_was_measured():
     ground = rows + [{'ref': 'S1', 'status': 'billed', 'derived': 'dpm', 'qty': 100.0, 'unit': 'm²', 'description': '', 'section': 'Substructure'}]
     # in its unit: hardcore as a 150mm bed in m³, or its area in m²; a lump sum is one; a unit it cannot give is none
     assert provisional_qty('hardcore', [], ground, 'm³') == 15.0 and provisional_qty('hardcore', [], ground, 'm²') == 100.0
-    assert provisional_qty('footprint', [], ground, 'item') == 1.0
+    assert provisional_qty('footprint', [], ground, 'item') == 1.0 and provisional_qty('none', [], ground, 'item') == 1.0
     assert provisional_qty('footprint', [], ground, 'm³') is None
+
+
+def test_a_provisional_item_is_measured_by_what_it_says_when_its_basis_cannot_give_its_unit():
+    assert basis_of('Excavation for strip foundations', 'footprint', 'm³') == 'excavation'
+    assert basis_of('Hardcore filling under ground slab', 'none', 'm³') == 'hardcore'
+    assert basis_of('Disposal of surplus excavated material', 'none', 'm³') == 'surplus'
+    assert basis_of('Site clearance', 'footprint', 'm²') == 'footprint'  # the AI's, when it fits
+    assert basis_of('Borehole', 'none', 'item') == 'none'
 
 
 # ── From the faces: formwork where nothing touches, beds under what bears on the ground ──
@@ -197,10 +205,10 @@ def test_what_code_cannot_settle_becomes_a_question():
 
 def test_a_layer_left_unbilled_is_asked_about():
     entry = {'key': 'k', 'type': 'Floor', 'class': 'IfcSlab', 'model': 'A', 'gids': ['x'],
-             'layers': [{'material': 'Screed', 'thickness_mm': 50}, {'material': 'Concrete', 'thickness_mm': 150}],
+             'layers': [{'material': 'Screed', 'thickness_mm': 50}, {'material': 'Concrete', 'thickness_mm': 150}, {'material': 'Air Space', 'thickness_mm': 25}],
              'mapping': {'decision': 'bill', 'items': [{'layer': 1}]}}
     asked = issues([], [entry], [])
-    assert len(asked) == 1 and '50mm Screed' in asked[0]['question']
+    assert len(asked) == 1 and '50mm Screed' in asked[0]['question'] and 'Air' not in asked[0]['question']  # air is never billed
 
 
 def test_a_copy_in_the_other_model_keeps_only_its_finishes():
