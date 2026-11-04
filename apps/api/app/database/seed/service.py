@@ -66,7 +66,7 @@ def seed() -> list[tuple]:
                 )
             else:
                 connection.execute('insert into estimates (org_id, project_id) values (%s, %s)', [org, project])
-            work.append((org, list(models.values())))
+            work.extend(((env.SAMPLES / folder / file).stat().st_size, org, model) for file, model in models.items())
         lekki = projects[PROJECTS[0][0]]
         for person, text, kind, label in (
             (people['qs'], '@Chidi Eze can you confirm the external wall build-up? The model shows stud framing with brick facing.', 'project', 'An estimate'),
@@ -83,7 +83,6 @@ def seed() -> list[tuple]:
 
 
 async def finish(work: list[tuple]) -> None:
-    """Convert every demo model, one after another."""
-    for org, models in work:
-        for model in models:
-            await asyncio.to_thread(convert, org, model)
+    """Convert every demo model, one after another, smallest first: a small model is not left waiting behind a big one."""
+    for _, org, model in sorted(work):
+        await asyncio.to_thread(convert, org, model)

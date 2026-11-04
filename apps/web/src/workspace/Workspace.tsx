@@ -104,7 +104,7 @@ export function Workspace() {
     },
     refresh,
   };
-  const fourD = shown === 'programme' && !!plan;
+  const fourD = shown === 'programme' && !!plan && !!result?.boq.length; // as the Programme panel: nothing without a BOQ
   const programmeFull = fourD && full;
 
   const links = {

@@ -30,7 +30,8 @@ def test_an_empty_database_gets_the_demo(monkeypatch):
     monkeypatch.setattr(service, 'copy_library', lambda c, org: 'card')
     monkeypatch.setattr(service, 'placed', lambda result, models, card, rows: result)
     work = run_seed(monkeypatch, connection)
-    assert len(work) == len(PROJECTS)
+    assert len(work) == sum(len(files) for *_, files in PROJECTS)  # one per model
+    assert min(work)[2] == 'model-Ifc2x3_Duplex_Architecture.ifc'  # the smallest is converted first
     finished = connection.ran("values (%s, %s, 'ready', %s, %s)")
     assert len(finished) == len(FINISHED)  # the rest are left to run, with no AI at seed time
     emails = {params[2] for params in connection.ran('insert into people (org_id, name, email, role, password_hash) values (%s, %s, %s, %s, %s)')}

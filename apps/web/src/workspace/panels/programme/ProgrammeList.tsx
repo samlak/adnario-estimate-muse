@@ -1,6 +1,7 @@
 /** The Programme (README §7.5): the contractor's activities under their headings with dates and the critical path;
  * the dock under the model with the 4D player and the Gantt chart; the readout over the model. */
-import { CalendarDays, Maximize2, Upload } from 'lucide-react';
+import { Box, CalendarDays, Maximize2, Upload } from 'lucide-react';
+import { Empty } from '@/components/ui/Empty';
 import { useEffect, useRef } from 'react';
 import { day as dayName } from '@/lib/format';
 import { useWs } from '../../state';
@@ -20,6 +21,7 @@ export function ProgrammeList() {
   }, [ws.activity]);
   const plan = ws.plan;
   const drop = useDrop();
+  if (!ws.result?.boq.length) return <Empty icon={Box} title="No BOQ yet">The programme ties its activities to the measured work in the BOQ. Start a takeoff and generate the BOQ first.</Empty>;
   if (!plan) return <UploadCard />;
   const opened = plan.byId.get(ws.activity ?? -1);
   if (opened && !opened.summary) return <div className="min-h-full px-[15px] pt-[15px]"><ActivityDetail activity={opened} /></div>;

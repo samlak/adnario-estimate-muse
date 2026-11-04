@@ -1,6 +1,9 @@
 /** The dock under the model (README §7.5): the 4D player that builds the model day by day, and the Gantt under it.
- * In full view it is the whole workspace. */
+ * In full view it is the whole workspace; otherwise its top edge drags it taller or shorter, or down to the player alone. */
 import { useEffect, useState } from 'react';
+import { Resizer } from '@/components/ui/Resizer';
+import { DOCK_DRAG } from '../../constants';
+import { useRemembered } from '../../useRemembered';
 import { iso, useWs } from '../../state';
 import { SCurve } from '../cash-flow/SCurve';
 import { VIEWS, ZOOMS } from './constants';
@@ -17,6 +20,12 @@ export function Dock({ outline, setOutline, roofOff, setRoofOff, canvas, fit }: 
   const plan = ws.plan!;
   const player = usePlayer(plan.days, ws.day, ws.setDay);
   const [shown, setShown] = useState(true);
+  const [height, setHeight] = useRemembered<number | null>('ws:dock', null); // null: 54% of the column
+  const resize = (size: number) => {
+    if (size < DOCK_DRAG.close) { setHeight(height); return setShown(false); } // shown again at its height before the drag
+    setShown(true);
+    setHeight(Math.max(DOCK_DRAG.min, Math.min(size, window.innerHeight - DOCK_DRAG.model)));
+  };
   const [zoom, setZoom] = useState<(typeof ZOOMS)[number]>('Weeks');
   const [view, setView] = useState<(typeof VIEWS)[number]>('Gantt');
   const [recording, setRecording] = useState<MediaRecorder | null>(null);
@@ -33,7 +42,12 @@ export function Dock({ outline, setOutline, roofOff, setRoofOff, canvas, fit }: 
 
   const date = plan.days[ws.day];
   return (
-    <div className={`flex flex-col border-t border-line bg-white ${ws.full ? 'h-full border-t-0' : shown ? 'h-[54%]' : ''}`}>
+    <>
+    {!ws.full && <Resizer axis="y" onSize={resize} />}
+    <div
+      className={`flex flex-col border-t border-line bg-white ${ws.full ? 'h-full border-t-0' : shown && height == null ? 'h-[54%]' : ''}`}
+      style={!ws.full && shown && height != null ? { height: Math.min(height, window.innerHeight - DOCK_DRAG.model) } : undefined}
+    >
       <PlayerControls
         player={player} day={ws.day} setDay={ws.setDay} date={date} full={ws.full} recording={!!recording} onRecord={record}
         outline={outline} setOutline={setOutline} roofOff={roofOff} setRoofOff={setRoofOff} shown={shown} setShown={setShown} onBack={() => ws.setFull(false)}
@@ -50,5 +64,6 @@ export function Dock({ outline, setOutline, roofOff, setRoofOff, canvas, fit }: 
         </>
       )}
     </div>
+    </>
   );
 }

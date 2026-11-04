@@ -13,8 +13,9 @@ const configs = {
 
 export async function convert(ifc) {
   let xkt;
-  const said = console.log;
-  console.log = () => {}; // the parser logs every element it skips
+  const [said, warned] = [console.log, console.error];
+  // the parser logs every element it skips, and web-ifc an "Invalid IFC Line" for every broken reference it steps over
+  console.log = console.error = () => {};
   await convert2xkt({
     WebIFC,
     configs,
@@ -23,7 +24,7 @@ export async function convert(ifc) {
     outputXKT: (data) => { xkt = data; },
     excludeTypes: ['IfcSpace', 'IfcOpeningElement'],
     log: () => {},
-  }).finally(() => { console.log = said; });
+  }).finally(() => { [console.log, console.error] = [said, warned]; });
   return Buffer.from(xkt);
 }
 
