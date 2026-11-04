@@ -7,7 +7,7 @@ import time
 from collections import Counter, defaultdict
 from collections.abc import AsyncIterator
 
-from app.core.constants import MODEL_FAST, PERCENT
+from app.core.constants import MODEL, PERCENT
 from app.database import connection as db
 from app.features.estimate import ai
 from app.features.estimate.constants import BILL_OF, MAP_BATCH, PARALLEL, SECTIONS, UNITS
@@ -79,7 +79,7 @@ async def run(estimate_id, org_id) -> AsyncIterator[tuple[str, dict]]:
 
     # the Map step: as each batch is answered, code measures it at once
     yield stage('Map')
-    yield 'log', {'text': f'{len(types)} types in {-(-len(types) // MAP_BATCH)} batches, {PARALLEL} at a time ({MODEL_FAST})'}
+    yield 'log', {'text': f'{len(types)} types in {-(-len(types) // MAP_BATCH)} batches, {PARALLEL} at a time ({MODEL})'}
     carried = {identity(entry): entry['mapping'] for entry in (before or {}).get('types', []) if entry.get('mapping') and entry['mapping'].get('decision') != 'unmapped'}
     members: dict[str, list[dict]] = defaultdict(list)
     for element in elements:

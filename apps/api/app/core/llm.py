@@ -1,7 +1,7 @@
 """The one door to the language models. Features call ask / ask_text / stream_text / converse from their ai.py and
 never import a provider. converse is a LangGraph graph: an orchestrator agent over the chat, with look-ups and
 specialist sub-agents.
-Which models: MODEL_FAST and MODEL_SMART in core/constants.py.
+Which model: MODEL in core/constants.py.
 Every model is Meta Muse, on Meta's Model API (MUSE_BASE_URL, key MUSE_API_KEY)."""
 
 import asyncio

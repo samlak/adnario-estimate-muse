@@ -1,10 +1,9 @@
-"""App-wide constants: the models, the default percentages, sessions and what each role may do (README §4, §11)."""
+"""App-wide constants: the model, the default percentages, sessions and what each role may do (README §4, §11)."""
 
 import os
 
-# the models (every one is Meta Muse); either can be changed from the environment
-MODEL_FAST = os.environ.get('MODEL_FAST', 'muse-spark-1.3')
-MODEL_SMART = os.environ.get('MODEL_SMART', 'muse-spark-1.3')
+# the one model (Meta Muse Spark); it can be changed from the environment
+MODEL = os.environ.get('MODEL', 'muse-spark-1.3')
 MODEL_TIMEOUT = 180  # seconds, retried twice
 
 PERCENT = {'prelims': 5.0, 'contingency': 5.0, 'vat': 7.5}  # a new estimate's prelims, contingency and VAT
